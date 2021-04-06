@@ -1,5 +1,7 @@
 package man.who.scan.my.app.die.a.mother.vpn.server.handler;
 
+import java.io.IOException;
+
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -18,7 +20,7 @@ public class BackendPipHandler extends ChannelInboundHandlerAdapter {
    public void channelActive(ChannelHandlerContext ctx) {
 //	   System.out.println("-- BackendPipHandler channelActive--");
        ctx.read();
-       inboundChannel.read();
+//       inboundChannel.read();
    }
 
    @Override
@@ -38,12 +40,14 @@ public class BackendPipHandler extends ChannelInboundHandlerAdapter {
 
    @Override
    public void channelInactive(ChannelHandlerContext ctx) {
+       FrontendPipHandler.closeOnFlush(ctx.channel());
        FrontendPipHandler.closeOnFlush(inboundChannel);
    }
 
    @Override
    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-       cause.printStackTrace();
-       FrontendPipHandler.closeOnFlush(ctx.channel());
+       if(!(cause instanceof IOException))
+           cause.printStackTrace();
+       channelInactive(ctx);
    }
 }
