@@ -55,7 +55,8 @@ public class BackendAuthHandler extends ChannelInboundHandlerAdapter {
                 .append(String.format("Origin: https://%s\r\n", Global.vpnConfig.domain)).append("Upgrade: websocket\r\n")
                 .append("Connection: keep-alive, Upgrade\r\n").append("Pragma: no-cache\r\n")
                 .append("Cache-Control: no-cache\r\n").append(String.format("Origin: https://%s\r\n", Global.vpnConfig.domain))
-                .append(String.format("Cookie: %s\r\n", genCookie(newCookie))).append("Sec-WebSocket-Key: 13\r\n\r\n");
+                .append(String.format("Cookie: %s\r\n", genCookie(newCookie))).append("Sec-WebSocket-Key: ")
+                .append(CommonUtil.getRandomString(24)).append("\r\n\r\n");
 //		System.out.println(sb.toString());
         byte content[] = sb.toString().getBytes();
         ByteBuf newMsg = ctx.alloc().buffer(content.length);

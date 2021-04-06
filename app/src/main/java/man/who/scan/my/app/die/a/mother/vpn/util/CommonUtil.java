@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.channels.SocketChannel;
 import java.security.MessageDigest;
+import java.util.Random;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -22,6 +23,18 @@ public class CommonUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	final public static String dictionary = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+	public static String getRandomString(int length) {
+		Random random = new Random();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			int number = random.nextInt(62);
+			sb.append(dictionary.charAt(number));
+		}
+		return sb.toString();
 	}
 
 	public  static Socket socketOf(Channel channel){
