@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menu2"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true">
+
+    <item
+        android:id="@+id/action_export"
+        android:title="导出所有到压缩包"
+        app:showAsAction="never"></item>
+    <item
+        android:id="@+id/action_import"
+        android:title="从压缩包导入配置"
+        app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/action_import_from_clipboard"
+        android:title="从剪贴板导入VPN"
+        app:showAsAction="never"></item>
+    <!--    在当前theme下添加以下Item：-->
+    <!--    <item name="android:dropDownListViewStyle">@style/MyListViewStyle</item>-->
+    <!--    <item name="android:textAppearanceLargePopupMenu">@style/PopupMenuText</item>-->
+    <!--    <item name="android:textAppearanceSmallPopupMenu">@style/PopupMenuText</item>-->
+    <!--    对应的Style：-->
+    <!--    <style name="PopupMenuText">-->
+    <!--        <item name="android:textColor">@color/colorBlack</item>-->
+    <!--        <item name="android:textSize">16sp</item>-->
+    <!--    </style>-->
+    <!--    <style name="MyListViewStyle">-->
+    <!--        <item name="android:divider">#F00</item>-->
+    <!--        <item name="android:dividerHeight">1px</item>-->
+    <!--    </style>-->
+
+    <!--    &lt;!&ndash;popMenu的Style&ndash;&gt;-->
+    <!--    <style name="CustomPopMenuStyle" >-->
+    <!--        <item name="android:itemBackground">@color/color_2C2C2C</item>-->
+    <!--        <item name="android:dropDownListViewStyle">@style/popmenuDivier</item>-->
+    <!--        <item name="android:textAppearanceSmallPopupMenu">@style/popmeuText</item>-->
+    <!--        <item name="android:textAppearanceLargePopupMenu">@style/popmeuText</item>-->
+    <!--    </style>-->
+    <!--    &lt;!&ndash; popMenu的背景色&ndash;&gt;-->
+    <!--    <style name="popmenuStyle" >-->
+
+    <!--    </style>-->
+    <!--    &lt;!&ndash;popmenu的字体颜色&ndash;&gt;-->
+    <!--    <style name="popmeuText">-->
+    <!--        <item name="android:textColor">@color/white</item>-->
+    <!--        <item name="android:textSize">14sp</item>-->
+    <!--        <item name="android:gravity">center</item>-->
+    <!--    </style>-->
+    <!--    &lt;!&ndash;popMenu分割线的颜色&ndash;&gt;-->
+    <!--    <style name="popmenuDivier">-->
+    <!--        <item name="android:divider">@color/color_4C4E55</item>-->
+    <!--        <item name="android:dividerHeight">1px</item>-->
+    <!--    </style>-->
+</menu>

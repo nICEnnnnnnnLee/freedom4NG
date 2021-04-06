@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?><!--以DrawerLayout作为界面的根布局-->
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <!--主界面，主内容区的布局代码要放在侧滑菜单布局的前面-->
+    <include layout="@layout/base"></include>
+    <!--侧滑界面,必须设置layout_gravity属性,表示侧滑方向-->
+    <!--    android:background="#FFFF00"-->
+    <LinearLayout
+        android:id="@+id/drawer"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/ly_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@android:color/background_dark"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:text="Freedom"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_dns"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:text="DNS 设置"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/tv_host"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:text="Host 设置"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <TextView
+                android:background="@android:color/darker_gray"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+            <TextView
+                android:id="@+id/tv_dex"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:text="外部Dex"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <TextView
+                android:background="@android:color/darker_gray"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <TextView
+                android:id="@+id/tv_about"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:text="关于"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

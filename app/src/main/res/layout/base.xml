@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal">
+
+    <include layout="@layout/base_title_bar"></include>
+
+    <ScrollView
+        android:layout_below="@+id/ly_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/base"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--      此处动态添加      -->
+        </LinearLayout>
+
+    </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_start"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="20dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_send"
+        app:fabCustomSize="50dp"
+        app:backgroundTint="#3F51B5"
+        android:visibility="invisible"
+        app:elevation="3dp"
+        app:pressedTranslationZ="6dp" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_stop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="20dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_myplaces"
+        app:fabCustomSize="50dp"
+        app:backgroundTint="@android:color/darker_gray"
+        android:visibility="invisible"
+        app:elevation="3dp"
+        app:pressedTranslationZ="6dp" />
+</RelativeLayout>

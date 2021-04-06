@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:layout_margin="16dp"-->
+    <!--        android:src="@android:drawable/radiobutton_off_background"-->
+    <!--        app:backgroundTint="#2d7ad0"-->
+    <!--        app:fabSize="normal" />-->
+    <!--    android:onClick="onClickmyBtn1"-->
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/fab"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_margin="20dp"-->
+    <!--        android:clickable="true"-->
+    <!--        android:src="@android:drawable/radiobutton_off_background"-->
+    <!--        app:backgroundTint="#3F51B5"-->
+    <!--        app:elevation="3dp"-->
+    <!--        app:pressedTranslationZ="6dp" />-->
+</LinearLayout>
