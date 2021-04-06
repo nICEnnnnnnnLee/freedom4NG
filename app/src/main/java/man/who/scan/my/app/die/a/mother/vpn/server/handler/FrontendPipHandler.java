@@ -27,7 +27,7 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-//		System.out.println("-- local server has received a connection --");
+//        System.out.println("-- local server has received a connection --");
         final Channel inboundChannel = ctx.channel();
         InetSocketAddress insocket = (InetSocketAddress) inboundChannel.remoteAddress();
         NATSession session = NATSessionManager.getSession("tcp", insocket.getPort());
@@ -37,6 +37,7 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
             return;
         }
 
+//        System.out.printf("-- remote (%s: %s) SSL: %s--\n", Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort, Global.vpnConfig.useSSL);
         if (Global.vpnConfig.directAll || (Global.vpnConfig.directIfCN && CNIPRecognizer.isCNIP(session.RemoteHost))) {
             Bootstrap b = new Bootstrap();
             b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())

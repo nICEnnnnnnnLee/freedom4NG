@@ -43,7 +43,7 @@ public class Global {
         cookies.put("my_domain", "");
         cookies.put("my_port", "0");
         cookies.put("my_username", vpnConfig.username);
-        cookies.put("my_token", CommonUtil.MD5(vpnConfig.password + vpnConfig.salt));
+//        cookies.put("my_token", CommonUtil.MD5(vpnConfig.password + vpnConfig.salt));
     }
 
     static {
