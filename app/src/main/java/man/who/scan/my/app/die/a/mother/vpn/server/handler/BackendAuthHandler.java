@@ -89,18 +89,21 @@ public class BackendAuthHandler extends ChannelInboundHandlerAdapter {
         ByteBuf buf = (ByteBuf) msg;
         int begin = header.length() > 4 ? header.length() - 4 : 0;
         header.append(CommonUtil.ByteBufToString(buf));
+        buf.release();
         int index = header.indexOf("\r\n\r\n", begin);
         if (index > -1) {
             String headerStr = header.substring(0, index);
 //			System.out.println(headerStr);
             String body = header.substring(index + 4);
             if (checkHeader(headerStr)) {
-                byte content[] = body.getBytes();
-                ByteBuf newMsg = ctx.alloc().buffer(content.length);
-                newMsg.writeBytes(content);
                 ctx.pipeline().remove(this);
-                ctx.fireChannelRead(newMsg);
-                buf.release();
+                byte content[] = body.getBytes();
+                if (content.length > 0) {
+                    ByteBuf newMsg = ctx.alloc().buffer(content.length);
+                    newMsg.writeBytes(content);
+                    ctx.fireChannelRead(newMsg);
+                } else
+                    ctx.read(); // 指示BackEnd Channel 读取内容(此时传至pip Handler)
             } else {
                 ctx.fireChannelInactive();
             }
