@@ -1,9 +1,11 @@
 package man.who.scan.my.app.die.a.mother.vpn.server.handler;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -38,24 +40,22 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
         }
 
 //        System.out.printf("-- remote (%s: %s) SSL: %s--\n", Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort, Global.vpnConfig.useSSL);
+        ChannelFuture f = null;
         if (Global.vpnConfig.directAll || (Global.vpnConfig.directIfCN && CNIPRecognizer.isCNIP(session.RemoteHost))) {
             Bootstrap b = new Bootstrap();
             b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
                     .handler(new BackendInitializer(inboundChannel))
                     .option(ChannelOption.AUTO_READ, false);
-            ChannelFuture f = b.connect(session.RemoteHost, session.RemotePort);
-            outboundChannel = f.channel();
-            addListner(f, inboundChannel);
+            f = b.connect(session.RemoteHost, session.RemotePort);
         } else {
             Bootstrap b = new Bootstrap();
             b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
                     .handler(new BackendInitializer(inboundChannel, session.RemoteHost, "" + session.RemotePort))
                     .option(ChannelOption.AUTO_READ, false);
-            ChannelFuture f = b.connect(Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort);
-            outboundChannel = f.channel();
-            addListner(f, inboundChannel);
+            f = b.connect(Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort);
         }
-        Socket socket = CommonUtil.socketOf(outboundChannel);
+        addListner(f, inboundChannel);
+        Socket socket = CommonUtil.socketOf(f.channel());
         if (socket != null) {
             LocalVpnService.Instance.protect(socket);
         } else {
@@ -67,15 +67,16 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void addListner(ChannelFuture f, Channel in0) {
-        final Channel in = in0;
+        final Channel inboundChannel = in0;
         f.addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture future) {
                 if (future.isSuccess()) {
 //					System.out.println("----连接成功");
-//					inboundChannel.read();
+                    outboundChannel = future.channel();
+                    inboundChannel.read();
                 } else {
-                    in.close();
+                    inboundChannel.close();
                 }
             }
         });
@@ -95,6 +96,10 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
                     }
                 }
             });
+        }else{
+            ByteBuf buf = (ByteBuf)msg;
+            System.err.println("-- 收到了不该收到的数据 --" + buf.readableBytes());
+            buf.release();
         }
     }
 
@@ -102,6 +107,7 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (evt instanceof Channel && outboundChannel == null) {
             outboundChannel = (Channel) evt;
+            ctx.channel().read();
         }
     }
 
@@ -111,19 +117,20 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
         if (outboundChannel != null) {
             closeOnFlush(outboundChannel);
         }
+        closeOnFlush(ctx.channel());
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
-        closeOnFlush(ctx.channel());
+        if(!(cause instanceof IOException))
+            cause.printStackTrace();
+        channelInactive(ctx);
     }
 
     /**
      * Closes the specified channel after all queued write requests are flushed.
      */
     static void closeOnFlush(Channel ch) {
-//        System.out.println("-- local server closeOnFlush --");
         if (ch.isActive()) {
             ch.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
         }
