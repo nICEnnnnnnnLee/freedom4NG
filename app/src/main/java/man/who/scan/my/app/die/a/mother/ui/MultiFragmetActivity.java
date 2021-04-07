@@ -89,6 +89,9 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
                                         file = new File(Global.VPN_DIR, name);
                                         index++;
                                     } while (file.exists());
+                                    File parent = file.getParentFile();
+                                    if (!parent.exists())
+                                        parent.mkdirs();
                                     try (FileWriter writer = new FileWriter(file)) {
                                         writer.write(decodedContent);
                                         MultiFragmetActivity.this.toast("导入剪贴板数据成功");
@@ -97,12 +100,14 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
                                         MultiFragmetActivity.this.toast("写入数据出错：" + e.toString());
                                     }
 
-                                }
+                                } else
+                                    MultiFragmetActivity.this.toast("剪贴板数据好像不对哦");
                             } catch (Exception e) {
                                 MultiFragmetActivity.this.toast("剪贴板数据好像不对哦");
                             }
-                        } else
+                        } else {
                             MultiFragmetActivity.this.toast("剪贴板里好像没有数据哦");
+                        }
                         break;
                     default:
                         break;
