@@ -35,6 +35,8 @@ public class TestUtil {
             newCookie.put("my_time", currentTime);
             newCookie.put("my_token", CommonUtil.MD5(token));
             newCookie.put("my_username", vpn.username);
+            newCookie.put("my_domain", vpn.domain);
+            newCookie.put("my_port", "" + vpn.port);
             conn.setRequestProperty("Cookie", BackendAuthHandler.genCookie(newCookie));
             conn.connect();
             return (conn.getResponseCode()); // && "ok".equals(conn.getHeaderField("auth"))
