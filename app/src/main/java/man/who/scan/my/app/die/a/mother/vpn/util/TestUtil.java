@@ -28,8 +28,13 @@ public class TestUtil {
             conn.setRequestProperty("Sec-WebSocket-Version", "13");
             conn.setRequestProperty("Origin", origin);
             HashMap<String, String> newCookie = new HashMap<>(Global.cookies);
+            String currentTime = String.valueOf(System.currentTimeMillis());
+            System.out.println("vpn.password:" + vpn.password);
+            System.out.println("vpn.salt:" + vpn.salt);
+            String token = new StringBuilder(vpn.password).append(vpn.salt).append(currentTime).toString();
+            newCookie.put("my_time", currentTime);
+            newCookie.put("my_token", CommonUtil.MD5(token));
             newCookie.put("my_username", vpn.username);
-            newCookie.put("my_token", CommonUtil.MD5(vpn.password + vpn.salt));
             conn.setRequestProperty("Cookie", BackendAuthHandler.genCookie(newCookie));
             conn.connect();
             return (conn.getResponseCode()); // && "ok".equals(conn.getHeaderField("auth"))
