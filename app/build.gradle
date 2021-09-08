@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+Properties props = new Properties()
+props.load(new FileInputStream(file("signing.properties")))
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -11,10 +13,19 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release{
+            keyAlias props['KEY_ALIAS']
+            keyPassword props['KEY_PASSWORD']
+            storeFile file(props['KEYSTORE_FILE'])
+            storePassword props['KEYSTORE_PASSWORD']
+        }
+    }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
