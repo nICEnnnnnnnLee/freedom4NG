@@ -1,8 +1,11 @@
 package man.who.scan.my.app.die.a.mother;
 
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.Map;
 
 import man.who.scan.my.app.die.a.mother.ui.MultiFragmetActivity;
@@ -25,6 +28,16 @@ public class MainActivity extends MultiFragmetActivity {
         if (map != null)
             Global.dnsConfig.fromMap(map);
         Config.fromHostFile(Global.hostConfig, Global.HOST_FILE);
+
+        if(resources == null){
+            resources = this.getResources();
+        }
+        Configuration config = resources.getConfiguration();
+        String lang = config.getLocales().toLanguageTags();
+        if(!lang.startsWith("zh")){
+            config.setLocale(Locale.ENGLISH);
+            resources.updateConfiguration(config, resources.getDisplayMetrics());
+        }
         super.onCreate(savedInstanceState);
     }
 

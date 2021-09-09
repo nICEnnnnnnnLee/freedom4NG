@@ -8,16 +8,16 @@
 
     <item
         android:id="@+id/action_export"
-        android:title="导出所有到压缩包"
+        android:title="@string/export_all_to_zip"
         app:showAsAction="never"></item>
     <item
         android:id="@+id/action_import"
-        android:title="从压缩包导入配置"
+        android:title="@string/import_all_from_zip"
         app:showAsAction="never"></item>
 
     <item
         android:id="@+id/action_import_from_clipboard"
-        android:title="从剪贴板导入VPN"
+        android:title="@string/import_vpn_from_clipboard"
         app:showAsAction="never"></item>
     <!--    在当前theme下添加以下Item：-->
     <!--    <item name="android:dropDownListViewStyle">@style/MyListViewStyle</item>-->

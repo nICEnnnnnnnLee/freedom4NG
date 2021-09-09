@@ -21,7 +21,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="35dp"
                 android:gravity="left"
-                android:text="本地TCP端口"
+                android:text="@string/local_tcp_port"
                 android:textSize="12sp" />
 
             <EditText
@@ -39,7 +39,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
-                android:text="服务器TCP端口"
+                android:text="@string/server_tcp_port"
                 android:textSize="12sp" />
 
             <EditText
@@ -56,7 +56,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
-                android:text="服务器地址"
+                android:text="@string/server_addr"
                 android:textSize="12sp" />
 
             <EditText
@@ -73,7 +73,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
-                android:text="用户名"
+                android:text="@string/username"
                 android:textSize="12sp" />
 
             <EditText
@@ -90,7 +90,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
-                android:text="密码"
+                android:text="@string/pwd"
                 android:textSize="12sp" />
 
             <EditText
@@ -107,7 +107,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
-                android:text="盐值"
+                android:text="@string/salt"
                 android:textSize="12sp" />
 
             <EditText
@@ -124,7 +124,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
-                android:text="使用SSL"
+                android:text="@string/use_ssl"
                 android:textSize="12sp" />
 
             <Spinner
@@ -211,7 +211,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
-                android:text="国内是否直连"
+                android:text="@string/direct_for_CN_ip"
                 android:textSize="12sp" />
 
             <Spinner
@@ -229,7 +229,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
-                android:text="是否自定义DNS"
+                android:text="@string/use_dns_specified"
                 android:textSize="12sp" />
 
             <Spinner
@@ -266,7 +266,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="left"
-                android:text="是否使用DNS over HTTPS"
+                android:text="@string/use_doh"
                 android:textSize="12sp" />
 
             <Spinner
@@ -335,6 +335,7 @@
                 android:layout_marginTop="23dp">
 
                 <Button
+                    android:textAllCaps="false"
                     android:id="@+id/btnStart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -343,6 +344,7 @@
 
                 <Button
                     android:id="@+id/btnEnd"
+                    android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/btnStart"
@@ -358,16 +360,18 @@
 
                 <Button
                     android:id="@+id/btnSave"
+                    android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="保存" />
+                    android:text="@string/SAVE" />
 
                 <Button
                     android:id="@+id/btnReload"
+                    android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/btnSave"
-                    android:text="重置" />
+                    android:text="@string/RESET" />
             </RelativeLayout>
 
 
@@ -379,16 +383,18 @@
 
                 <Button
                     android:id="@+id/btnHostRead"
+                    android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Host保护" />
+                    android:text="@string/host_protect" />
 
                 <Button
                     android:id="@+id/btnHostWrite"
+                    android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/btnHostRead"
-                    android:text="Host更改" />
+                    android:text="@string/host_change" />
 
             </RelativeLayout>
             <!--  <TextView

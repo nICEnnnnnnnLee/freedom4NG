@@ -1,6 +1,7 @@
 package man.who.scan.my.app.die.a.mother.ui.base;
 
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ public class BaseFragment extends Fragment {
     protected ImageView iv_add, iv_more, iv_delete, iv_save, iv_reload;
     protected TextView tv_title;
     protected FragmetActivity activity;
+    protected Resources resources;
     public View view;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class BaseFragment extends Fragment {
         iv_delete = activity.findViewById(R.id.iv_delete);
         iv_save = activity.findViewById(R.id.iv_save);
         iv_reload = activity.findViewById(R.id.iv_reload);
+        resources = this.getResources();
     }
 
     public void toast(String msg) {

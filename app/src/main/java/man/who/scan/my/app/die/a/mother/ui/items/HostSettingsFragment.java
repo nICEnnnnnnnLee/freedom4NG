@@ -21,13 +21,14 @@ import man.who.scan.my.app.die.a.mother.Config;
 import man.who.scan.my.app.die.a.mother.Global;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.base.BaseFragment;
 
-public class HostSettingsFragment extends Fragment implements View.OnClickListener {
+public class HostSettingsFragment extends BaseFragment implements View.OnClickListener {
 
-    ImageView imgSave, imgReload;
+//    ImageView iv_save, iv_reload;
     EditText textHost;
-    FragmetActivity activity;
-    View view;
+//    FragmetActivity activity;
+//    View view;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,33 +42,31 @@ public class HostSettingsFragment extends Fragment implements View.OnClickListen
 
         view = inflater.inflate(R.layout.host_settings, container, false);
         TextView title = activity.findViewById(R.id.tv_title);
-        title.setText("Host 设置");
+        title.setText(R.string.host_settings_title);
         textHost = view.findViewById(R.id.hostConfig);
         reloadFromFile();
-        imgSave = activity.findViewById(R.id.iv_save);
-        imgReload = activity.findViewById(R.id.iv_reload);
-        imgSave.setVisibility(View.VISIBLE);
-        imgReload.setVisibility(View.VISIBLE);
-        imgSave.setOnClickListener(this);
-        imgReload.setOnClickListener(this);
+        iv_save.setVisibility(View.VISIBLE);
+        iv_reload.setVisibility(View.VISIBLE);
+        iv_save.setOnClickListener(this);
+        iv_reload.setOnClickListener(this);
         return view;
     }
 
 
     @Override
     public void onClick(View v) {
-        String tips = "未处理的点击";
+        String tips = resources.getString(R.string.tips_undealt_click);
         if(Global.isRun){
-            tips = "VPN 尚未关闭";
-        }else if (v == imgSave) {
+            tips = resources.getString(R.string.tips_vpn_not_shut_down);
+        }else if (v == iv_save) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(Global.HOST_FILE))) {
                 writer.write(textHost.getText().toString());
-                tips = "Host 文件已保存";
+                tips = resources.getString(R.string.tips_host_setings_saved);
             } catch (Exception e) {
                 e.printStackTrace();
-                tips = "Host 保存失败";
+                tips = resources.getString(R.string.tips_host_save_not_ok);
             }
-        } else if (v == imgReload) {
+        } else if (v == iv_reload) {
             tips = reloadFromFile();
         }
         Config.fromHostFile(Global.hostConfig, Global.HOST_FILE);
@@ -75,9 +74,10 @@ public class HostSettingsFragment extends Fragment implements View.OnClickListen
 //        for(Map.Entry entry: Global.hostConfig.entrySet()){
 //            System.out.printf("%s -> %s\n", entry.getKey(), entry.getValue());
 //        }
-        Toast toast = Toast.makeText(activity, tips, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+//        Toast toast = Toast.makeText(activity, tips, Toast.LENGTH_SHORT);
+//        toast.setGravity(Gravity.CENTER, 0, 0);
+//        toast.show();
+        toast(tips);
     }
 
     public String reloadFromFile(){
@@ -89,9 +89,9 @@ public class HostSettingsFragment extends Fragment implements View.OnClickListen
                 line = reader.readLine();
             }
             textHost.setText(sb.toString());
-            return "Host 加载成功";
+            return resources.getString(R.string.tips_host_load_ok);
         } catch (Exception e) {
-            return "Host 读取失败";
+            return resources.getString(R.string.tips_host_load_not_ok);
         }
     }
     @Override
