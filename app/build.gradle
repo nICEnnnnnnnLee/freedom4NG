@@ -9,8 +9,8 @@ android {
         applicationId "man.who.scan.my.app.die.a.mother"
         minSdkVersion 24
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.1.1r"
+        versionCode 10
+        versionName "1.2.0r"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {

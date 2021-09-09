@@ -1,0 +1,73 @@
+name: android master CI
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+    # Trigger only when src/** changes
+      - ".github/release.json"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Read tag_latest
+        id: tag_latest
+        uses:  ashley-taylor/read-json-property-action@v1.0
+        with:
+          path: ./.github/release.json
+          property: tag_latest
+
+      - name: Read description
+        id: description
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./.github/release.info
+
+      - name: Generate signing.properties
+        run: |
+          rm -rf freedom.jks
+          ${{ secrets.BASH_DOWNLOAD_JKS }}
+          echo "KEYSTORE_FILE = ${{github.workspace}}/freedom.jks" > app/signing.properties
+          echo "KEYSTORE_PASSWORD = ${{ secrets.KEYSTORE_PASSWORD }}" >> app/signing.properties
+          echo "KEY_ALIAS = ${{ secrets.KEY_ALIAS }}" >> app/signing.properties
+          echo "KEY_PASSWORD = ${{ secrets.KEY_PASSWORD }}" >> app/signing.properties
+          cat app/signing.properties
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease
+    
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{steps.tag_latest.outputs.value}}
+          release_name: Freedom - v${{steps.tag_latest.outputs.value}}
+          body: |
+            ${{steps.description.outputs.content}}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./app/build/outputs/apk/release/app-release.apk
+          asset_name: Freedom.${{steps.tag_latest.outputs.value}}.apk
+          asset_content_type: application/vnd.android.package-archive
