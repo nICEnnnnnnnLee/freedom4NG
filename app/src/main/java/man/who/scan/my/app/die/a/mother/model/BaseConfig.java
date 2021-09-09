@@ -19,6 +19,7 @@ public class BaseConfig {
     final static public int VPN = 2;
     final static public int HOST = 3;
     final static public int DEX = 4;
+    final static public int ABOUT = 5;
 
     private static int getId(String id) {
         try {
