@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.Gravity;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import man.who.scan.my.app.die.a.mother.Config;
@@ -30,7 +32,7 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
     File configFile;
     View view;
     VPNConfig config;
-
+    Resources resources;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = (FragmetActivity) getActivity();
@@ -41,6 +43,7 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
         if (map != null) {
             config.fromMap(map);
         }
+        resources = this.getResources();
     }
 
 
@@ -52,7 +55,7 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
         config.initView(view);
         config.updateView(view);
         TextView title = activity.findViewById(R.id.tv_title);
-        title.setText("VPN 设置");
+        title.setText(R.string.vpn_settings);
         imgSave = activity.findViewById(R.id.iv_save);
         imgDelete = activity.findViewById(R.id.iv_delete);
         imgReload = activity.findViewById(R.id.iv_reload);
@@ -71,47 +74,47 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        String tips = "未处理的点击";
+        String tips = resources.getString(R.string.tips_undealt_click);
         if (v == imgShare) {
             try {
                 String content = ResourcesUtil.readAll(configFile);
-                content = Base64.encodeToString(content.getBytes("utf-8"), Base64.DEFAULT);
+                content = Base64.encodeToString(content.getBytes(StandardCharsets.UTF_8), Base64.DEFAULT);
                 ClipboardManager cm = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData mClipData = ClipData.newPlainText("Label", content);
                 cm.setPrimaryClip(mClipData);
-                tips = "配置已经复制到剪贴板";
+                tips = resources.getString(R.string.tips_settings_copied);
             } catch (Exception e) {
-                tips = "复制配置出现错误";
+                tips = resources.getString(R.string.tips_setting_copy_err);
             }
         } else if (v == imgSave) {
             config.getFromView(view);
 //            System.out.println("保存的Host配置 :" + config);
             if (Config.toFile(config.toMap(), configFile)) {
                 if (config.remark.equals(configFile.getName())) {
-                    tips = "保存成功";
+                    tips = resources.getString(R.string.tips_save_ok);
                 } else {
                     File newConfigFile = new File(configFile.getParent(), config.remark);
                     if (configFile.renameTo(newConfigFile)) {
                         configFile = newConfigFile;
                         activity.configPath = newConfigFile.getAbsolutePath();
-                        tips = "保存并重命名文件成功！";
+                        tips = resources.getString(R.string.tips_save_and_rename_ok);
                     } else
-                        tips = "配置保存成功，但重命名失败";
+                        tips = resources.getString(R.string.tips_save_ok_rename_err);
                 }
             } else
-                tips = "保存失败！";
+                tips = resources.getString(R.string.tips_save_not_ok);
         } else if (v == imgDelete) {
             boolean result = new File(activity.configPath).delete();
-            tips = result ? "删除成功！" : "删除失败！";
+            tips = result ? resources.getString(R.string.tips_delete_ok) : resources.getString(R.string.tips_delete_not_ok);
         } else if (v == imgReload) {
             Map<String, String> map = Config.fromFile(activity.configPath);
             if (map != null) {
                 config.fromMap(map);
 //                System.out.println("读取的Host配置 :" + config);
                 config.updateView(view);
-                tips = "已重新加载";
+                tips = resources.getString(R.string.tips_reloaded);
             } else {
-                tips = "没有VPN配置文件！";
+                tips = resources.getString(R.string.tips_no_vpn_settings);
             }
         }
         Toast toast = Toast.makeText(activity, tips, Toast.LENGTH_SHORT);

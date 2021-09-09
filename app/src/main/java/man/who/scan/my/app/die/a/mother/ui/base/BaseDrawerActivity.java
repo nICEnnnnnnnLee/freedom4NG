@@ -15,7 +15,7 @@ public class BaseDrawerActivity extends BaseActivity implements View.OnClickList
 
     protected View fab_start, fab_stop;
     //    protected ImageView iv_add, iv_more, iv_delete, iv_save, iv_reload;
-    protected TextView tv_dns, tv_host, tv_dex;
+    protected TextView tv_dns, tv_host, tv_dex, tv_about;
     protected DrawerLayout mDrawerLayout;
 
     @Override
@@ -30,9 +30,11 @@ public class BaseDrawerActivity extends BaseActivity implements View.OnClickList
         tv_dns = findViewById(R.id.tv_dns);
         tv_host = findViewById(R.id.tv_host);
         tv_dex = findViewById(R.id.tv_dex);
+        tv_about = findViewById(R.id.tv_about);
         tv_dns.setOnClickListener(this);
         tv_host.setOnClickListener(this);
         tv_dex.setOnClickListener(this);
+        tv_about.setOnClickListener(this);
 
         mDrawerLayout = findViewById(R.id.drawerLayout);
     }
@@ -59,6 +61,13 @@ public class BaseDrawerActivity extends BaseActivity implements View.OnClickList
                 intent = new Intent(BaseDrawerActivity.this, FragmetActivity.class);
                 intent.putExtra("configPath", Global.HOST_FILE.getAbsolutePath());
                 intent.putExtra("configType", BaseConfig.DEX);
+                startActivity(intent);
+                break;
+            case R.id.tv_about:
+                mDrawerLayout.closeDrawers();
+                intent = new Intent(BaseDrawerActivity.this, FragmetActivity.class);
+                intent.putExtra("configPath", Global.HOST_FILE.getAbsolutePath());
+                intent.putExtra("configType", BaseConfig.ABOUT);
                 startActivity(intent);
                 break;
         }

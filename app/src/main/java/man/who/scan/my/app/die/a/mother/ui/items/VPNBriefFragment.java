@@ -2,6 +2,7 @@ package man.who.scan.my.app.die.a.mother.ui.items;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,6 +36,7 @@ public class VPNBriefFragment extends Fragment implements View.OnClickListener {
     String configPath, configName;
     int index;
     boolean isLast;
+    Resources resources;
 
     @Override
     public void setArguments(Bundle args) {
@@ -52,6 +54,7 @@ public class VPNBriefFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         activity = (MultiFragmetActivity) getActivity();
         toastHandler = new ToastHandler(activity);
+        resources = this.getResources();
     }
 
 
@@ -103,16 +106,16 @@ public class VPNBriefFragment extends Fragment implements View.OnClickListener {
                     try {
                         int code = TestUtil.testVPNConfig(config);
                         if (code == 101)
-                            msg.obj = "连接成功";
+                            msg.obj = resources.getString(R.string.tips_connect_ok);
                         else if (code == 403)
-                            msg.obj = "鉴权失败";
+                            msg.obj = resources.getString(R.string.tips_auth_failed);
                         else if (code == 200)
-                            msg.obj = "返回200 OK，很可能是path 设置错误";
+                            msg.obj = resources.getString(R.string.tips_200ok_path_err);
                         else
-                            msg.obj = "未知原因: " + code;
+                            msg.obj = resources.getString(R.string.tips_unknown_fail_reason) + code;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        msg.obj = "连接失败";
+                        msg.obj = resources.getString(R.string.tips_connect_failed);
                     }
                     toastHandler.sendMessage(msg);
                 }

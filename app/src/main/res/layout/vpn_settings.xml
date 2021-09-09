@@ -9,7 +9,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:gravity="start"
-        android:text="备注 Remark"
+        android:text="@string/vpn_setting_remark"
         android:textSize="12sp" />
 
     <EditText
@@ -28,7 +28,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="全部直连"
+        android:text="@string/direct_for_all"
         android:textSize="12sp" />
 
     <Spinner
@@ -45,7 +45,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:gravity="start"
-        android:text="本地TCP端口"
+        android:text="@string/local_tcp_port"
         android:textSize="12sp" />
 
     <EditText
@@ -63,7 +63,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="服务器TCP端口"
+        android:text="@string/server_tcp_port"
         android:textSize="12sp" />
 
     <EditText
@@ -80,7 +80,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="服务器地址"
+        android:text="@string/server_addr"
         android:textSize="12sp" />
 
     <EditText
@@ -97,7 +97,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="用户名"
+        android:text="@string/username"
         android:textSize="12sp" />
 
     <EditText
@@ -114,7 +114,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="密码"
+        android:text="@string/pwd"
         android:textSize="12sp" />
 
     <EditText
@@ -131,7 +131,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="盐值"
+        android:text="@string/salt"
         android:textSize="12sp" />
 
     <EditText
@@ -148,7 +148,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="使用SSL"
+        android:text="@string/use_ssl"
         android:textSize="12sp" />
 
     <Spinner
@@ -166,7 +166,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="验证SSL证书"
+        android:text="@string/verify_ssl"
         android:textSize="12sp" />
 
     <Spinner
@@ -253,7 +253,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="国内是否直连"
+        android:text="@string/direct_for_CN_ip"
         android:textSize="12sp" />
 
     <Spinner

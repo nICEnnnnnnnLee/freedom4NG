@@ -1,6 +1,7 @@
 package man.who.scan.my.app.die.a.mother.ui.items;
 
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +30,7 @@ public class DNSSettingsFragment extends Fragment implements View.OnClickListene
     EditText dohHost, doHDomain, dohPath;
     FragmetActivity activity;
     DNSConfig config;
+    Resources resources;
     private Handler toastHandler;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class DNSSettingsFragment extends Fragment implements View.OnClickListene
         toastHandler = new ToastHandler(activity);
         Map<String, String> map = Config.fromFile(activity.configPath);
         config = Global.dnsConfig;
+        resources = this.getResources();
         if (map != null) {
             config.fromMap(map);
         }
@@ -51,7 +54,7 @@ public class DNSSettingsFragment extends Fragment implements View.OnClickListene
         config.initView(view);
         config.updateView(view);
         TextView title = activity.findViewById(R.id.tv_title);
-        title.setText("DNS 设置");
+        title.setText(R.string.dns_settings);
         doHDomain = view.findViewById(R.id.dohDomain);
         dohHost = view.findViewById(R.id.dohHost);
         dohPath = view.findViewById(R.id.dohPath);
@@ -83,10 +86,10 @@ public class DNSSettingsFragment extends Fragment implements View.OnClickListene
                     try {
                         String ip = Inet4Address.getByName(domain).getHostAddress();
                         dohHost.setText(ip);
-                        msg.obj = "IP 查询成功";
+                        msg.obj = resources.getString(R.string.tips_ip_query_ok);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        msg.obj = "IP 查询失败： " + e;
+                        msg.obj = resources.getString(R.string.tips_ip_query_not_ok) + e;
                     }
                     toastHandler.sendMessage(msg);
                 }
@@ -104,29 +107,29 @@ public class DNSSettingsFragment extends Fragment implements View.OnClickListene
                         ).test();
                     } catch (Exception e) {
                         e.printStackTrace();
-                        msg.obj = "doh 无效： " + e;
+                        msg.obj = resources.getString(R.string.tips_doh_invalid) + e;
                     }
                     toastHandler.sendMessage(msg);
                 }
             }).start();
             return;
         }
-        String tips = "未处理的点击";
+        String tips = resources.getString(R.string.tips_undealt_click);
         if (Global.isRun) {
-            tips = "VPN 尚未关闭";
+            tips = resources.getString(R.string.tips_vpn_not_shut_down);
         } else if (v == imgSave) {
             config.getFromView(view);
 //            System.out.println("保存的DNS配置 :" + config);
             boolean result = Config.toFile(config.toMap(), activity.configPath);
-            tips = result ? "保存成功！" : "保存失败！";
+            tips = result ? resources.getString(R.string.tips_save_ok) : resources.getString(R.string.tips_save_not_ok);
         } else if (v == imgReload) {
             Map<String, String> map = Config.fromFile(activity.configPath);
             if (map != null) {
                 config.fromMap(map);
                 config.updateView(view);
-                tips = "已重新加载";
+                tips = resources.getString(R.string.tips_reloaded);
             } else {
-                tips = "没有DNS配置文件！";
+                tips = resources.getString(R.string.tips_no_dns_setting_file);
             }
         }
         Toast toast = Toast.makeText(activity, tips, Toast.LENGTH_SHORT);

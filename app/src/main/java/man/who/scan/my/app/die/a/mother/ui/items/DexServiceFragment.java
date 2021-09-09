@@ -23,7 +23,7 @@ public class DexServiceFragment extends BaseFragment implements View.OnClickList
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tv_title.setText("Dex 设置");
+        tv_title.setText(R.string.dex_settings);
         Global.dexConfig.fromMap(Config.fromFile(Global.DEX_CONFIG_FILE));
     }
 
@@ -57,7 +57,7 @@ public class DexServiceFragment extends BaseFragment implements View.OnClickList
                     System.setProperty("ninja.dex.path", et_dex_path.getText().toString());
                     Global.dexConfig.getFromView(view);
                     Config.toFile(Global.dexConfig.toMap(), Global.DEX_CONFIG_FILE);
-                    toast("载入成功！！");
+                    toast(resources.getString(R.string.tips_successfully_loaded));
                 } catch (Exception e) {
                     toast(e.toString());
                 }

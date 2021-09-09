@@ -10,6 +10,7 @@ import android.widget.EditText;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.model.BaseConfig;
 import man.who.scan.my.app.die.a.mother.ui.base.BaseFragment;
+import man.who.scan.my.app.die.a.mother.ui.items.AboutFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.DNSSettingsFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.DexServiceFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.HostSettingsFragment;
@@ -47,6 +48,10 @@ public class FragmetActivity extends Activity {
                 break;
             case BaseConfig.DEX:
                 frag = new DexServiceFragment();
+                transaction.add(R.id.base, frag);
+                break;
+            case BaseConfig.ABOUT:
+                frag = new AboutFragment();
                 transaction.add(R.id.base, frag);
                 break;
             default:

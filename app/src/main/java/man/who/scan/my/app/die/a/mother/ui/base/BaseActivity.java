@@ -1,6 +1,7 @@
 package man.who.scan.my.app.die.a.mother.ui.base;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ public class BaseActivity extends Activity {
     protected ImageView iv_add, iv_more, iv_delete, iv_save, iv_reload;
     protected TextView tv_title;
     protected LayoutInflater layoutInflater;
+    protected Resources resources;
 
     boolean isLoadDefault = true;
 
@@ -25,6 +27,9 @@ public class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         layoutInflater = LayoutInflater.from(this);
+        if(resources == null){
+            resources = this.getResources();
+        }
         if(isLoadDefault){
             setContentView(R.layout.base);
             onLayoutLoded();

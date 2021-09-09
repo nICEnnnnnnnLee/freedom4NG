@@ -44,7 +44,7 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configDir = Global.VPN_DIR;
-        tv_title.setText("配置列表");
+        tv_title.setText(R.string.settings);
         iv_more.setVisibility(View.VISIBLE);
         iv_add.setVisibility(View.VISIBLE);
         View[] onClicks = {iv_more, iv_add, tv_dns, tv_host, fab_start, fab_stop};
@@ -94,19 +94,19 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
                                         parent.mkdirs();
                                     try (FileWriter writer = new FileWriter(file)) {
                                         writer.write(decodedContent);
-                                        MultiFragmetActivity.this.toast("导入剪贴板数据成功");
+                                        MultiFragmetActivity.this.toast(resources.getString(R.string.tips_import_clipborad_ok));
                                         refreshView();
                                     } catch (Exception e) {
-                                        MultiFragmetActivity.this.toast("写入数据出错：" + e.toString());
+                                        MultiFragmetActivity.this.toast(resources.getString(R.string.tips_write_err) + e.toString());
                                     }
 
                                 } else
-                                    MultiFragmetActivity.this.toast("剪贴板数据好像不对哦");
+                                    MultiFragmetActivity.this.toast(resources.getString(R.string.tips_clipborad_err_data));
                             } catch (Exception e) {
-                                MultiFragmetActivity.this.toast("剪贴板数据好像不对哦");
+                                MultiFragmetActivity.this.toast(resources.getString(R.string.tips_clipborad_err_data));
                             }
                         } else {
-                            MultiFragmetActivity.this.toast("剪贴板里好像没有数据哦");
+                            MultiFragmetActivity.this.toast(resources.getString(R.string.tips_clipborad_no_data));
                         }
                         break;
                     default:
@@ -175,9 +175,9 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
                     File dstZip = new File(folder, name);
                     try {
                         ResourcesUtil.toZip(Global.ROOT_DIR, dstZip);
-                        this.toast("导出成功");
+                        this.toast(resources.getString(R.string.tips_export_ok));
                     } catch (Exception e) {
-                        this.toast("导出失败");
+                        this.toast(resources.getString(R.string.tips_export_not_ok));
                     }
                 }
                 break;
@@ -186,9 +186,9 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
                     String zipFile = data.getStringExtra("path");
                     try {
                         ResourcesUtil.unZip(new File(zipFile), Global.ROOT_DIR.getAbsolutePath());
-                        this.toast("导入成功，重启后生效");
+                        this.toast(resources.getString(R.string.tips_import_ok_need_reboot));
                     } catch (Exception e) {
-                        this.toast("导入失败");
+                        this.toast(resources.getString(R.string.tips_import_not_ok));
                     }
                 }
                 break;
@@ -208,15 +208,15 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
                 final View view = layoutInflater.inflate(R.layout.base_prompt_edit_text, null);//这里必须是final的
                 final EditText edit = (EditText) view.findViewById(R.id.editText);//获得输入框对象
                 new AlertDialog.Builder(MultiFragmetActivity.this)
-                        .setTitle("配置名称(备注)")//提示框标题
+                        .setTitle(resources.getString(R.string.setting_name_remark))//提示框标题
                         .setView(view)
-                        .setPositiveButton("确定",//提示框的两个按钮
+                        .setPositiveButton(resources.getString(R.string.OK),//提示框的两个按钮
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         File config = new File(configDir, edit.getText().toString());
                                         if (config.exists()) {
-                                            MultiFragmetActivity.this.toast("已经存在该文件");
+                                            MultiFragmetActivity.this.toast(resources.getString(R.string.tips_file_exists));
                                         } else {
                                             Intent intent = new Intent(MultiFragmetActivity.this, FragmetActivity.class);
                                             intent.putExtra("configPath", config.getAbsolutePath());
@@ -226,11 +226,11 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
 
                                     }
                                 })
-                        .setNegativeButton("取消", null).create().show();
+                        .setNegativeButton(resources.getString(R.string.CANCEL), null).create().show();
                 break;
             case R.id.fab_start:
                 if (Global.currentVPNConfigIndex < 0) {
-                    this.toast("尚未选择配置！！");
+                    this.toast(resources.getString(R.string.tips_setting_not_select));
                 } else {
                     Global.vpnConfig = frags.get(Global.currentVPNConfigIndex).config;
                     startVPN();

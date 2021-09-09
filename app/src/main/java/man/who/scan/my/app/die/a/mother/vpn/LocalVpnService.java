@@ -1,6 +1,10 @@
 package man.who.scan.my.app.die.a.mother.vpn;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.net.VpnService;
+import android.os.Build;
 import android.os.ParcelFileDescriptor;
 
 import java.io.FileInputStream;
@@ -8,7 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import androidx.core.app.NotificationCompat;
 import man.who.scan.my.app.die.a.mother.Global;
+import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.vpn.ip.CommonMethods;
 import man.who.scan.my.app.die.a.mother.vpn.ip.IPHeader;
 import man.who.scan.my.app.die.a.mother.vpn.ip.TCPHeader;
@@ -43,6 +49,10 @@ public class LocalVpnService extends VpnService implements Runnable {
     UDPServer udpServer;
 //    UDPServer2 udpServer2;
 
+    NotificationCompat.Builder notificationBuilder;
+    NotificationManager notificationManager;
+    private static final int NotificationID = 0x1314;
+    private static final String NotificationTAG = "freedom";
     boolean isClosed = false;
 
     public void stopVPN() {
@@ -68,6 +78,9 @@ public class LocalVpnService extends VpnService implements Runnable {
     @Override
     public void onDestroy() {
         super.onDestroy();
+//        notificationBuilder.setOngoing(false);
+//        notificationManager.notify(NotificationTAG, NotificationID, notificationBuilder.build());
+        notificationManager.cancel(NotificationTAG, NotificationID);
     }
 
     @Override
@@ -107,6 +120,17 @@ public class LocalVpnService extends VpnService implements Runnable {
         tcpServer.start();
         udpServer.start();
 //        udpServer2.start();
+        notificationBuilder = new NotificationCompat.Builder(this, this.getPackageName());
+        notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+        notificationBuilder.setContentTitle("Freedom");
+        notificationBuilder.setContentText("运行中");
+        notificationBuilder.setOngoing(true);
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(this.getPackageName(), NotificationTAG, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+        notificationManager.notify(NotificationTAG, NotificationID, notificationBuilder.build());
     }
 
     @Override

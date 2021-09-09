@@ -32,7 +32,7 @@ public class FileChooserActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         typeStr = getIntent().getStringExtra("type");
-        tv_title.setText("请选择路径");
+        tv_title.setText(resources.getString(R.string.please_select_path));
         showFolder(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), false);
 //        showFolder(getFilesDir(), false);
         if ("dir".equals(typeStr)) {
@@ -71,7 +71,7 @@ public class FileChooserActivity extends BaseActivity implements View.OnClickLis
         frag = new FileFragment();
         bundle = new Bundle();
         bundle.putInt("type", 1);
-        bundle.putString("display", "返回上一级目录");
+        bundle.putString("display", resources.getString(R.string.return_to_parent_folder));
         bundle.putString("file", folder.getParent());
         frag.setArguments(bundle);
         transaction.add(R.id.base, frag);

@@ -1,3 +1,111 @@
 <resources>
     <string name="app_name">Freedom</string>
+    <!-- HostSettingsFragment -->
+    <string name="host_settings_title">Host 设置</string>
+    <string name="tips_host_setings_saved">Host 文件已保存</string>
+    <string name="tips_host_save_not_ok">Host 保存失败</string>
+    <string name="tips_host_load_ok">Host 加载成功</string>
+    <string name="tips_host_load_not_ok">Host 读取失败</string>
+
+    <!-- VPNBriefFragment -->
+    <string name="tips_connect_ok">连接成功</string>
+    <string name="tips_auth_failed">鉴权失败</string>
+    <string name="tips_200ok_path_err">返回200 OK，很可能是path 设置错误</string>
+    <string name="tips_unknown_fail_reason">未知原因: </string>
+    <string name="tips_connect_failed">连接失败</string>
+
+    <!-- VPNSettingsFragment -->
+    <string name="vpn_settings">VPN 设置</string>
+    <string name="tips_undealt_click">未处理的点击</string>
+    <string name="tips_settings_copied">配置已经复制到剪贴板</string>
+    <string name="tips_setting_copy_err">复制配置出现错误</string>
+    <string name="tips_save_ok">保存成功</string>
+    <string name="tips_save_and_rename_ok">保存并重命名文件成功！</string>
+    <string name="tips_save_ok_rename_err">配置保存成功，但重命名失败</string>
+    <string name="tips_save_not_ok">保存失败！</string>
+    <string name="tips_delete_not_ok">删除失败！</string>
+    <string name="tips_reloaded">已重新加载</string>
+    <string name="tips_no_vpn_settings">没有VPN配置文件！</string>
+    <!-- MultiFragmetActivity -->
+    <string name="settings">配置列表</string>
+    <string name="tips_import_clipborad_ok">导入剪贴板数据成功</string>
+    <string name="tips_write_err">写入数据出错：</string>
+    <string name="tips_clipborad_err_data">剪贴板数据好像不对哦</string>
+    <string name="tips_clipborad_no_data">剪贴板里好像没有数据哦</string>
+    <string name="tips_export_ok">导出成功</string>
+    <string name="tips_export_not_ok">导出失败</string>
+    <string name="tips_import_ok_need_reboot">导入成功，重启后生效</string>
+    <string name="tips_import_not_ok">导入失败</string>
+    <string name="setting_name_remark">配置名称(备注)</string>
+    <string name="OK">确定</string>
+    <string name="tips_file_exists">已经存在该文件</string>
+    <string name="CANCEL">取消</string>
+    <string name="tips_setting_not_select">尚未选择配置！！</string>
+    <!-- FileChooserActivity -->
+    <string name="please_select_path">请选择路径</string>
+    <string name="return_to_parent_folder">返回上一级目录</string>
+    <!-- DNSSettingsFragment -->
+    <string name="dns_settings">DNS 设置</string>
+    <string name="tips_ip_query_ok">IP 查询成功</string>
+    <string name="tips_ip_query_not_ok">IP 查询失败：</string>
+    <string name="tips_doh_invalid">doh 无效： </string>
+    <string name="tips_vpn_not_shut_down">VPN 尚未关闭</string>
+    <string name="tips_no_dns_setting_file">没有DNS配置文件！</string>
+    <!-- AboutFragment -->
+    <string name="about">关于</string>
+    <!-- HostSettingsFragment -->
+    <string name="host_settings">Host 设置</string>
+    <!-- DexServiceFragment -->
+    <string name="dex_settings">Dex 设置</string>
+    <string name="tips_successfully_loaded">载入成功！！</string>
+
+    <!-- activity_main.xml -->
+    <string name="SAVE">保存</string>
+    <string name="RESET">重置</string>
+    <string name="host_protect" translatable="false">Host保护</string>
+    <string name="host_change" translatable="false">Host更改</string>
+
+    <!-- base_drawer.xml -->
+    <string name="drawer_title">Freedom</string>
+    <string name="drawer_dns_settings">DNS 设置</string>
+    <string name="drawer_host_settings">Host 设置</string>
+    <string name="drawer_dex">外部Dex</string>
+    <string name="drawer_about">关于</string>
+
+    <!-- base_menu.xml -->
+    <string name="export_all_to_zip">导出所有到压缩包</string>
+    <string name="import_all_from_zip">从压缩包导入配置</string>
+    <string name="import_vpn_from_clipboard">从剪贴板导入VPN</string>
+
+    <!-- dex_service.xml -->
+    <string name="dex_location">外部Dex包位置</string>
+    <string name="dex_main_class_name">入口类全称</string>
+    <string name="dex_select_path">选择dex路径</string>
+    <string name="dex_test_main_class">测试入口类</string>
+    <string name="dex_run_service">开启服务</string>
+    <string name="dex_stop_service">关闭服务</string>
+
+    <!-- host_settings.xml -->
+    <string name="host_settings_default_placeholder">请输入host记录，如：\n127.0.0.1 localhost \n行首添加#号可备注</string>
+
+    <!-- dns_settings.xml -->
+    <string name="use_dns_specified">是否自定义DNS</string>
+    <string name="use_host_specified">是否使用自定义Host</string>
+    <string name="use_doh">是否使用DNS over HTTPS</string>
+    <string name="query_ip_by_DoH_domain">根据DoH域名填写 DoH ip</string>
+    <string name="test_current_DoH_Settings">测试当前 DoH</string>
+
+    <!-- vpn_settings.xml -->
+    <string name="vpn_setting_remark">备注 Remark</string>
+    <string name="direct_for_all">全部直连</string>
+    <string name="local_tcp_port">本地TCP端口</string>
+    <string name="server_tcp_port">服务器TCP端口</string>
+    <string name="server_addr">服务器地址</string>
+    <string name="username">用户名</string>
+    <string name="pwd">密码</string>
+    <string name="salt">盐值</string>
+    <string name="use_ssl">使用SSL</string>
+    <string name="verify_ssl">验证SSL证书</string>
+    <string name="direct_for_CN_ip">国内是否直连</string>
+    <string name="tips_delete_ok">删除成功！</string>
 </resources>
