@@ -21,14 +21,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.core.content.ContextCompat;
 import man.who.scan.my.app.die.a.mother.MainActivity;
 import man.who.scan.my.app.die.a.mother.R;
+import man.who.scan.my.app.die.a.mother.ui.utils.CookieDao;
 import man.who.scan.my.app.die.a.mother.ui.utils.JavascriptInterface;
 import man.who.scan.my.app.die.a.mother.ui.utils.WebTools;
-import me.jingbin.web.ByWebTools;
+import man.who.scan.my.app.die.a.mother.ui.utils.model.Cookie;
 import me.jingbin.web.ByWebView;
 import me.jingbin.web.OnByWebClientCallback;
 import me.jingbin.web.OnTitleProgressCallback;
@@ -209,7 +212,49 @@ public class ByWebViewActivity extends Activity {
                 break;
             case R.id.actionbar_webview_copy_cookies:// 复制当前页面cookie
                 //byWebView.reload();
-                byWebView.getLoadJsHolder().loadJs("javascript:window.tomato_bridge.copy(document.cookie)");
+                try {
+//                    byWebView.getLoadJsHolder().loadJs("javascript:window.tomato_bridge.copy(document.cookie)");
+                    // 获取所有符合条件的cookie
+                    URL url = new URL(webView.getUrl());
+//                    URL url = new URL("https://github.com");
+                    String host = url.getHost().toLowerCase();
+                    String path = url.getPath();
+                    List<Cookie> cookies = CookieDao.getInstance().getAllMatchedCookies(host, path);
+                    StringBuilder sb = new StringBuilder();
+                    for (Cookie cookie : cookies) {
+                        sb.append(cookie.getName()).append("=").append(cookie.getValue()).append("; ");
+                    }
+                    WebTools.copy(this, sb.toString());
+                    Toast.makeText(this, "复制成功", Toast.LENGTH_LONG).show();
+//                    // 先获取所有保密的cookie
+//                    List<Cookie> cookies =  CookieDao.getInstance().getAllEncrypedCookies();
+//                    // 找出需要修改的cookie
+//                    String host = new URL(webView.getUrl()).getHost().toLowerCase();
+//                    List<Cookie> cookieNeedModify = new ArrayList<>(cookies.size());
+//                    for(Cookie cookie: cookies){
+//                        String hostKey = cookie.getHost_key();
+//                        if(hostKey.startsWith(".")){
+//                            hostKey = hostKey.substring(1);
+//                        }
+//                        if(host.endsWith(hostKey)){
+//                            cookieNeedModify.add(cookie);
+//                        }
+//                    }
+//                    System.out.println("不能被js获取到的cookie数量为： " + cookies.size());
+//                    System.out.println("当前域名为： " + host);
+//                    System.out.println("需要修改的cookie数量为： " + cookieNeedModify.size());
+//                    // 将is_httponly 置为0
+//                    int result = CookieDao.getInstance().updateCookiesHttpValue(cookieNeedModify, 0);
+////                    int result = CookieDao.getInstance().exposeAllCookies();
+//                    System.out.println("0受影响行数为： " + result);
+//                    // 复制cookie
+//                    byWebView.getLoadJsHolder().loadJs("javascript:window.tomato_bridge.copy(document.cookie)");
+//                    // 恢复设置
+//                    result = CookieDao.getInstance().updateCookiesHttpValue(cookieNeedModify, 1);
+//                    System.out.println("1受影响行数为： " + result);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 break;
@@ -270,9 +315,9 @@ public class ByWebViewActivity extends Activity {
 //            MainActivity.start(this);
 //        }
         finishAfterTransition();
-        if(mFromUrl == null || mFromUrl.startsWith("file")){
+        if (mFromUrl == null || mFromUrl.startsWith("file")) {
             this.startActivity(new Intent(this, MainActivity.class));
-        }else{
+        } else {
             loadUrl(this, "file:///android_asset/browser/index.html", "Tomato", 0, mUrl);
         }
     }
