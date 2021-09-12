@@ -145,7 +145,13 @@ x-requested-with: tomato/1.0
 				e.preventDefault();
 				var input = document.getElementById('kw');
 				console.log(input.value);
-				window.location = input.value;
+				if(input.value != ""){
+				    if(!input.value.startsWith("http") && input.value.indexOf("://") == -1){
+				        input.value = "https://" + input.value
+				    }
+				    window.location = input.value;
+				}
+
 				return false;
 			}
 
