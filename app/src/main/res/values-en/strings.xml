@@ -81,4 +81,20 @@
     <string name="tips_connect_failed">Connect failed</string>
     <string name="tips_unknown_fail_reason">"Unknown err: "</string>
     <string name="tips_connect_ok">Connect succeed</string>
+    <string name="tips_200ok_path_err">The server returns 200 OK, seems url path err</string>
+    <string name="drawer_browser">Browser</string>
+
+
+    <string name="action_update">update</string>
+    <string name="action_about">about</string>
+    <string name="action_share">share</string>
+    <string name="actionbar_search">search</string>
+    <string name="actionbar_more">more</string>
+    <string name="actionbar_webview_share">Share to</string>
+    <string name="actionbar_webview_cope">Copy the link</string>
+    <string name="actionbar_webview_copy_cookies">Copy the cookies</string>
+    <string name="actionbar_webview_open">Browser open</string>
+    <string name="actionbar_webview_refresh">Refresh the page</string>
+    <string name="actionbar_share">Share it with friends\(^o^)/~</string>
+    <string name="string_hit">Search or enter the url</string>
 </resources>

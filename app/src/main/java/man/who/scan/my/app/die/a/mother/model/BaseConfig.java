@@ -20,6 +20,7 @@ public class BaseConfig {
     final static public int HOST = 3;
     final static public int DEX = 4;
     final static public int ABOUT = 5;
+    final static public int BROWSER = 6;
 
     private static int getId(String id) {
         try {

@@ -70,6 +70,7 @@
     <string name="drawer_dns_settings">DNS 设置</string>
     <string name="drawer_host_settings">Host 设置</string>
     <string name="drawer_dex">外部Dex</string>
+    <string name="drawer_browser">浏览器</string>
     <string name="drawer_about">关于</string>
 
     <!-- base_menu.xml -->
@@ -108,4 +109,19 @@
     <string name="verify_ssl">验证SSL证书</string>
     <string name="direct_for_CN_ip">国内是否直连</string>
     <string name="tips_delete_ok">删除成功！</string>
+
+
+    <string name="action_update">更新</string>
+    <string name="action_about">关于</string>
+    <string name="action_share">分享</string>
+    <string name="actionbar_search">搜索</string>
+    <string name="actionbar_more">更多信息</string>
+    <string name="actionbar_webview_share">分享到</string>
+    <string name="actionbar_webview_cope">复制链接</string>
+    <string name="actionbar_webview_copy_cookies">复制Cookies</string>
+    <string name="actionbar_webview_open">浏览器打开</string>
+    <string name="actionbar_webview_refresh">刷新页面</string>
+    <string name="actionbar_share">分享给朋友\(^o^)/~</string>
+    <string name="string_hit">搜索或输入网址</string>
+    <string name="bt_open_url">打开网页</string>
 </resources>
