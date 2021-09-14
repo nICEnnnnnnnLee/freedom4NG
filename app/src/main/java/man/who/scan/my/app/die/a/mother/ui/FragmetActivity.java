@@ -55,7 +55,7 @@ public class FragmetActivity extends Activity {
                 transaction.add(R.id.base, frag);
                 break;
             case BaseConfig.BROWSER:
-                ByWebViewActivity.loadUrl(this, "file:///android_asset/browser/index.html", "Tomato", 0, null);
+                ByWebViewActivity.loadUrl(this, this.getResources().getString(R.string.browser_index_path), "Tomato", 0, null);
                 break;
             default:
                 break;

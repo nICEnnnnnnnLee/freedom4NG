@@ -124,4 +124,6 @@
     <string name="actionbar_share">分享给朋友\(^o^)/~</string>
     <string name="string_hit">搜索或输入网址</string>
     <string name="bt_open_url">打开网页</string>
+    <string name="browser_index_path">file:///android_asset/browser/index.html</string>
+    <string name="about_index_path">file:///android_asset/about/about.html</string>
 </resources>

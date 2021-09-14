@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -24,6 +26,7 @@ import android.widget.Toolbar;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.core.content.ContextCompat;
 import man.who.scan.my.app.die.a.mother.MainActivity;
@@ -64,6 +67,7 @@ public class ByWebViewActivity extends Activity {
     private WebView webView;
     private ByWebView byWebView;
     private TextView tvGunTitle;
+    private Resources resources;
     public Boolean allowThirdApp;
     public static String versionName;
     private static HashMap<String, String> headers;
@@ -81,6 +85,13 @@ public class ByWebViewActivity extends Activity {
         getIntentData();
         initTitle();
         getDataFromBrowser(getIntent());
+        resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        String lang = config.getLocales().toLanguageTags();
+        if(!lang.startsWith("zh")){
+            config.setLocale(Locale.ENGLISH);
+            resources.updateConfiguration(config, resources.getDisplayMetrics());
+        }
     }
 
     private void getIntentData() {
@@ -321,7 +332,7 @@ public class ByWebViewActivity extends Activity {
         if (mFromUrl == null || mFromUrl.startsWith("file")) {
             this.startActivity(new Intent(this, MainActivity.class));
         } else {
-            loadUrl(this, "file:///android_asset/browser/index.html", "Tomato", 0, mUrl);
+            loadUrl(this, resources.getString(R.string.browser_index_path), "Tomato", 0, mUrl);
         }
     }
 

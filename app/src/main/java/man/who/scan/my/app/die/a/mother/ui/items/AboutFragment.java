@@ -35,13 +35,12 @@ public class AboutFragment extends BaseFragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.about, container, false);
-        String htmlPath = "file:///android_asset/about/about.html";
+        String htmlPath = resources.getString(R.string.about_index_path);
         Configuration config = resources.getConfiguration();
         String lang = config.getLocales().toLanguageTags();
         if(!lang.startsWith("zh")){
             config.setLocale(Locale.ENGLISH);
             resources.updateConfiguration(config, resources.getDisplayMetrics());
-            htmlPath = "file:///android_asset/about/about_EN.html";
         }
 
         TextView title = activity.findViewById(R.id.tv_title);

@@ -97,4 +97,7 @@
     <string name="actionbar_webview_refresh">Refresh the page</string>
     <string name="actionbar_share">Share it with friends\(^o^)/~</string>
     <string name="string_hit">Search or enter the url</string>
+    <string name="bt_open_url">Open website</string>
+    <string name="about_index_path">file:///android_asset/about/about_EN.html</string>
+    <string name="browser_index_path">file:///android_asset/browser/index_EN.html</string>
 </resources>
