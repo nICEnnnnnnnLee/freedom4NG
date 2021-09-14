@@ -95,20 +95,20 @@ html,body {
 	background-color:#4662d9;
 }
 
-.header-settings{
+.settings{
 position:relative;
 display:block;
 margin:0 auto;
 max-width:655px;
 }
-.header-settings.tips{
+.settings.tips{
     margin: 10px auto 4px auto;
 }
-.header-settings button{
+.settings button{
     margin-left: 8px;
     width: 50px;
 }
-.header-settings textarea{
+.settings textarea{
     width: 95%;
     height: 150px;
     white-space: nowrap;
@@ -128,10 +128,18 @@ max-width:655px;
                 Go
             </button>
         </div>
-    </>
+    </form>
 </section>
-<div class="header-settings">
-    <div class="header-settings tips"><span>Header Settings:</span><button id="header-settings-reset">Reset</button><button id="header-settings-save">Save</button></div>
+<div class="settings">
+    <div class="settings tips">
+        <span>Allow third app urls:</span>
+        <input type="checkbox" id="allowThirdApp" checked="checked"/>
+    </div>
+    <div class="settings tips">
+        <span>Header Settings:</span>
+        <button id="header-settings-reset">Reset</button>
+        <button id="header-settings-save">Save</button>
+    </div>
 <textarea id="header-settings" >
 # Firefox PC
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/93.0
@@ -140,6 +148,7 @@ User-Agent: Mozilla/5.0 (Android 8.0.0; Mobile; rv:90.0) Gecko/90.0 Firefox/90.0
 x-requested-with: tomato/1.0
 </textarea>
     <script type="text/javascript">
+            // 访问网页
 			var btnGo = document.getElementById('search-submit');
 			btnGo.onclick = function(e) {
 				e.preventDefault();
@@ -154,22 +163,34 @@ x-requested-with: tomato/1.0
 
 				return false;
 			}
-
+            // 设置允许打开第三方app url
+            var chBoxAllowThirdApp = document.getElementById("allowThirdApp");
+            function saveAllowThirdApp(){
+                //console.log(chBoxAllowThirdApp.checked);
+                if(window.tomato_bridge){
+                    window.tomato_bridge.allThirdApp(chBoxAllowThirdApp.checked);
+				}
+            }
+            chBoxAllowThirdApp.onclick = saveAllowThirdApp;
+            saveAllowThirdApp();
+            // header 设置
 			var btnHeaderReset = document.getElementById('header-settings-reset');
 			var btnHeaderSave = document.getElementById('header-settings-save');
 			var txtHeaderSettings = document.getElementById('header-settings');
-            function reset() {
+            function reset(event) {
 				var headerSettings = window.localStorage.getItem('header-settings');
 				txtHeaderSettings.value = headerSettings;
 				if(window.tomato_bridge){
                     window.tomato_bridge.setHeaders(headerSettings);
 				}
+				return false;
 			}
-            function save() {
+            function save(event) {
 				window.localStorage.setItem('header-settings', txtHeaderSettings.value);
 				if(window.tomato_bridge){
                     window.tomato_bridge.setHeaders(txtHeaderSettings.value);
 				}
+				return false;
 			}
 			btnHeaderReset.onclick = reset;
 			btnHeaderSave.onclick = save;

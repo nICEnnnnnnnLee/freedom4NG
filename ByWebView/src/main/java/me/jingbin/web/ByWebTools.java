@@ -77,24 +77,24 @@ public class ByWebTools {
 
             // 会唤起手机里有的App，如果不想被唤起，复制出来然后添加屏蔽即可
             boolean isJump = true;
-            if (backUrl.contains("tbopen:")// 淘宝
-                    || backUrl.contains("openapp.jdmobile:")// 京东
-                    || backUrl.contains("jdmobile:")//京东
-                    || backUrl.contains("zhihu:")// 知乎
-                    || backUrl.contains("vipshop:")//
-                    || backUrl.contains("youku:")//优酷
-                    || backUrl.contains("uclink:")// UC
-                    || backUrl.contains("ucbrowser:")// UC
-                    || backUrl.contains("newsapp:")//
-                    || backUrl.contains("sinaweibo:")// 新浪微博
-                    || backUrl.contains("suning:")//
-                    || backUrl.contains("pinduoduo:")// 拼多多
-                    || backUrl.contains("qtt:")//
-                    || backUrl.contains("baiduboxapp:")// 百度
-                    || backUrl.contains("baiduhaokan:")// 百度看看
-            ) {
-                isJump = false;
-            }
+//            if (backUrl.contains("tbopen:")// 淘宝
+//                    || backUrl.contains("openapp.jdmobile:")// 京东
+//                    || backUrl.contains("jdmobile:")//京东
+//                    || backUrl.contains("zhihu:")// 知乎
+//                    || backUrl.contains("vipshop:")//
+//                    || backUrl.contains("youku:")//优酷
+//                    || backUrl.contains("uclink:")// UC
+//                    || backUrl.contains("ucbrowser:")// UC
+//                    || backUrl.contains("newsapp:")//
+//                    || backUrl.contains("sinaweibo:")// 新浪微博
+//                    || backUrl.contains("suning:")//
+//                    || backUrl.contains("pinduoduo:")// 拼多多
+//                    || backUrl.contains("qtt:")//
+//                    || backUrl.contains("baiduboxapp:")// 百度
+//                    || backUrl.contains("baiduhaokan:")// 百度看看
+//            ) {
+//                isJump = false;
+//            }
             if (isJump) {
                 startActivity(activity, backUrl);
             }

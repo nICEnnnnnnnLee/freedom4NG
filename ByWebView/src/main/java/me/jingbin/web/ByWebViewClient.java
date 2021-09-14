@@ -85,41 +85,34 @@ public class ByWebViewClient extends WebViewClient {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-//        String url = request.getUrl().toString();
-//        if (TextUtils.isEmpty(url)) {
-//            return false;
-//        }
-//        if (onByWebClientCallback != null) {
-//            return onByWebClientCallback.isOpenThirdApp(url);
-//        } else {
-//            Activity mActivity = this.mActivityWeakReference.get();
-//            if (mActivity != null && !mActivity.isFinishing()) {
-//                return ByWebTools.handleThirdApp(mActivity, url);
-//            } else {
-//                return !url.startsWith("http:") && !url.startsWith("https:");
-//            }
-//        }
         String url = request.getUrl().toString();
-        mByWebView.loadUrl(url);
+        boolean isOpenThirdApp = true;
+        if (onByWebClientCallback != null) {
+            isOpenThirdApp =  onByWebClientCallback.isOpenThirdApp(url);
+        }
+        if(isOpenThirdApp){
+            Activity mActivity = this.mActivityWeakReference.get();
+            isOpenThirdApp = ByWebTools.handleThirdApp(mActivity, url);
+        }
+        if(!isOpenThirdApp){
+            mByWebView.loadUrl(url);
+        }
         return true;
     }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//        if (TextUtils.isEmpty(url)) {
-//            return false;
-//        }
-//        if (onByWebClientCallback != null) {
-//            return onByWebClientCallback.isOpenThirdApp(url);
-//        } else {
-//            Activity mActivity = this.mActivityWeakReference.get();
-//            if (mActivity != null && !mActivity.isFinishing()) {
-//                return ByWebTools.handleThirdApp(mActivity, url);
-//            } else {
-//                return !url.startsWith("http:") && !url.startsWith("https:");
-//            }
-//        }
-        mByWebView.loadUrl(url);
+        boolean isOpenThirdApp = true;
+        if (onByWebClientCallback != null) {
+            isOpenThirdApp =  onByWebClientCallback.isOpenThirdApp(url);
+        }
+        if(isOpenThirdApp){
+            Activity mActivity = this.mActivityWeakReference.get();
+            isOpenThirdApp = ByWebTools.handleThirdApp(mActivity, url);
+        }
+        if(!isOpenThirdApp){
+            mByWebView.loadUrl(url);
+        }
         return true;
     }
 

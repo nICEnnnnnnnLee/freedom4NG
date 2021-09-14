@@ -36,6 +36,11 @@ public class JavascriptInterface {
     }
 
     @android.webkit.JavascriptInterface
+    public void allThirdApp(String boolStr) {
+        byWebViewActivity.allowThirdApp = "true".equalsIgnoreCase(boolStr);
+    }
+
+    @android.webkit.JavascriptInterface
     public void copy(String content) {
         //ByWebViewActivity.loadUrl(context, url, "Tomato", 0, "index");
         final String content2Copy = content;

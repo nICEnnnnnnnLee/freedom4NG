@@ -32,6 +32,7 @@ import man.who.scan.my.app.die.a.mother.ui.utils.CookieDao;
 import man.who.scan.my.app.die.a.mother.ui.utils.JavascriptInterface;
 import man.who.scan.my.app.die.a.mother.ui.utils.WebTools;
 import man.who.scan.my.app.die.a.mother.ui.utils.model.Cookie;
+import me.jingbin.web.ByWebTools;
 import me.jingbin.web.ByWebView;
 import me.jingbin.web.OnByWebClientCallback;
 import me.jingbin.web.OnTitleProgressCallback;
@@ -63,6 +64,7 @@ public class ByWebViewActivity extends Activity {
     private WebView webView;
     private ByWebView byWebView;
     private TextView tvGunTitle;
+    public Boolean allowThirdApp;
     public static String versionName;
     private static HashMap<String, String> headers;
 
@@ -98,6 +100,7 @@ public class ByWebViewActivity extends Activity {
             headers.put("x-requested-with", "tomato." + versionName);
             headers.put("user-agent", "ninja");  // user-agent 小写生效
         }
+        allowThirdApp = true;
         byWebView = ByWebView
                 .with(this)
                 .setWebParent(container, new LinearLayout.LayoutParams(-1, -1))
@@ -180,7 +183,7 @@ public class ByWebViewActivity extends Activity {
             // 处理三方链接
             //Log.e("---url", url);
             //return ByWebTools.handleThirdApp(ByWebViewActivity.this, url);
-            return false;
+            return allowThirdApp && ByWebTools.handleThirdApp(ByWebViewActivity.this, url);
         }
     };
 
