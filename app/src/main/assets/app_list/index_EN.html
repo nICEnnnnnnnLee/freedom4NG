@@ -80,7 +80,7 @@
     </style>
 </head>
 <body>
-<div>
+<div id="content">
     <div class="center">
         <div class="settings center">
             <button id="settings-reset">Reset</button>
@@ -197,13 +197,16 @@
     var search = function(){
         var searchTxt = txtSearch.value;
         console.log(searchTxt);
-        document.querySelectorAll(".package").forEach((node)=>{
+        var newFrag = document.createDocumentFragment();
+        newFrag.appendChild(document.getElementById('package'));
+        newFrag.querySelectorAll(".package").forEach((node)=>{
             if(node.innerText.indexOf(searchTxt) == -1){
                 node.classList.add('hide');
             }else{
                 node.classList.remove('hide');
             }
         });
+        document.getElementById('content').appendChild(newFrag);
         return false;
     }
     var btnReset = document.getElementById('settings-reset');
