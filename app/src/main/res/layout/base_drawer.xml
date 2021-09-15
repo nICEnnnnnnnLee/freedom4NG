@@ -62,6 +62,17 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/tv_applist"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:text="@string/app_list_title"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
             <TextView
                 android:background="@android:color/darker_gray"
                 android:layout_margin="5dp"

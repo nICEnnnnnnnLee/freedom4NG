@@ -126,4 +126,8 @@
     <string name="bt_open_url">打开网页</string>
     <string name="browser_index_path">file:///android_asset/browser/index.html</string>
     <string name="about_index_path">file:///android_asset/about/about.html</string>
+
+    <!--  app list -->
+    <string name="app_list_title">分应用代理</string>
+    <string name="app_list_index_path">file:///android_asset/app_list/index.html</string>
 </resources>

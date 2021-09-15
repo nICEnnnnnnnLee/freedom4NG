@@ -29,6 +29,8 @@ public class MainActivity extends MultiFragmetActivity {
             Global.dnsConfig.fromMap(map);
         Config.fromHostFile(Global.hostConfig, Global.HOST_FILE);
 
+        Global.vpnGlobalConfig.load();
+
         if(resources == null){
             resources = this.getResources();
         }

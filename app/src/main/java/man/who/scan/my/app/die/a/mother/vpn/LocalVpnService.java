@@ -3,6 +3,8 @@ package man.who.scan.my.app.die.a.mother.vpn;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
@@ -11,10 +13,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.List;
 
 import androidx.core.app.NotificationCompat;
 import man.who.scan.my.app.die.a.mother.Global;
 import man.who.scan.my.app.die.a.mother.R;
+import man.who.scan.my.app.die.a.mother.model.BaseConfig;
 import man.who.scan.my.app.die.a.mother.vpn.ip.CommonMethods;
 import man.who.scan.my.app.die.a.mother.vpn.ip.IPHeader;
 import man.who.scan.my.app.die.a.mother.vpn.ip.TCPHeader;
@@ -23,6 +27,7 @@ import man.who.scan.my.app.die.a.mother.vpn.server.TCPServer;
 import man.who.scan.my.app.die.a.mother.vpn.server.UDPServer;
 import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSession;
 import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSessionManager;
+import man.who.scan.my.app.die.a.mother.vpn.util.AppManagerUtil;
 import man.who.scan.my.app.die.a.mother.vpn.util.DNSUtil;
 
 public class LocalVpnService extends VpnService implements Runnable {
@@ -98,11 +103,34 @@ public class LocalVpnService extends VpnService implements Runnable {
         builder.addAddress(localIP, 32);
         builder.setSession("Freedom");
         builder.addRoute("0.0.0.0", 0);
+
+        try {
+            switch (Global.vpnGlobalConfig.mode){
+                case BaseConfig.MODE_WHITE_LIST:
+                    builder.addAllowedApplication(this.getPackageName());
+                    for(String pkg: Global.vpnGlobalConfig.whitelist){
+                        builder.addAllowedApplication(pkg);
+                    }
+                    break;
+                case BaseConfig.MODE_BLACK_LIST:
+                    for(String pkg: Global.vpnGlobalConfig.blacklist){
+                        builder.addDisallowedApplication(pkg);
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("\n\n\n\n\n\n\n创建黑白名单时出现错误!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n\n\n\n\n\n\n\n");
+        }
         if (Global.dnsConfig.useCunstomDNS && !Global.dnsConfig.dns1.isEmpty()) {
             builder.addDnsServer(Global.dnsConfig.dns1);
+            // 在builder.addRoute("0.0.0.0", 0);的情况下没必要再加重复路由
+            //builder.addRoute(Global.dnsConfig.dns1, 32);
         } else {
             for (String dns : DNSUtil.defaultDNS(this)) {
                 builder.addDnsServer(dns);
+                // 在builder.addRoute("0.0.0.0", 0);的情况下没必要再加重复路由
+                //builder.addRoute(dns, 32);
             }
         }
         fileDescriptor = builder.establish();
