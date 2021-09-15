@@ -27,7 +27,11 @@
            font-size: 16px;
         }
         .center.settings{
-            width: 100px;
+            width: 180px;
+        }
+        .center.settings button{
+            margin-left: 15px;
+            width: 64px;
         }
         #searchStr{
             width: 190px;
@@ -44,6 +48,11 @@
         .pkg-label{
             font-size: 16px;
             margin: 5px 2px 5px;
+            white-space: nowrap;  /*强制span不换行*/
+            display: inline-block;  /*将span当做块级元素对待*/
+            width: 100%;  /*限制宽度*/
+            overflow: hidden;  /*超出宽度部分隐藏*/
+            text-overflow: ellipsis;  /*超出部分以点号代替*/
         }
         .pkg-name{
             font-size: 12px;
@@ -61,9 +70,12 @@
         }
         .package li.appInfo{
             margin-left: 5px;
-            width: 250px;
+            width: 260px;
             height: 60px;
             overflow: hidden;
+        }
+        .hide {
+            display: none
         }
     </style>
 </head>
@@ -81,8 +93,10 @@
         <input type="radio" name="mode" id="mode_2" value="2"><span>黑名单</span>
     </div>
     <div class="center">
+        <form>
         <input type="text" id="searchStr">
         <button id="search">搜索</button>
+        </form>
     </div>
     <div id="package">
     <ul class="package ">
@@ -91,7 +105,7 @@
         </li>
         <li class="appInfo ">
             <div><p class="pkg-label ">app名称</p></div>
-            <div><p class="pkg-name " pkg="pkg">man.who.scan.my.app.die.a.mother</p></div>
+            <div><p class="pkg-name ">com.android.test</p></div>
         </li>
     </ul>
     <ul class="package ">
@@ -99,8 +113,8 @@
             <input type="checkbox" checked="checked"/>
         </li>
         <li class="appInfo ">
-            <div><p class="pkg-label ">版本</p></div>
-            <div><p class="pkg-name " pkg="pkg">man.who.scan.my.app.die.a.mother</p></div>
+            <div><p class="pkg-label ">app名称</p></div>
+            <div><p class="pkg-name ">com.android.test</p></div>
         </li>
     </ul>
     <ul class="package ">
@@ -108,8 +122,8 @@
             <input type="checkbox" checked="checked"/>
         </li>
         <li class="appInfo ">
-            <div><p class="pkg-label ">版本</p></div>
-            <div><p class="pkg-name " pkg="pkg">man.who.scan.my.app.die.a.mother</p></div>
+            <div><p class="pkg-label ">app名称</p></div>
+            <div><p class="pkg-name ">com.android.test</p></div>
         </li>
     </ul>
     </div>
@@ -118,7 +132,21 @@
 </body>
 </html>
 
+
 <script type="text/javascript">
+    if(!window.android){
+        window.android = {
+            "getAppMode" : () =>{
+                return '1'
+            },
+            "setApplist" : () =>{
+            },
+            "getApplist" : () =>{
+                var temp = [{"appName":"com.android.cts.priv.ctsshim","packageName":"com.android.cts.priv.ctsshim","isSysApp":true,"isInWhiteList":false,"isInBlackList":false}, {"appName":"玩机技巧","packageName":"com.huawei.android.tips","isSysApp":true,"isInWhiteList":true,"isInBlackList":false}, {"appName":"全局复制","packageName":"com.camel.corp.universalcopy","isSysApp":false,"isInWhiteList":true,"isInBlackList":false}, {"appName":"Android Services Library","packageName":"com.google.android.ext.services","isSysApp":true,"isInWhiteList":false,"isInBlackList":false}, {"appName":"银联可信服务安全组件","packageName":"com.unionpay.tsmservice","isSysApp":false,"isInWhiteList":false,"isInBlackList":false}];
+                return JSON.stringify(temp)
+            },
+        }
+    };
     var reload = function (){
         console.log('------------------reload');
         // 模式
@@ -128,6 +156,17 @@
         var package = document.getElementById('package');
         var appListStr = window.android.getApplist();
         var appList = JSON.parse(appListStr);
+        appList.sort((a,b) => {
+            var a_in_list = (mode == '1' && a.isInWhiteList) || (mode == '2' && a.isInBlackList);
+            var b_in_list = (mode == '1' && b.isInWhiteList) || (mode == '2' && b.isInBlackList);
+            if(a_in_list == b_in_list)
+                return 0;
+            else if(a_in_list)
+                return -1;
+            else
+                return 1;
+            return a.age-b.age;
+        });
         var html = "";
         appList.forEach((app) =>{
             var node = '<ul class="package "><li class="isSelect "><input type="checkbox" ';
@@ -135,9 +174,9 @@
                 node += 'checked="checked"'
             node += '/> </li><li class="appInfo "><div><p class="pkg-label ">';
             if(app.isSysApp)
-                node += '*';
+                node += '**';
             node += app.appName;
-            node += '</p></div><div><p class="pkg-name " pkg="pkg">';
+            node += ' </p></div><div><p class="pkg-name ">';
             node += app.packageName;
             node += '</p></div></li></ul>';
             html += node;
@@ -145,7 +184,6 @@
         package.innerHTML = html;
     }
     var save = function (){
-        console.log('------------------save');
         var list = [];
         var mode = document.querySelector("input[name='mode']:checked").value;
         list.push(mode);
@@ -156,12 +194,27 @@
         });
         window.android.setApplist(list.toString());
     }
+    var search = function(){
+        var searchTxt = txtSearch.value;
+        console.log(searchTxt);
+        document.querySelectorAll(".package").forEach((node)=>{
+            if(node.innerText.indexOf(searchTxt) == -1){
+                node.classList.add('hide');
+            }else{
+                node.classList.remove('hide');
+            }
+        });
+        return false;
+    }
     var btnReset = document.getElementById('settings-reset');
     var btnSave = document.getElementById('settings-save');
+    var btnSearch = document.getElementById('search');
+    var txtSearch = document.getElementById('searchStr');
     var radioMode1 = document.getElementById('mode_1');
     var radioMode2 = document.getElementById('mode_2');
 	btnReset.onclick = reload;
 	btnSave.onclick = save;
+	btnSearch.onclick = search;
 
 	reload();
 

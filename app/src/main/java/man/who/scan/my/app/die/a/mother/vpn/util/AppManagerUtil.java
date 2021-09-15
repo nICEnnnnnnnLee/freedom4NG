@@ -17,10 +17,12 @@ public class AppManagerUtil {
     public static List<AppInfo> loadNetworkAppList(Context context) {
         List<AppInfo> apps = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
-        List<PackageInfo> list = packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
+        List<PackageInfo> list = packageManager.getInstalledPackages(0);
+//        List<PackageInfo> list = packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
         for (PackageInfo pkg : list) {
             String pkgName = pkg.packageName;
-            if (hasInternetPermission(pkg) && !pkgName.equals("android")){
+            if (!pkgName.equals("android")){
+//            if (hasInternetPermission(pkg) && !pkgName.equals("android")){
                 String pkgLabel = pkg.applicationInfo.loadLabel(packageManager).toString();
                 boolean isSysApp = (pkg.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0;
                 AppInfo appInfo = new AppInfo(pkgLabel, pkgName, isSysApp);
