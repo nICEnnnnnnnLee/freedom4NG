@@ -95,7 +95,9 @@ public class ByWebViewClient extends WebViewClient {
             isOpenThirdApp = ByWebTools.handleThirdApp(mActivity, url);
         }
         if(!isOpenThirdApp){
-            mByWebView.loadUrl(url);
+            if(url.startsWith("http")){
+                mByWebView.loadUrl(url);
+            }
         }
         return true;
     }
@@ -111,7 +113,9 @@ public class ByWebViewClient extends WebViewClient {
             isOpenThirdApp = ByWebTools.handleThirdApp(mActivity, url);
         }
         if(!isOpenThirdApp){
-            mByWebView.loadUrl(url);
+            if(url.startsWith("http")){
+                mByWebView.loadUrl(url);
+            }
         }
         return true;
     }
