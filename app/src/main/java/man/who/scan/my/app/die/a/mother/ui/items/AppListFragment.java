@@ -1,8 +1,8 @@
 package man.who.scan.my.app.die.a.mother.ui.items;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -43,7 +43,7 @@ public class AppListFragment extends BaseFragment {
         String htmlPath = resources.getString(R.string.app_list_index_path);
         Configuration config = resources.getConfiguration();
         String lang = config.getLocales().toLanguageTags();
-        if(!lang.startsWith("zh")){
+        if (!lang.startsWith("zh")) {
             config.setLocale(Locale.ENGLISH);
             resources.updateConfiguration(config, resources.getDisplayMetrics());
         }
@@ -60,29 +60,55 @@ public class AppListFragment extends BaseFragment {
     }
 
     @JavascriptInterface
+    public String getClipboard() {
+        ClipboardManager cm = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = cm.getPrimaryClip();
+        if (clipData.getItemCount() > 0) {
+            try {
+                String content = clipData.getItemAt(0).getText().toString();
+                boolean isValid = content.charAt(0) >= '0' && content.charAt(0) <= '2';
+                if (isValid && content.contains(",")) {
+                    toast(resources.getString(R.string.tips_import_clipborad_ok));
+                    return content;
+                }
+
+            } catch (Exception e) {
+            }
+        }
+        toast(resources.getString(R.string.tips_clipborad_err_data));
+        return "";
+    }
+
+    @JavascriptInterface
+    public void setClipboard(String data) {
+        ClipboardManager cm = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData mClipData = ClipData.newPlainText("Label", data);
+        cm.setPrimaryClip(mClipData);
+        toast(resources.getString(R.string.tips_settings_copied));
+    }
+
+    @JavascriptInterface
     public String getAppMode() {
-//        System.out.println("=========getAppMode");
         return "" + Global.vpnGlobalConfig.mode;
     }
 
     @JavascriptInterface
     public void setApplist(String list) {
-//        System.out.println("=========");
         String[] lists = list.split(",");
         int mode = Integer.parseInt(lists[0]);
         Global.vpnGlobalConfig.mode = mode;
-        switch (mode){
+        switch (mode) {
             case BaseConfig.MODE_DEFAULT:
                 break;
             case BaseConfig.MODE_WHITE_LIST:
                 Global.vpnGlobalConfig.getEmptyWhiteList();
-                for(int i=1; i<lists.length; i++){
+                for (int i = 1; i < lists.length; i++) {
                     Global.vpnGlobalConfig.whitelist.add(lists[i]);
                 }
                 break;
             case BaseConfig.MODE_BLACK_LIST:
                 Global.vpnGlobalConfig.getEmptyBlackList();
-                for(int i=1; i<lists.length; i++){
+                for (int i = 1; i < lists.length; i++) {
                     Global.vpnGlobalConfig.blacklist.add(lists[i]);
                 }
                 break;
@@ -93,18 +119,16 @@ public class AppListFragment extends BaseFragment {
 
     @JavascriptInterface
     public String getApplist() {
-//        System.out.println("=========getApplist");
         Context context = this.getContext();
         List<AppInfo> apps = AppManagerUtil.loadNetworkAppList(context);
-        for(AppInfo app: apps){
+        for (AppInfo app : apps) {
             String pkgName = app.getPackageName();
-            if(Global.vpnGlobalConfig.mode == BaseConfig.MODE_BLACK_LIST && Global.vpnGlobalConfig.blacklist.contains(pkgName)){
+            if (Global.vpnGlobalConfig.mode == BaseConfig.MODE_BLACK_LIST && Global.vpnGlobalConfig.blacklist.contains(pkgName)) {
                 app.setInBlackList(true);
-            }else if(Global.vpnGlobalConfig.mode == BaseConfig.MODE_WHITE_LIST && Global.vpnGlobalConfig.whitelist.contains(pkgName)){
+            } else if (Global.vpnGlobalConfig.mode == BaseConfig.MODE_WHITE_LIST && Global.vpnGlobalConfig.whitelist.contains(pkgName)) {
                 app.setInWhiteList(true);
             }
         }
-//        System.out.println(apps);
         return apps.toString();
     }
 }
