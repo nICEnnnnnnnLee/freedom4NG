@@ -97,7 +97,12 @@ public class BackendAuthHandler extends ChannelInboundHandlerAdapter {
             String body = header.substring(index + 4);
             if (checkHeader(headerStr)) {
                 ctx.pipeline().remove(this);
-                ctxOfFrontHandler.read();
+                //ctxOfFrontHandler.read();
+                ChannelInboundHandler handler = (ChannelInboundHandler) ctxOfFrontHandler.handler();
+                try {
+                    handler.userEventTriggered(ctxOfFrontHandler, "write first Msg");
+                } catch (Exception e) {
+                }
                 byte content[] = body.getBytes();
                 if (content.length > 0) {
                     ByteBuf newMsg = ctx.alloc().buffer(content.length);
