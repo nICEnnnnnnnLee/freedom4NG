@@ -12,6 +12,7 @@ import android.os.ParcelFileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSession;
 import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSessionManager;
 import man.who.scan.my.app.die.a.mother.vpn.util.AppManagerUtil;
 import man.who.scan.my.app.die.a.mother.vpn.util.DNSUtil;
+import man.who.scan.my.app.die.a.mother.vpn.util.EngineRhino;
 
 public class LocalVpnService extends VpnService implements Runnable {
 
@@ -50,6 +52,7 @@ public class LocalVpnService extends VpnService implements Runnable {
     public int intLocalIP = CommonMethods.ipStringToInt(localIP);
     public String uniqueIp = "222.222.222.222";
     public int intUniqueIp = CommonMethods.ipStringToInt(uniqueIp);
+    public EngineRhino pac;
     TCPServer tcpServer;
     UDPServer udpServer;
 //    UDPServer2 udpServer2;
@@ -78,6 +81,7 @@ public class LocalVpnService extends VpnService implements Runnable {
         }
         stopSelf();
         isClosed = true;
+        pac = null;
     }
 
     @Override
@@ -132,6 +136,13 @@ public class LocalVpnService extends VpnService implements Runnable {
                 // 在builder.addRoute("0.0.0.0", 0);的情况下没必要再加重复路由
                 //builder.addRoute(dns, 32);
             }
+        }
+        try{
+            InputStreamReader isr = new InputStreamReader(this.getResources().openRawResource(R.raw.gfw_pac));
+            pac = new EngineRhino(isr);
+        }catch (Exception e){
+            e.printStackTrace();
+            pac = null;
         }
         fileDescriptor = builder.establish();
         vpnInput = new FileInputStream(fileDescriptor.getFileDescriptor());

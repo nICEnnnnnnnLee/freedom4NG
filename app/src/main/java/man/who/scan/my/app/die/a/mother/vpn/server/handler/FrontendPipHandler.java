@@ -63,20 +63,36 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
 //        System.out.println("--------------------FrontendPipHandler channelRead");
         if (isFirstRead) {
             final Channel inboundChannel = ctx.channel();
-            ByteBuf buf = (ByteBuf) msg;
-            String sni = SNIHelper.getSNIOrNull(buf.array(), buf.readableBytes());
-            System.out.println("----------sni:" + sni);
-
             InetSocketAddress insocket = (InetSocketAddress) inboundChannel.remoteAddress();
             NATSession session = NATSessionManager.getSession("tcp", insocket.getPort());
+            String sni = null;
+            if(Global.vpnConfig.detectSNI || Global.vpnConfig.usePAC){ // pac 必须要使用流量探测
+                ByteBuf buf = (ByteBuf) msg;
+                sni = SNIHelper.getSNIOrNull(buf.array(), buf.readableBytes());
+            }
             if (session == null) {
                 inboundChannel.close();
                 return;
             }
 
+            Boolean isDirectResult = null;
+            if(Global.vpnConfig.directAll){
+                isDirectResult = true;
+            }
+            // 使用流量探测 + PAC分析
+            if(isDirectResult == null && Global.vpnConfig.usePAC && LocalVpnService.Instance.pac != null){
+                if(sni != null){
+                    isDirectResult = LocalVpnService.Instance.pac.isDirect("/", sni);
+                    System.out.printf("sni: %s, direct: %s\n", sni, isDirectResult);
+                }
+            }
+            // 使用GeoIP
+            if(isDirectResult == null){
+                isDirectResult = Global.vpnConfig.directIfCN && CNIPRecognizer.isCNIP(session.RemoteHost);
+            }
 //        System.out.printf("-- remote (%s: %s) SSL: %s--\n", Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort, Global.vpnConfig.useSSL);
             ChannelFuture f = null;
-            if (Global.vpnConfig.directAll || (Global.vpnConfig.directIfCN && CNIPRecognizer.isCNIP(session.RemoteHost))) {
+            if (isDirectResult) {
                 Bootstrap b = new Bootstrap();
                 b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
                         .handler(new BackendInitializer(inboundChannel))
@@ -84,9 +100,10 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
                 f = b.connect(session.RemoteHost, session.RemotePort);
                 addListner(f, inboundChannel, true, ctx);
             } else {
+                String remoteHost = Global.vpnConfig.transeportSNI2Remote && sni != null ? sni: session.RemoteHost;
                 Bootstrap b = new Bootstrap();
                 b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
-                        .handler(new BackendInitializer(inboundChannel, session.RemoteHost, "" + session.RemotePort, ctx))
+                        .handler(new BackendInitializer(inboundChannel, remoteHost, "" + session.RemotePort, ctx))
                         .option(ChannelOption.AUTO_READ, false);
                 f = b.connect(Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort);
                 addListner(f, inboundChannel, false, ctx);

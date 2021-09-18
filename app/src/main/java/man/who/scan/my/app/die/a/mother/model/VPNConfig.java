@@ -18,5 +18,8 @@ public class VPNConfig extends BaseConfig {
     public String port = "443";
     public String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0";
 
+    public boolean usePAC = true;
+    public boolean transeportSNI2Remote = true;
+    public boolean detectSNI = true;
     public boolean directIfCN = true;
 }

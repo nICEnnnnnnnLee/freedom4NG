@@ -102,7 +102,7 @@ try {
         }
     }
 
-    public boolean isDirect(String url, String host) {
+    public Boolean isDirect(String url, String host) {
         try {
             Context cx = Context.enter();
             Object functionArgs[] = { url, host};
@@ -112,7 +112,7 @@ try {
             return scriptResult.startsWith("DIRECT");
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }finally {
             Context.exit();
         }
