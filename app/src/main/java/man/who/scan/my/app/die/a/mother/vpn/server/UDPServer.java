@@ -133,6 +133,10 @@ public class UDPServer extends Thread {
                 Question question = dnsPacket.Questions[0];
                 String domain = question.Domain;
                 String ipAddr = Global.hostConfig.get(domain);
+                if(ipAddr == null && Global.hostTableRuntime != null){
+                    // 这个host表是PAC解析的时候必须要维护的，范围更大。
+                    ipAddr = Global.hostTableRuntime.get(domain);
+                }
                 // 如果查询的域名在host当中，直接构造回复
                 if (ipAddr != null) {
                     dnsPacket.Header.setResourceCount((short) 1);
