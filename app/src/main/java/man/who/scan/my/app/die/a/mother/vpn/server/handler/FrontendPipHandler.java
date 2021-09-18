@@ -19,6 +19,7 @@ import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSession;
 import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSessionManager;
 import man.who.scan.my.app.die.a.mother.vpn.util.CNIPRecognizer;
 import man.who.scan.my.app.die.a.mother.vpn.util.CommonUtil;
+import man.who.scan.my.app.die.a.mother.vpn.util.SNIHelper;
 
 public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
 
@@ -47,14 +48,15 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
                     .handler(new BackendInitializer(inboundChannel))
                     .option(ChannelOption.AUTO_READ, false);
             f = b.connect(session.RemoteHost, session.RemotePort);
+            addListner(f, inboundChannel, true);
         } else {
             Bootstrap b = new Bootstrap();
             b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
-                    .handler(new BackendInitializer(inboundChannel, session.RemoteHost, "" + session.RemotePort))
+                    .handler(new BackendInitializer(inboundChannel, session.RemoteHost, "" + session.RemotePort, ctx))
                     .option(ChannelOption.AUTO_READ, false);
             f = b.connect(Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort);
+            addListner(f, inboundChannel, false);
         }
-        addListner(f, inboundChannel);
         Socket socket = CommonUtil.socketOf(f.channel());
         if (socket != null) {
             LocalVpnService.Instance.protect(socket);
@@ -66,15 +68,17 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
 
     }
 
-    private void addListner(ChannelFuture f, Channel in0) {
+    private void addListner(ChannelFuture f, Channel in0, boolean isDirect) {
         final Channel inboundChannel = in0;
+        final boolean isDirectf = isDirect;
         f.addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture future) {
                 if (future.isSuccess()) {
 //					System.out.println("----连接成功");
                     outboundChannel = future.channel();
-                    inboundChannel.read();
+                    if(isDirectf)
+                        inboundChannel.read();
                 } else {
                     inboundChannel.close();
                 }
@@ -86,6 +90,9 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(final ChannelHandlerContext ctx, Object msg) {
 //        System.out.println("-- local server channelRead --");
         if (outboundChannel != null && outboundChannel.isActive()) {
+            ByteBuf buf = (ByteBuf)msg;
+            String sni = SNIHelper.getSNIOrNull(buf.array(), buf.readableBytes());
+            System.out.println("----------sni:" + sni);
             outboundChannel.writeAndFlush(msg).addListener(new ChannelFutureListener() {
                 @Override
                 public void operationComplete(ChannelFuture future) {
