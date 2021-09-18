@@ -8,7 +8,9 @@ import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
+import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,6 +23,7 @@ import androidx.core.app.NotificationCompat;
 import man.who.scan.my.app.die.a.mother.Global;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.model.BaseConfig;
+import man.who.scan.my.app.die.a.mother.ui.base.ToastHandler;
 import man.who.scan.my.app.die.a.mother.vpn.ip.CommonMethods;
 import man.who.scan.my.app.die.a.mother.vpn.ip.IPHeader;
 import man.who.scan.my.app.die.a.mother.vpn.ip.TCPHeader;
@@ -140,11 +143,21 @@ public class LocalVpnService extends VpnService implements Runnable {
             }
         }
         try{
-            InputStreamReader isr = new InputStreamReader(this.getResources().openRawResource(R.raw.gfw_pac));
+            File pacFile = new File(Global.vpnConfig.pacPath);
+            InputStreamReader isr = null;
+            if(pacFile.exists())
+                isr = new InputStreamReader(new FileInputStream(pacFile));
+            else{
+                if(Global.vpnConfig.pacPath.length()>1)// * or empty is designed for default
+                    ToastHandler.show(this, "PAC path is not right.");
+                isr = new InputStreamReader(this.getResources().openRawResource(R.raw.gfw_pac));
+            }
+
             pac = new EngineRhino(isr);
             Global.hostTableRuntime = new ConcurrentHashMap<>();
         }catch (Exception e){
             e.printStackTrace();
+            ToastHandler.show(this, "PAC file parse error.");
             pac = null;
         }
         fileDescriptor = builder.establish();

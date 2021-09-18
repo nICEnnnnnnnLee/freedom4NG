@@ -265,6 +265,34 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="30dp" />
 
+    <LinearLayout
+        android:baselineAligned="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="start"
+            android:text="@string/pacPath"
+            android:textSize="12sp" />
+        <Button
+            android:textAllCaps="false"
+            android:id="@+id/btnSelectPacPath"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:textSize="8sp"
+            android:text="..." />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/pacPath"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
