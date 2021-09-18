@@ -1,10 +1,39 @@
 package man.who.scan.my.app.die.a.mother.vpn.util;
 
 import java.nio.charset.Charset;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SNIHelper {
 
+    private static Pattern pattern;
+    public static String getHostOrNull(byte[] data, int dataLen) {
+        if (data[0] >= 'A' && data[0] <= 'Z'
+                && data[1] >= 'A' && data[1] <= 'Z'
+                && data[2] >= 'A' && data[2] <= 'Z'
+        ) {
+            String http_header = new String(data, 0, dataLen);
+            if(http_header.startsWith("CONNECT"))
+                return null;
+            if(pattern == null)
+                pattern = Pattern.compile("Host *: *([^: \r\n]+)", Pattern.CASE_INSENSITIVE);
+            Matcher m = pattern.matcher(http_header);
+            if(m.find()) {
+                return m.group(1);
+            }
+        }
+        return null;
+    }
+
     public static String getSNIOrNull(byte[] data, int dataLen) {
+        String result = getSNIOrNull_(data, dataLen);
+        if(result != null)
+            return result;
+        else
+            return getHostOrNull(data, dataLen);
+    }
+
+    public static String getSNIOrNull_(byte[] data, int dataLen) {
         /**
          struct {
          ContentType type; 			1字节
