@@ -14,7 +14,7 @@ import man.who.scan.my.app.die.a.mother.model.AppInfo;
 
 public class AppManagerUtil {
 
-    public static List<AppInfo> loadNetworkAppList(Context context) {
+    public static List<AppInfo> loadNetworkAppList(Context context, boolean getAppName) {
         List<AppInfo> apps = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
         List<PackageInfo> list = packageManager.getInstalledPackages(0);
@@ -23,7 +23,7 @@ public class AppManagerUtil {
             String pkgName = pkg.packageName;
             if (!pkgName.equals("android")){
 //            if (hasInternetPermission(pkg) && !pkgName.equals("android")){
-                String pkgLabel = pkg.applicationInfo.loadLabel(packageManager).toString();
+                String pkgLabel = getAppName? pkg.applicationInfo.loadLabel(packageManager).toString() : "";
                 boolean isSysApp = (pkg.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0;
                 AppInfo appInfo = new AppInfo(pkgLabel, pkgName, isSysApp);
 //                System.out.println(appInfo);
@@ -33,6 +33,14 @@ public class AppManagerUtil {
         return apps;
     }
 
+    public static String getAppName(Context context, String pkgName){
+        PackageManager pm = context.getPackageManager();
+        try{
+            return pm.getApplicationLabel(pm.getApplicationInfo(pkgName,PackageManager.GET_META_DATA)).toString();
+        }catch (Exception e){
+            return pkgName;
+        }
+    }
     private static boolean hasInternetPermission(PackageInfo pkg) {
         if(pkg.permissions == null)
             return true;

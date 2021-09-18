@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -53,6 +54,13 @@ public class AppListFragment extends BaseFragment {
         wb_app_list = (WebView) view.findViewById(R.id.wb_about);
         // 启用javascript
         wb_app_list.getSettings().setJavaScriptEnabled(true);
+        WebSettings ws = wb_app_list.getSettings();
+//        String appCachePath = this.getContext().getCacheDir().getAbsolutePath();
+//        ws.setAppCachePath(appCachePath);
+        ws.setAllowFileAccess(true);
+        ws.setAppCacheEnabled(true);
+        ws.setDatabaseEnabled(true);
+        ws.setDomStorageEnabled(true);
         // 从assets目录下面的加载html
         wb_app_list.loadUrl(htmlPath);
         wb_app_list.addJavascriptInterface(AppListFragment.this, "android");
@@ -118,9 +126,10 @@ public class AppListFragment extends BaseFragment {
 
 
     @JavascriptInterface
-    public String getApplist() {
+    public String getApplist(String isNotFirstRun) {
+        boolean isNotFirstTime = "true".equals(isNotFirstRun);
         Context context = this.getContext();
-        List<AppInfo> apps = AppManagerUtil.loadNetworkAppList(context);
+        List<AppInfo> apps = AppManagerUtil.loadNetworkAppList(context, !isNotFirstTime);
         for (AppInfo app : apps) {
             String pkgName = app.getPackageName();
             if (Global.vpnGlobalConfig.mode == BaseConfig.MODE_BLACK_LIST && Global.vpnGlobalConfig.blacklist.contains(pkgName)) {
@@ -130,5 +139,9 @@ public class AppListFragment extends BaseFragment {
             }
         }
         return apps.toString();
+    }
+    @JavascriptInterface
+    public String getAppName(String pkgName) {
+        return  AppManagerUtil.getAppName(this.getContext(), pkgName);
     }
 }

@@ -1,5 +1,10 @@
 var waiting = document.getElementById("waiting");
 waiting.style.height = (window.screen.height - waiting.offsetTop -150) + "px";
+
+var isNotFirstRun = localStorage.getItem("isNotFirstRun");
+if(!isNotFirstRun)
+    localStorage.setItem("isNotFirstRun", true);
+
 if(!window.android){
     window.android = {
         "getAppMode" : () =>{
@@ -14,9 +19,12 @@ if(!window.android){
         "setApplist" : (data) =>{
             console.log("已经设置Applist: " + data);
         },
-        "getApplist" : () =>{
+        "getApplist" : (a) =>{
             var temp = [{"appName":"com.android.cts.priv.ctsshim","packageName":"com.android.cts.priv.ctsshim","isSysApp":true,"isInWhiteList":false,"isInBlackList":false}, {"appName":"玩机技巧","packageName":"com.huawei.android.tips","isSysApp":true,"isInWhiteList":true,"isInBlackList":false}, {"appName":"全局复制","packageName":"com.camel.corp.universalcopy","isSysApp":false,"isInWhiteList":true,"isInBlackList":false}, {"appName":"Android Services Library","packageName":"com.google.android.ext.services","isSysApp":true,"isInWhiteList":false,"isInBlackList":false}, {"appName":"银联可信服务安全组件","packageName":"com.unionpay.tsmservice","isSysApp":false,"isInWhiteList":false,"isInBlackList":false}];
             return JSON.stringify(temp)
+        },
+        "getAppName" : (pkgName) =>{
+            return "这是一个APP名称";
         },
     }
 };
@@ -131,11 +139,23 @@ var save = () =>{
     window.android.setApplist(list.toString());
 }
 var reload = () =>{
-    console.log('------------------reload');
     // 获取模式包信息
     var mode = window.android.getAppMode();
-    var appListStr = window.android.getApplist();
+    var appListStr = window.android.getApplist(isNotFirstRun);
     var appList = JSON.parse(appListStr);
+    appList.forEach((app, index)=>{
+        if(isNotFirstRun){ // 查询包名
+            var appName = localStorage.getItem("pkg_" + app.packageName);
+            if(!appName){
+                console.log("仍然需要查询: " + app.packageName);
+                appName = window.android.getAppName(app.packageName);
+                localStorage.setItem("pkg_" + app.packageName, appName);
+            }
+            app.appName = appName;
+        }else{
+            localStorage.setItem("pkg_" + app.packageName, app.appName);
+        }
+    });
     loadByContent(mode, appList);
 }
 var import_settings = () =>{
