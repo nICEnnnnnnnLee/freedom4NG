@@ -36,6 +36,7 @@ public class Global {
     final public static DexConfig dexConfig = new DexConfig();
     final public static VPNGlobalConfig vpnGlobalConfig = new VPNGlobalConfig();
     final public static HashMap<String, String> hostConfig = new HashMap<>();
+    public static ConcurrentHashMap<String, String> hostTableRuntime;
 
 
     final public static ConcurrentHashMap<String, String> cookies = new ConcurrentHashMap<>();

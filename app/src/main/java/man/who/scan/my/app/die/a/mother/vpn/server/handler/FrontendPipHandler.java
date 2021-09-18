@@ -82,8 +82,11 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
             // 使用流量探测 + PAC分析
             if(isDirectResult == null && Global.vpnConfig.usePAC && LocalVpnService.Instance.pac != null){
                 if(sni != null){
+                    Global.hostTableRuntime.putIfAbsent(sni, session.RemoteHost);
                     isDirectResult = LocalVpnService.Instance.pac.isDirect("/", sni);
-                    System.out.printf("sni: %s, direct: %s\n", sni, isDirectResult);
+//                    System.out.printf("sni: %s, direct: %s\n", sni, isDirectResult);
+                }else{
+                    isDirectResult = LocalVpnService.Instance.pac.isDirect("/", session.RemoteHost);
                 }
             }
             // 使用GeoIP

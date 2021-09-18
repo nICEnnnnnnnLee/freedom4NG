@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import androidx.core.app.NotificationCompat;
 import man.who.scan.my.app.die.a.mother.Global;
@@ -82,6 +83,7 @@ public class LocalVpnService extends VpnService implements Runnable {
         stopSelf();
         isClosed = true;
         pac = null;
+        Global.hostTableRuntime = null;
     }
 
     @Override
@@ -140,6 +142,7 @@ public class LocalVpnService extends VpnService implements Runnable {
         try{
             InputStreamReader isr = new InputStreamReader(this.getResources().openRawResource(R.raw.gfw_pac));
             pac = new EngineRhino(isr);
+            Global.hostTableRuntime = new ConcurrentHashMap<>();
         }catch (Exception e){
             e.printStackTrace();
             pac = null;
