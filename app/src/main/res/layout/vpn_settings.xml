@@ -253,6 +253,60 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
+        android:text="@string/use_PAC"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/usePAC"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="start"
+        android:text="@string/use_sni_detect"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/detectSNI"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="start"
+        android:text="@string/send_sni_instead_ip"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/transeportSNI2Remote"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="start"
         android:text="@string/direct_for_CN_ip"
         android:textSize="12sp" />
 

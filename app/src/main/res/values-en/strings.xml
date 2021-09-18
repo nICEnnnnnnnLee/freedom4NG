@@ -13,7 +13,10 @@
     <string name="dex_settings">Dex Settings</string>
     <string name="dex_stop_service">Stop service</string>
     <string name="dex_test_main_class">Test main class</string>
-    <string name="direct_for_CN_ip">Direct for CN ip?</string>
+    <string name="direct_for_CN_ip">Direct for CN ip(Not effective if PAC enabled)?</string>
+    <string name="use_PAC">Enable PAC(SNI detect auto effect if enabled)?</string>
+    <string name="use_sni_detect">Enable SNI detect</string>
+    <string name="send_sni_instead_ip">Send SNI to remote instead of IP</string>
     <string name="direct_for_all">Direct for all ip?</string>
     <string name="dns_settings">DNS Settings</string>
     <string name="drawer_about">About</string>
