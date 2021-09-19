@@ -143,20 +143,21 @@ public class LocalVpnService extends VpnService implements Runnable {
             }
         }
         try{
-            File pacFile = new File(Global.vpnConfig.pacPath);
-            InputStreamReader isr = null;
-            if(pacFile.exists())
-                isr = new InputStreamReader(new FileInputStream(pacFile));
-            else{
-                if(Global.vpnConfig.pacPath.length()>1)// * or empty is designed for default
-                    ToastHandler.show(this, "PAC path is not right.");
-                isr = new InputStreamReader(this.getResources().openRawResource(R.raw.gfw_pac));
-            }
+            if(Global.vpnConfig.usePAC){
+                File pacFile = new File(Global.vpnConfig.pacPath);
+                InputStreamReader isr = null;
+                if(pacFile.exists())
+                    isr = new InputStreamReader(new FileInputStream(pacFile));
+                else{
+                    if(Global.vpnConfig.pacPath.length()>1)// * or empty is designed for default
+                        ToastHandler.show(this, "PAC path is not right.");
+                    isr = new InputStreamReader(this.getResources().openRawResource(R.raw.gfw_pac));
+                }
 
-            pac = new EngineRhino(isr);
-            Global.hostTableRuntime = new ConcurrentHashMap<>();
+                pac = new EngineRhino(isr);
+                Global.hostTableRuntime = new ConcurrentHashMap<>();
+            }
         }catch (Exception e){
-            e.printStackTrace();
             ToastHandler.show(this, "PAC file parse error.");
             pac = null;
         }
