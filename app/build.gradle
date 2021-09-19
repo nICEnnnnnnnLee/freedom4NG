@@ -1,4 +1,14 @@
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
+
+def getCurrentTime() {
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+    return df.format(Calendar.getInstance(Locale.CHINA).getTime())
+}
+
+def currentTime = getCurrentTime();
 
 Properties props = new Properties()
 props.load(new FileInputStream(file("signing.properties")))
@@ -26,9 +36,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            buildConfigField("String", "apkBuildTime", "\"${currentTime}\"")
         }
         debug{
             signingConfig signingConfigs.release
+            buildConfigField("String", "apkBuildTime", "\"${currentTime}\"")
         }
     }
 }

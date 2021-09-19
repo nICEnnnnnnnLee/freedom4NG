@@ -44,6 +44,9 @@
     <p class="name content-left">版本</p>
     <p class="value content-left" id="version">Unkown</p>
 
+    <p class="name content-left">编译时间</p>
+    <p class="value content-left" id="buildTime">Unkown</p>
+
     <p class="name content-left">作者</p>
     <p class="value content-left"><a href="https://github.com/nICEnnnnnnnLee">nICEnnnnnnnLee</a>
     </p>
@@ -104,6 +107,8 @@
 <script type="text/javascript">
     var version = document.getElementById('version');
     version.innerHTML = window.android.getVersionName();
+    var buildTime = document.getElementById('buildTime');
+    buildTime.innerHTML = window.android.getBuildTime();
 </script>
 </body>
 </html>

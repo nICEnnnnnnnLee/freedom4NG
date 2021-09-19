@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import man.who.scan.my.app.die.a.mother.BuildConfig;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
 import man.who.scan.my.app.die.a.mother.ui.base.BaseFragment;
@@ -55,7 +56,6 @@ public class AboutFragment extends BaseFragment {
         return view;
     }
 
-    //由于安全原因 需要加 @JavascriptInterface
     @JavascriptInterface
     public String getVersionName() {
         Context context = this.getContext();
@@ -67,5 +67,10 @@ public class AboutFragment extends BaseFragment {
             e.printStackTrace();
             return "Unknown";
         }
+    }
+
+    @JavascriptInterface
+    public String getBuildTime() {
+        return BuildConfig.apkBuildTime;
     }
 }
