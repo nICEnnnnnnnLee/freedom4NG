@@ -107,9 +107,9 @@
     <string name="salt">盐值</string>
     <string name="use_ssl">使用SSL</string>
     <string name="verify_ssl">验证SSL证书</string>
-    <string name="direct_for_CN_ip">国内IP是否直连(使用PAC时可能失效)</string>
-    <string name="use_PAC">使用PAC(生效时自动开启流量探测)</string>
-    <string name="pacPath">PAC文件位置：</string>
+    <string name="direct_for_CN_ip">国内IP是否直连(使用GeoDomain时可能失效)</string>
+    <string name="use_GeoDomain">使用GeoDomain(生效时自动开启流量探测)</string>
+    <string name="gfwPath">GFW文件位置：</string>
     <string name="use_sni_detect">开启流量探测</string>
     <string name="send_sni_instead_ip">将SNI而不是IP发送到远端</string>
     <string name="tips_delete_ok">删除成功！</string>

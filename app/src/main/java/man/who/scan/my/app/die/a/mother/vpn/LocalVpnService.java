@@ -3,20 +3,16 @@ package man.who.scan.my.app.die.a.mother.vpn;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import androidx.core.app.NotificationCompat;
@@ -32,9 +28,8 @@ import man.who.scan.my.app.die.a.mother.vpn.server.TCPServer;
 import man.who.scan.my.app.die.a.mother.vpn.server.UDPServer;
 import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSession;
 import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSessionManager;
-import man.who.scan.my.app.die.a.mother.vpn.util.AppManagerUtil;
 import man.who.scan.my.app.die.a.mother.vpn.util.DNSUtil;
-import man.who.scan.my.app.die.a.mother.vpn.util.EngineRhino;
+import man.who.scan.my.app.die.a.mother.vpn.util.GeoDomainUtil;
 
 public class LocalVpnService extends VpnService implements Runnable {
 
@@ -56,7 +51,7 @@ public class LocalVpnService extends VpnService implements Runnable {
     public int intLocalIP = CommonMethods.ipStringToInt(localIP);
     public String uniqueIp = "222.222.222.222";
     public int intUniqueIp = CommonMethods.ipStringToInt(uniqueIp);
-    public EngineRhino pac;
+    public GeoDomainUtil geoDomain;
     TCPServer tcpServer;
     UDPServer udpServer;
 //    UDPServer2 udpServer2;
@@ -85,7 +80,7 @@ public class LocalVpnService extends VpnService implements Runnable {
         }
         stopSelf();
         isClosed = true;
-        pac = null;
+        geoDomain = null;
         Global.hostTableRuntime = null;
     }
 
@@ -114,15 +109,15 @@ public class LocalVpnService extends VpnService implements Runnable {
         builder.addRoute("0.0.0.0", 0);
 
         try {
-            switch (Global.vpnGlobalConfig.mode){
+            switch (Global.vpnGlobalConfig.mode) {
                 case BaseConfig.MODE_WHITE_LIST:
                     builder.addAllowedApplication(this.getPackageName());
-                    for(String pkg: Global.vpnGlobalConfig.whitelist){
+                    for (String pkg : Global.vpnGlobalConfig.whitelist) {
                         builder.addAllowedApplication(pkg);
                     }
                     break;
                 case BaseConfig.MODE_BLACK_LIST:
-                    for(String pkg: Global.vpnGlobalConfig.blacklist){
+                    for (String pkg : Global.vpnGlobalConfig.blacklist) {
                         builder.addDisallowedApplication(pkg);
                     }
                     break;
@@ -142,24 +137,24 @@ public class LocalVpnService extends VpnService implements Runnable {
                 //builder.addRoute(dns, 32);
             }
         }
-        try{
-            if(Global.vpnConfig.usePAC){
-                File pacFile = new File(Global.vpnConfig.pacPath);
-                InputStreamReader isr = null;
-                if(pacFile.exists())
-                    isr = new InputStreamReader(new FileInputStream(pacFile));
-                else{
-                    if(Global.vpnConfig.pacPath.length()>1)// * or empty is designed for default
-                        ToastHandler.show(this, "PAC path is not right.");
-                    isr = new InputStreamReader(this.getResources().openRawResource(R.raw.gfw_pac));
+        try {
+            if (Global.vpnConfig.useGeoDomain) {
+                File gfwFile = new File(Global.vpnConfig.gfwPath);
+                InputStream isr = null;
+                if (gfwFile.exists())
+                    isr = (new FileInputStream(gfwFile));
+                else {
+                    if (Global.vpnConfig.gfwPath.length() > 1)// * or empty is designed for default
+                        ToastHandler.show(this, "GFW path is not right.");
+                    isr = this.getResources().openRawResource(R.raw.gfwlist);
                 }
-
-                pac = new EngineRhino(isr);
+                geoDomain = new GeoDomainUtil(isr,
+                        this.getResources().openRawResource(R.raw.direct_domains));
                 Global.hostTableRuntime = new ConcurrentHashMap<>();
             }
-        }catch (Exception e){
-            ToastHandler.show(this, "PAC file parse error.");
-            pac = null;
+        } catch (Exception e) {
+            ToastHandler.show(this, "Gfw file parse error.");
+            geoDomain = null;
         }
         fileDescriptor = builder.establish();
         vpnInput = new FileInputStream(fileDescriptor.getFileDescriptor());
@@ -182,7 +177,7 @@ public class LocalVpnService extends VpnService implements Runnable {
         notificationBuilder.setContentText("运行中");
         notificationBuilder.setOngoing(true);
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(this.getPackageName(), NotificationTAG, NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }

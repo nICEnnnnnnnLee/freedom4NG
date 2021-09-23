@@ -253,11 +253,11 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="@string/use_PAC"
+        android:text="@string/use_GeoDomain"
         android:textSize="12sp" />
 
     <Spinner
-        android:id="@+id/usePAC"
+        android:id="@+id/useGeoDomain"
         android:layout_width="fill_parent"
         android:layout_height="20dp"
         android:layout_marginLeft="10dp"
@@ -275,7 +275,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="start"
-            android:text="@string/pacPath"
+            android:text="@string/gfwPath"
             android:textSize="12sp" />
         <Button
             android:textAllCaps="false"
@@ -287,7 +287,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/pacPath"
+        android:id="@+id/gfwPath"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

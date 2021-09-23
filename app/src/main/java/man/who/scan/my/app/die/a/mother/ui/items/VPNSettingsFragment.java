@@ -148,9 +148,9 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
         switch (requestCode) {
             case SELECT_FILE:
                 if (resultCode == RESULT_OK) {
-                    String pac = data.getStringExtra("path");
-                    TextView tvPacPath = this.getView().findViewById(R.id.pacPath);
-                    tvPacPath.setText(pac);
+                    String gfw_path = data.getStringExtra("path");
+                    TextView tvGfwPath = this.getView().findViewById(R.id.gfwPath);
+                    tvGfwPath.setText(gfw_path);
                 }
                 break;
         }

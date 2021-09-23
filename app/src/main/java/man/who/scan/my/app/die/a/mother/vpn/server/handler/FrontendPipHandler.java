@@ -66,7 +66,7 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
             InetSocketAddress insocket = (InetSocketAddress) inboundChannel.remoteAddress();
             NATSession session = NATSessionManager.getSession("tcp", insocket.getPort());
             String sni = null;
-            if(Global.vpnConfig.detectSNI || Global.vpnConfig.usePAC){ // pac 必须要使用流量探测
+            if(Global.vpnConfig.detectSNI || Global.vpnConfig.useGeoDomain){ // GeoDomain 必须要使用流量探测
                 ByteBuf buf = (ByteBuf) msg;
                 sni = SNIHelper.getSNIOrNull(buf.array(), buf.readableBytes());
             }
@@ -80,13 +80,13 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
                 isDirectResult = true;
             }
             // 使用流量探测 + PAC分析
-            if(isDirectResult == null && Global.vpnConfig.usePAC && LocalVpnService.Instance.pac != null){
+            if(isDirectResult == null && Global.vpnConfig.useGeoDomain && LocalVpnService.Instance.geoDomain != null){
                 if(sni != null){
                     Global.hostTableRuntime.putIfAbsent(sni, session.RemoteHost);
-                    isDirectResult = LocalVpnService.Instance.pac.isDirect("/", sni);
+                    isDirectResult = LocalVpnService.Instance.geoDomain.isDirect(sni);
 //                    System.out.printf("sni: %s, direct: %s\n", sni, isDirectResult);
                 }else{
-                    isDirectResult = LocalVpnService.Instance.pac.isDirect("/", session.RemoteHost);
+                    isDirectResult = LocalVpnService.Instance.geoDomain.isDirect(session.RemoteHost);
                 }
             }
             // 使用GeoIP
