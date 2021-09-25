@@ -17,7 +17,7 @@
     <Spinner
         android:id="@+id/useCustomDNS"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"></Spinner>
@@ -35,7 +35,7 @@
     <Spinner
         android:id="@+id/useHost"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"></Spinner>
@@ -74,7 +74,7 @@
     <Spinner
         android:id="@+id/useDoH"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"></Spinner>

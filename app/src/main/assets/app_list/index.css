@@ -32,7 +32,7 @@ li {
     min-width:95%;
     max-width:300px;
     width: 98%;
-    height:60px;
+    height:70px;
     margin: 0 auto;
     border-bottom: 2px solid gray;
 }
@@ -52,7 +52,7 @@ li {
 }
 .package li.isSelect{
     width: 20px;
-    height: 60px;
+    height: 70px;
     overflow: hidden;
 }
 .package li.isSelect input{
@@ -62,9 +62,13 @@ li {
 .package li.appInfo{
     margin-left: 5px;
     width: 260px;
-    height: 60px;
+    height: 70px;
     overflow: hidden;
 }
 .hide {
     display: none
+}
+.center input[type='radio']{
+    width: 12px;
+    height: 12px
 }

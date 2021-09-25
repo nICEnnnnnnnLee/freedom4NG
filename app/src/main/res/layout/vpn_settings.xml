@@ -36,7 +36,7 @@
     <Spinner
         android:id="@+id/directAll"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"></Spinner>
@@ -168,7 +168,7 @@
     <Spinner
         android:id="@+id/useSSL"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp" />
@@ -186,7 +186,7 @@
     <Spinner
         android:id="@+id/verifySSL"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp" />
@@ -281,7 +281,7 @@
     <Spinner
         android:id="@+id/useGeoDomain"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
@@ -329,7 +329,7 @@
     <Spinner
         android:id="@+id/detectSNI"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
@@ -347,7 +347,7 @@
     <Spinner
         android:id="@+id/transportSNI2Remote"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
@@ -366,7 +366,7 @@
     <Spinner
         android:id="@+id/directIfCN"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
@@ -384,7 +384,7 @@
     <Spinner
         android:id="@+id/exportHostCacheAfterServiceStop"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"

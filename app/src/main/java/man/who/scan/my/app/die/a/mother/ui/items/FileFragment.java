@@ -49,15 +49,15 @@ public class FileFragment extends Fragment implements View.OnClickListener {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         switch (type) {
             case 0:
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-                textView.setHeight(50);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+//                textView.setHeight(50);
                 params.setMargins(5, 15, 0, 0);
                 textView.setLayoutParams(params);
                 view.findViewById(R.id.tv_divider).setVisibility(View.GONE);
                 break;
             case 1:
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-                textView.setHeight(50);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+//                textView.setHeight(50);
                 params.setMargins(15, 15, 0, 0);
                 textView.setLayoutParams(params);
                 view.findViewById(R.id.tv_divider).setVisibility(View.GONE);
