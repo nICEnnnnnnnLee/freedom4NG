@@ -112,6 +112,7 @@
     <string name="gfwPath">GFW文件位置：</string>
     <string name="use_sni_detect">开启流量探测</string>
     <string name="send_sni_instead_ip">将SNI而不是IP发送到远端</string>
+    <string name="exportHostCacheAfterServiceStop">VpnService关闭时是否将本次缓存的Host表复制到剪贴板?</string>
     <string name="tips_delete_ok">删除成功！</string>
 
 

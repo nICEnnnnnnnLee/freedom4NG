@@ -14,6 +14,7 @@
     <string name="dex_stop_service">Stop service</string>
     <string name="dex_test_main_class">Test main class</string>
     <string name="direct_for_CN_ip">Direct for CN ip(May not effective if GeoDomain enabled)?</string>
+    <string name="exportHostCacheAfterServiceStop">Copy Host cache to clipboard when VpnService stop?</string>
 <!--    <string name="use_PAC">Enable PAC(SNI detect auto effect if enabled)?</string>-->
 <!--    <string name="pacPath">PAC path: </string>-->
     <string name="use_GeoDomain">Enable GeoDomain(SNI detect auto effect if enabled)?</string>

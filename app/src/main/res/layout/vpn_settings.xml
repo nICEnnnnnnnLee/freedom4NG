@@ -335,11 +335,11 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
-        android:text="@string/direct_for_CN_ip"
+        android:text="@string/exportHostCacheAfterServiceStop"
         android:textSize="12sp" />
 
     <Spinner
-        android:id="@+id/directIfCN"
+        android:id="@+id/exportHostCacheAfterServiceStop"
         android:layout_width="fill_parent"
         android:layout_height="20dp"
         android:layout_marginLeft="10dp"

@@ -2,6 +2,8 @@ package man.who.scan.my.app.die.a.mother.vpn;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.net.VpnService;
 import android.os.Build;
@@ -13,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import androidx.core.app.NotificationCompat;
@@ -81,6 +84,15 @@ public class LocalVpnService extends VpnService implements Runnable {
         stopSelf();
         isClosed = true;
         geoDomain = null;
+        if(Global.hostTableRuntime != null && Global.vpnConfig.exportHostCacheAfterServiceStop){
+            StringBuilder sb = new StringBuilder();
+            for(Map.Entry<String,String> entry: Global.hostTableRuntime.entrySet()){
+                sb.append(entry.getKey()).append(" ").append(entry.getValue()).append("\r\n");
+            }
+            ClipboardManager cm = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData mClipData = ClipData.newPlainText("Label", sb.toString());
+            cm.setPrimaryClip(mClipData);
+        }
         Global.hostTableRuntime = null;
     }
 

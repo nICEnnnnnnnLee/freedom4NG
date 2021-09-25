@@ -20,9 +20,11 @@ public class VPNConfig extends BaseConfig {
 
 //    public boolean usePAC = true;
 //    public String pacPath = "*";
-    public boolean useGeoDomain = true;
+    public boolean useGeoDomain = false;
     public String gfwPath = "*";
-    public boolean transeportSNI2Remote = true;
-    public boolean detectSNI = true;
+    public boolean transeportSNI2Remote = false;
+    public boolean detectSNI = false;
     public boolean directIfCN = true;
+
+    public boolean exportHostCacheAfterServiceStop = false;
 }
