@@ -9,13 +9,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import man.who.scan.my.app.die.a.mother.R;
 
-//import com.example.jingbin.webviewstudy.App;
-//import com.example.jingbin.webviewstudy.BuildConfig;
-//import com.example.jingbin.webviewstudy.R;
 
 /**
  * Created by jingbin on 2017/2/13.

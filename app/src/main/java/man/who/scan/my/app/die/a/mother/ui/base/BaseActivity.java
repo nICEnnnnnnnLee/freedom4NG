@@ -32,11 +32,11 @@ public class BaseActivity extends Activity {
         }
         if(isLoadDefault){
             setContentView(R.layout.base);
-            onLayoutLoded();
+            onLayoutLoaded();
         }
     }
 
-    protected void onLayoutLoded() {
+    protected void onLayoutLoaded() {
         tv_title = findViewById(R.id.tv_title);
         iv_more = findViewById(R.id.iv_more);
         iv_add = findViewById(R.id.iv_add);

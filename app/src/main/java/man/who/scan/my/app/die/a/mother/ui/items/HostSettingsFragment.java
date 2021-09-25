@@ -1,38 +1,33 @@
 package man.who.scan.my.app.die.a.mother.ui.items;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Map;
 
 import man.who.scan.my.app.die.a.mother.Config;
 import man.who.scan.my.app.die.a.mother.Global;
 import man.who.scan.my.app.die.a.mother.R;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
 import man.who.scan.my.app.die.a.mother.ui.base.BaseFragment;
 
 public class HostSettingsFragment extends BaseFragment implements View.OnClickListener {
 
 //    ImageView iv_save, iv_reload;
     EditText textHost;
-//    FragmetActivity activity;
+//    FragmentActivity activity;
 //    View view;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (FragmetActivity) getActivity();
+        activity = (FragmentActivity) getActivity();
     }
 
 
@@ -93,9 +88,5 @@ public class HostSettingsFragment extends BaseFragment implements View.OnClickLi
         } catch (Exception e) {
             return resources.getString(R.string.tips_host_load_not_ok);
         }
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 }

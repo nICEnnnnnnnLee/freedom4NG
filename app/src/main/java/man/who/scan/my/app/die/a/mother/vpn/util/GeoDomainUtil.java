@@ -5,6 +5,7 @@ import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashSet;
 
 public class GeoDomainUtil {
@@ -22,9 +23,10 @@ public class GeoDomainUtil {
         String result = new String(raw);
         direct_set = new HashSet<>();
         String[] lines = result.split("\n");
-        for (String line : lines) {
-            direct_set.add(line);
-        }
+//        for (String line : lines) {
+//            direct_set.add(line);
+//        }
+        Collections.addAll(direct_set, lines);
     }
 
     private void initGFW(InputStream gfw_f) throws IOException{
@@ -35,9 +37,9 @@ public class GeoDomainUtil {
         for (String line : lines) {
             if ("!##############General List End#################".equals(line))
                 break;
-            if (line.indexOf(".*") >= 0)
+            if (line.contains(".*"))
                 continue;
-            else if (line.indexOf("*") >= 0)
+            else if (line.contains("*"))
                 line = line.replace("*", "/");
 
             if (line.startsWith("||"))

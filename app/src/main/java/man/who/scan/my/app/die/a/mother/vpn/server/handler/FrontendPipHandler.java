@@ -36,7 +36,7 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
         ctx.read();
     }
 
-    private void addListner(ChannelFuture f, Channel in0, boolean isDirect, ChannelHandlerContext ctx) {
+    private void addListener(ChannelFuture f, Channel in0, boolean isDirect, ChannelHandlerContext ctx) {
         final Channel inboundChannel = in0;
         final boolean isDirectf = isDirect;
         final ChannelHandlerContext ctxf = ctx;
@@ -101,15 +101,15 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
                         .handler(new BackendInitializer(inboundChannel))
                         .option(ChannelOption.AUTO_READ, false);
                 f = b.connect(session.RemoteHost, session.RemotePort);
-                addListner(f, inboundChannel, true, ctx);
+                addListener(f, inboundChannel, true, ctx);
             } else {
-                String remoteHost = Global.vpnConfig.transeportSNI2Remote && sni != null ? sni: session.RemoteHost;
+                String remoteHost = Global.vpnConfig.transportSNI2Remote && sni != null ? sni: session.RemoteHost;
                 Bootstrap b = new Bootstrap();
                 b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
                         .handler(new BackendInitializer(inboundChannel, remoteHost, "" + session.RemotePort, ctx))
                         .option(ChannelOption.AUTO_READ, false);
                 f = b.connect(Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort);
-                addListner(f, inboundChannel, false, ctx);
+                addListener(f, inboundChannel, false, ctx);
             }
             Socket socket = CommonUtil.socketOf(f.channel());
             if (socket != null) {

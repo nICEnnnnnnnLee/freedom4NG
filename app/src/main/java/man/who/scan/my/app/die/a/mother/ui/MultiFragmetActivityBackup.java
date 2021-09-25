@@ -161,7 +161,7 @@ public class MultiFragmetActivityBackup extends Activity implements View.OnClick
                                         toast.setGravity(Gravity.CENTER, 0, 0);
                                         toast.show();
                                     } else {
-                                        Intent intent = new Intent(MultiFragmetActivityBackup.this, FragmetActivity.class);
+                                        Intent intent = new Intent(MultiFragmetActivityBackup.this, FragmentActivity.class);
                                         intent.putExtra("configPath", config.getAbsolutePath());
                                         intent.putExtra("configType", BaseConfig.VPN);
                                         startActivity(intent);
@@ -186,12 +186,12 @@ public class MultiFragmetActivityBackup extends Activity implements View.OnClick
             fab_stop.setVisibility(View.GONE);
             fab_start.setVisibility(View.VISIBLE);
         } else if (v == tv_dns) {
-            Intent intent = new Intent(MultiFragmetActivityBackup.this, FragmetActivity.class);
+            Intent intent = new Intent(MultiFragmetActivityBackup.this, FragmentActivity.class);
             intent.putExtra("configPath", Global.ROOT_DIR + Global.DNS_PATH);
             intent.putExtra("configType", BaseConfig.DNS);
             startActivity(intent);
         } else if (v == tv_host) {
-            Intent intent = new Intent(MultiFragmetActivityBackup.this, FragmetActivity.class);
+            Intent intent = new Intent(MultiFragmetActivityBackup.this, FragmentActivity.class);
             intent.putExtra("configPath", Global.ROOT_DIR + Global.HOST_PATH);
             intent.putExtra("configType", BaseConfig.HOST);
             startActivity(intent);

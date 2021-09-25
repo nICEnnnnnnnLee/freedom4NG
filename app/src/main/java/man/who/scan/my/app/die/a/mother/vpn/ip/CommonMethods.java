@@ -3,9 +3,6 @@ package man.who.scan.my.app.die.a.mother.vpn.ip;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.security.MessageDigest;
-
-import io.netty.buffer.ByteBuf;
 
 public class CommonMethods {
 

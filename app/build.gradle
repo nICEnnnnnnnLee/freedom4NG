@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 apply plugin: 'com.android.application'
 
 def getCurrentTime() {
-    DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     return df.format(Calendar.getInstance(Locale.CHINA).getTime())
 }
 

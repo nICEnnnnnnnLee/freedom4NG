@@ -1,6 +1,5 @@
 package man.who.scan.my.app.die.a.mother.model;
 
-import java.io.File;
 import java.lang.reflect.Method;
 
 public class DexConfig extends BaseConfig{

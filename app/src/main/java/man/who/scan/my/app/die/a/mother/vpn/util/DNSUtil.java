@@ -7,11 +7,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -36,9 +33,9 @@ public class DNSUtil {
 		if(dnsList.isEmpty()){
 			dnsList.add("114.114.114.114");
 		}
-		for(String dns : dnsList){
+//		for(String dns : dnsList){
 //			System.out.println("DNS 服务器: " + dns);
-		}
+//		}
 		return dnsList;
 
 	}

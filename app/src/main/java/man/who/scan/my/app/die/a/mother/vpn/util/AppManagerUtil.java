@@ -45,7 +45,7 @@ public class AppManagerUtil {
         if(pkg.permissions == null)
             return true;
         for (PermissionInfo per : pkg.permissions) {
-            if (per.name == Manifest.permission.INTERNET)
+            if (per.name.equals(Manifest.permission.INTERNET))
                 return true;
         }
         return false;

@@ -16,16 +16,18 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:labelFor="@+id/localPort"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="35dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/local_tcp_port"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/localPort"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -33,85 +35,95 @@
                 android:layout_marginRight="10dp" />
 
             <TextView
+                android:labelFor="@+id/remotePort"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/server_tcp_port"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/remotePort"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
             <TextView
+                android:labelFor="@+id/remoteHost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/server_addr"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/remoteHost"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
             <TextView
+                android:labelFor="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/username"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/username"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
             <TextView
+                android:labelFor="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/pwd"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/password"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
             <TextView
+                android:labelFor="@+id/salt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/salt"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/salt"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -123,7 +135,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/use_ssl"
                 android:textSize="12sp" />
 
@@ -136,68 +148,76 @@
                 android:layout_marginRight="10dp"></Spinner>
 
             <TextView
+                android:labelFor="@+id/path"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="HTTP path"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/path"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
             <TextView
+                android:labelFor="@+id/domain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="HTTP domain"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/domain"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
             <TextView
+                android:labelFor="@+id/port"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="HTTP port"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/port"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
             <TextView
+                android:labelFor="@+id/userAgent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="HTTP userAgent"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/userAgent"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -210,7 +230,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/direct_for_CN_ip"
                 android:textSize="12sp" />
 
@@ -228,7 +248,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/use_dns_specified"
                 android:textSize="12sp" />
 
@@ -242,17 +262,19 @@
 
 
             <TextView
+                android:labelFor="@+id/dns1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="DNS"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/dns1"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -260,12 +282,13 @@
 
 
             <TextView
+                android:labelFor="@+id/useDoH"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/use_doh"
                 android:textSize="12sp" />
 
@@ -281,17 +304,19 @@
 
 
             <TextView
+                android:labelFor="@+id/dohDomain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="DoH Domain"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/dohDomain"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -299,17 +324,19 @@
 
 
             <TextView
+                android:labelFor="@+id/dohHost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="DoH Host"
                 android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/dohHost"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -347,7 +374,7 @@
                     android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/btnStart"
+                    android:layout_toEndOf="@+id/btnStart"
                     android:text="End" />
 
             </RelativeLayout>
@@ -370,7 +397,7 @@
                     android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/btnSave"
+                    android:layout_toEndOf="@+id/btnSave"
                     android:text="@string/RESET" />
             </RelativeLayout>
 
@@ -393,7 +420,7 @@
                     android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/btnHostRead"
+                    android:layout_toEndOf="@+id/btnHostRead"
                     android:text="@string/host_change" />
 
             </RelativeLayout>

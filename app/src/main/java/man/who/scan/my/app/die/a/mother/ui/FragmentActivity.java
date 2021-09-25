@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
 
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.model.BaseConfig;
@@ -17,7 +16,7 @@ import man.who.scan.my.app.die.a.mother.ui.items.DexServiceFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.HostSettingsFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.VPNSettingsFragment;
 
-public class FragmetActivity extends Activity {
+public class FragmentActivity extends Activity {
 
     public String configPath;
     public int configType;

@@ -50,10 +50,10 @@ public class LocalVpnService extends VpnService implements Runnable {
     UDPHeader m_UDPHeader;
     ByteBuffer m_DNSBuffer;
 
-    public String localIP = "168.168.168.168";
-    public int intLocalIP = CommonMethods.ipStringToInt(localIP);
-    public String uniqueIp = "222.222.222.222";
-    public int intUniqueIp = CommonMethods.ipStringToInt(uniqueIp);
+    final public String localIP = "168.168.168.168";
+    final public int intLocalIP = CommonMethods.ipStringToInt(localIP);
+    final public String uniqueIp = "222.222.222.222";
+    final public int intUniqueIp = CommonMethods.ipStringToInt(uniqueIp);
     public GeoDomainUtil geoDomain;
     TCPServer tcpServer;
     UDPServer udpServer;
@@ -138,7 +138,7 @@ public class LocalVpnService extends VpnService implements Runnable {
             e.printStackTrace();
             System.out.println("\n\n\n\n\n\n\n创建黑白名单时出现错误!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n\n\n\n\n\n\n\n");
         }
-        if (Global.dnsConfig.useCunstomDNS && !Global.dnsConfig.dns1.isEmpty()) {
+        if (Global.dnsConfig.useCustomDNS && !Global.dnsConfig.dns1.isEmpty()) {
             builder.addDnsServer(Global.dnsConfig.dns1);
             // 在builder.addRoute("0.0.0.0", 0);的情况下没必要再加重复路由
             //builder.addRoute(Global.dnsConfig.dns1, 32);

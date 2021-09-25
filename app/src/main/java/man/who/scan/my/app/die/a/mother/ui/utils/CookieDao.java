@@ -15,7 +15,7 @@ import man.who.scan.my.app.die.a.mother.ui.utils.model.Cookie;
 public class CookieDao {
 
     private static CookieDao cookieDao;
-    private String db_path;
+    final private String db_path;
 
     private CookieDao(String db_path) {
         this.db_path = db_path;
@@ -33,8 +33,7 @@ public class CookieDao {
 
     public SQLiteDatabase openDataBase() {
 //        SQLiteDatabase db = SQLiteDatabase.openDatabase("/data/user/0/man.who.scan.my.app.die.a.mother/app_webview/Cookies", null, SQLiteDatabase.OPEN_READWRITE);
-        SQLiteDatabase db = SQLiteDatabase.openDatabase(db_path, null, SQLiteDatabase.OPEN_READWRITE);
-        return db;
+        return SQLiteDatabase.openDatabase(db_path, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
     public List<Cookie> getAllMatchedCookies(String host, String path) {
@@ -59,6 +58,7 @@ public class CookieDao {
                 }
             } while (cursor.moveToNext());
         }
+        cursor.close();
         db.close();
         return cookies;
     }
@@ -82,14 +82,14 @@ public class CookieDao {
         }
         if(requestPath.startsWith(cookiePath)){
             if(cookiePath.endsWith("/")){
-                ;return true;
+                return true;
             }else if(requestPath.substring(cookiePath.length()).startsWith("/")){
                 return true;
             }
         }
         return false;
     }
-    public List<Cookie> getAllEncrypedCookies() {
+    public List<Cookie> getAllEncryptedCookies() {
         List<Cookie> cookies = new ArrayList<>();
 //        String selectQuery = "SELECT  * FROM cookies order by creation_utc";
         String selectQuery = "SELECT  * FROM cookies where is_httponly == 1";
@@ -105,6 +105,7 @@ public class CookieDao {
                 cookies.add(cookie);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         db.close();
         return cookies;
     }

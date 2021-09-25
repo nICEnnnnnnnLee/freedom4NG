@@ -116,9 +116,10 @@ public class DoH {
 //                        request.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
 //                        System.out.println(request.toString());
                         future.channel().writeAndFlush(request);
-                    } else {
-//                        System.out.println("与DoH的连接建立失败");
                     }
+//                    else {
+//                        System.out.println("与DoH的连接建立失败");
+//                    }
                 }
             });
         }

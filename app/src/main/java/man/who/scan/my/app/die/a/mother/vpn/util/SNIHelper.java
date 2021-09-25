@@ -157,8 +157,7 @@ public class SNIHelper {
         // dataLen);
         if (offset + len - exOffsetStart > exLen)
             return null;
-        String hostName = new String(data, offset, len, Charset.forName("ascii"));
-        return hostName;
+        return new String(data, offset, len, Charset.forName("ascii"));
     }
     /**
      * 第一个字节为 内容长度 len, 后面为len个字节的内容
@@ -190,14 +189,12 @@ public class SNIHelper {
     }
 
     private static int read2Int(byte[] data, int offsetBegin) {
-        int number = (data[offsetBegin] & 0xff) << 8 | (data[offsetBegin + 1] & 0xff);
-        return number;
+        return (data[offsetBegin] & 0xff) << 8 | (data[offsetBegin + 1] & 0xff);
     }
 
     private static int read3Int(byte[] data, int offsetBegin) {
-        int number = (data[offsetBegin] & 0xff) << 16 | (data[offsetBegin + 1] & 0xff) << 8
+        return (data[offsetBegin] & 0xff) << 16 | (data[offsetBegin + 1] & 0xff) << 8
                 | (data[offsetBegin + 2] & 0xff);
-        return number;
     }
 
 }

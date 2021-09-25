@@ -11,7 +11,7 @@ import android.widget.EditText;
 import man.who.scan.my.app.die.a.mother.Config;
 import man.who.scan.my.app.die.a.mother.Global;
 import man.who.scan.my.app.die.a.mother.R;
-import man.who.scan.my.app.die.a.mother.dex.MDexClassLoder;
+import man.who.scan.my.app.die.a.mother.dex.MDexClassLoader;
 import man.who.scan.my.app.die.a.mother.dex.MDexService;
 import man.who.scan.my.app.die.a.mother.model.DexConfig;
 import man.who.scan.my.app.die.a.mother.ui.FileChooserActivity;
@@ -50,7 +50,7 @@ public class DexServiceFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onClick(View v) {
                 try {
-                    Class main = MDexClassLoder.load(et_dex_path.getText().toString(), et_dex_main_class.getText().toString());
+                    Class main = MDexClassLoader.load(et_dex_path.getText().toString(), et_dex_main_class.getText().toString());
                     DexConfig.startService = main.getDeclaredMethod("start");
                     DexConfig.stopService = main.getDeclaredMethod("stop");
 

@@ -19,6 +19,7 @@ import android.widget.PopupMenu;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ import man.who.scan.my.app.die.a.mother.ui.items.VPNBriefFragment;
 import man.who.scan.my.app.die.a.mother.vpn.LocalVpnService;
 import man.who.scan.my.app.die.a.mother.vpn.util.ResourcesUtil;
 
-public class MultiFragmetActivity extends BaseDrawerActivity {
+public class MultiFragmentActivity extends BaseDrawerActivity {
 
     final static int START_VPN = 0;
     final static int SELECT_FOLDER = 1;
@@ -55,7 +56,7 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
             fab_start.setVisibility(View.VISIBLE);
         frags = new ArrayList<>();
 
-        popupMenu = new PopupMenu(MultiFragmetActivity.this, iv_more);
+        popupMenu = new PopupMenu(MultiFragmentActivity.this, iv_more);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.base_menu, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -63,12 +64,12 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_export:
-                        Intent intent = new Intent(MultiFragmetActivity.this, FileChooserActivity.class);
+                        Intent intent = new Intent(MultiFragmentActivity.this, FileChooserActivity.class);
                         intent.putExtra("type", "dir");
                         startActivityForResult(intent, SELECT_FOLDER);
                         break;
                     case R.id.action_import:
-                        intent = new Intent(MultiFragmetActivity.this, FileChooserActivity.class);
+                        intent = new Intent(MultiFragmentActivity.this, FileChooserActivity.class);
                         intent.putExtra("type", "file");
                         startActivityForResult(intent, SELECT_FILE);
                         break;
@@ -79,7 +80,7 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
                         if (clipData.getItemCount() > 0) {
                             try {
                                 String content = clipData.getItemAt(0).getText().toString();
-                                String decodedContent = new String(Base64.decode(content, Base64.DEFAULT), "utf-8");
+                                String decodedContent = new String(Base64.decode(content, Base64.DEFAULT), StandardCharsets.UTF_8);
 //                                System.out.println(decodedContent);
                                 if (decodedContent.contains("remoteHost:") && decodedContent.contains("remotePort:")) {
                                     File file = null;
@@ -94,19 +95,19 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
                                         parent.mkdirs();
                                     try (FileWriter writer = new FileWriter(file)) {
                                         writer.write(decodedContent);
-                                        MultiFragmetActivity.this.toast(resources.getString(R.string.tips_import_clipborad_ok));
+                                        MultiFragmentActivity.this.toast(resources.getString(R.string.tips_import_clipborad_ok));
                                         refreshView();
                                     } catch (Exception e) {
-                                        MultiFragmetActivity.this.toast(resources.getString(R.string.tips_write_err) + e.toString());
+                                        MultiFragmentActivity.this.toast(resources.getString(R.string.tips_write_err) + e.toString());
                                     }
 
                                 } else
-                                    MultiFragmetActivity.this.toast(resources.getString(R.string.tips_clipborad_err_data));
+                                    MultiFragmentActivity.this.toast(resources.getString(R.string.tips_clipborad_err_data));
                             } catch (Exception e) {
-                                MultiFragmetActivity.this.toast(resources.getString(R.string.tips_clipborad_err_data));
+                                MultiFragmentActivity.this.toast(resources.getString(R.string.tips_clipborad_err_data));
                             }
                         } else {
-                            MultiFragmetActivity.this.toast(resources.getString(R.string.tips_clipborad_no_data));
+                            MultiFragmentActivity.this.toast(resources.getString(R.string.tips_clipborad_no_data));
                         }
                         break;
                     default:
@@ -207,7 +208,7 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
             case R.id.iv_add:
                 final View view = layoutInflater.inflate(R.layout.base_prompt_edit_text, null);//这里必须是final的
                 final EditText edit = (EditText) view.findViewById(R.id.editText);//获得输入框对象
-                new AlertDialog.Builder(MultiFragmetActivity.this)
+                new AlertDialog.Builder(MultiFragmentActivity.this)
                         .setTitle(resources.getString(R.string.setting_name_remark))//提示框标题
                         .setView(view)
                         .setPositiveButton(resources.getString(R.string.OK),//提示框的两个按钮
@@ -216,9 +217,9 @@ public class MultiFragmetActivity extends BaseDrawerActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         File config = new File(configDir, edit.getText().toString());
                                         if (config.exists()) {
-                                            MultiFragmetActivity.this.toast(resources.getString(R.string.tips_file_exists));
+                                            MultiFragmentActivity.this.toast(resources.getString(R.string.tips_file_exists));
                                         } else {
-                                            Intent intent = new Intent(MultiFragmetActivity.this, FragmetActivity.class);
+                                            Intent intent = new Intent(MultiFragmentActivity.this, FragmentActivity.class);
                                             intent.putExtra("configPath", config.getAbsolutePath());
                                             intent.putExtra("configType", BaseConfig.VPN);
                                             startActivity(intent);

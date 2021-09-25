@@ -20,19 +20,19 @@ import man.who.scan.my.app.die.a.mother.Global;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.model.AppInfo;
 import man.who.scan.my.app.die.a.mother.model.BaseConfig;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
 import man.who.scan.my.app.die.a.mother.ui.base.BaseFragment;
 import man.who.scan.my.app.die.a.mother.vpn.util.AppManagerUtil;
 
 public class AppListFragment extends BaseFragment {
 
-    FragmetActivity activity;
+    FragmentActivity activity;
     View view;
     WebView wb_app_list;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (FragmetActivity) getActivity();
+        activity = (FragmentActivity) getActivity();
     }
 
 

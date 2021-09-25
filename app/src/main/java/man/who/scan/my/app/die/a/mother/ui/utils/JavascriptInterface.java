@@ -1,8 +1,6 @@
 package man.who.scan.my.app.die.a.mother.ui.utils;
 
 import android.content.Context;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.Toast;
 
 import java.util.Map;
@@ -15,8 +13,8 @@ import man.who.scan.my.app.die.a.mother.ui.ByWebViewActivity;
  */
 public class JavascriptInterface {
 
-    private Context context;
-    private ByWebViewActivity byWebViewActivity;
+    final private Context context;
+    final private ByWebViewActivity byWebViewActivity;
 
     public JavascriptInterface(Context context) {
         this.context = context;
@@ -69,7 +67,7 @@ public class JavascriptInterface {
                         byWebViewActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                byWebViewActivity.getByWebView().getWebView().getSettings().setUserAgentString(value);;
+                                byWebViewActivity.getByWebView().getWebView().getSettings().setUserAgentString(value);
                             }
                         });
                         headers.put("user-agent", key);

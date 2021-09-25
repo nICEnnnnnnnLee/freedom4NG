@@ -26,7 +26,7 @@
     <string name="tips_delete_not_ok">删除失败！</string>
     <string name="tips_reloaded">已重新加载</string>
     <string name="tips_no_vpn_settings">没有VPN配置文件！</string>
-    <!-- MultiFragmetActivity -->
+    <!-- MultiFragmentActivity -->
     <string name="settings">配置列表</string>
     <string name="tips_import_clipborad_ok">导入剪贴板数据成功</string>
     <string name="tips_write_err">写入数据出错：</string>

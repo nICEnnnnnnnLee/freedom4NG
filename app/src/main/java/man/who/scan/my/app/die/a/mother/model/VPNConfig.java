@@ -22,7 +22,7 @@ public class VPNConfig extends BaseConfig {
 //    public String pacPath = "*";
     public boolean useGeoDomain = false;
     public String gfwPath = "*";
-    public boolean transeportSNI2Remote = false;
+    public boolean transportSNI2Remote = false;
     public boolean detectSNI = false;
     public boolean directIfCN = true;
 

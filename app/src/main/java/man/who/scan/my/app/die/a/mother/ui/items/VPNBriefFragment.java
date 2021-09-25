@@ -20,8 +20,8 @@ import man.who.scan.my.app.die.a.mother.Global;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.model.BaseConfig;
 import man.who.scan.my.app.die.a.mother.model.VPNConfig;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
-import man.who.scan.my.app.die.a.mother.ui.MultiFragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
+import man.who.scan.my.app.die.a.mother.ui.MultiFragmentActivity;
 import man.who.scan.my.app.die.a.mother.ui.base.ToastHandler;
 import man.who.scan.my.app.die.a.mother.vpn.util.TestUtil;
 
@@ -31,7 +31,7 @@ public class VPNBriefFragment extends Fragment implements View.OnClickListener {
     public VPNConfig config;
     private Handler toastHandler;
     TextView addr, remark;
-    MultiFragmetActivity activity;
+    MultiFragmentActivity activity;
     View view;
     String configPath, configName;
     int index;
@@ -52,7 +52,7 @@ public class VPNBriefFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (MultiFragmetActivity) getActivity();
+        activity = (MultiFragmentActivity) getActivity();
         toastHandler = new ToastHandler(activity);
         resources = this.getResources();
     }
@@ -89,7 +89,7 @@ public class VPNBriefFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == imgEdit) {
-            Intent intent = new Intent(activity, FragmetActivity.class);
+            Intent intent = new Intent(activity, FragmentActivity.class);
             intent.putExtra("configPath", configPath);
             intent.putExtra("configType", BaseConfig.VPN);
             startActivity(intent);
@@ -121,10 +121,5 @@ public class VPNBriefFragment extends Fragment implements View.OnClickListener {
                 }
             }).start();
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 }

@@ -156,7 +156,7 @@ public class ByWebViewActivity extends Activity {
         tvGunTitle.setText(mTitle);
     }
 
-    private OnTitleProgressCallback onTitleProgressCallback = new OnTitleProgressCallback() {
+    final private OnTitleProgressCallback onTitleProgressCallback = new OnTitleProgressCallback() {
         @Override
         public void onReceivedTitle(String title) {
             Log.e("---title", title);
@@ -164,7 +164,7 @@ public class ByWebViewActivity extends Activity {
         }
     };
 
-    private OnByWebClientCallback onByWebClientCallback = new OnByWebClientCallback() {
+    final private OnByWebClientCallback onByWebClientCallback = new OnByWebClientCallback() {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -241,7 +241,7 @@ public class ByWebViewActivity extends Activity {
                     WebTools.copy(this, sb.toString());
                     Toast.makeText(this, "复制成功", Toast.LENGTH_LONG).show();
 //                    // 先获取所有保密的cookie
-//                    List<Cookie> cookies =  CookieDao.getInstance().getAllEncrypedCookies();
+//                    List<Cookie> cookies =  CookieDao.getInstance().getAllEncryptedCookies();
 //                    // 找出需要修改的cookie
 //                    String host = new URL(webView.getUrl()).getHost().toLowerCase();
 //                    List<Cookie> cookieNeedModify = new ArrayList<>(cookies.size());

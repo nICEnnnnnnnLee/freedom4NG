@@ -15,7 +15,7 @@
         tools:ignore="QueryAllPackagesPermission" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher"
@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.FragmetActivity"
+            android:name=".ui.FragmentActivity"
             android:launchMode="standard"></activity>
 
         <activity
@@ -55,7 +55,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.MultiFragmetActivity"></activity>
+        <activity android:name=".ui.MultiFragmentActivity"></activity>
         <activity android:name=".ui.FileChooserActivity"></activity>
 
         <service

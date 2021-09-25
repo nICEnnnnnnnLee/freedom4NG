@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Random;
 
@@ -29,7 +30,7 @@ public class CommonUtil {
 
 	public static String getRandomString(int length) {
 		Random random = new Random();
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			int number = random.nextInt(62);
 			sb.append(dictionary.charAt(number));
@@ -49,9 +50,9 @@ public class CommonUtil {
 	public static String MD5(String dataStr) {
 		try {
 			MessageDigest m = MessageDigest.getInstance("MD5");
-			m.update(dataStr.getBytes("UTF8"));
-			byte s[] = m.digest();
-			StringBuffer result = new StringBuffer();
+			m.update(dataStr.getBytes(StandardCharsets.UTF_8));
+			byte[] s = m.digest();
+			StringBuilder result = new StringBuilder();
 			for (int i = 0; i < s.length; i++) {
 				result.append(Integer.toHexString((0x000000FF & s[i]) | 0xFFFFFF00).substring(6));
 			}

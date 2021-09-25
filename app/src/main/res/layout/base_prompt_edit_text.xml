@@ -6,6 +6,8 @@
     android:layout_height="fill_parent">
 
     <EditText android:id="@+id/editText"
+        android:hint=""
+        android:inputType="text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 

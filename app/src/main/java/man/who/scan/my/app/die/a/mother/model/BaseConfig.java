@@ -14,7 +14,7 @@ import man.who.scan.my.app.die.a.mother.R;
 
 
 public class BaseConfig {
-    final static String options[] = {"true", "false"};
+    final static String[] options = {"true", "false"};
     final static public int DNS = 1;
     final static public int VPN = 2;
     final static public int HOST = 3;

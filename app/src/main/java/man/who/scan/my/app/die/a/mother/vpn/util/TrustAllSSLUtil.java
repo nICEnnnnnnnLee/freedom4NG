@@ -10,7 +10,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-public class TrustAllSSLUitl {
+public class TrustAllSSLUtil {
     public static SSLSocketFactory getSSLSocketFactory() {
         try {
             SSLContext sslContext = SSLContext.getInstance("SSL");

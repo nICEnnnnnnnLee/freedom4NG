@@ -12,7 +12,7 @@
         android:id="@+id/iv_selected"
         android:src="@android:drawable/radiobutton_off_background"
         android:layout_alignParentStart="true"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_centerVertical="true"
         android:layout_width="30dp"
         android:layout_height="30dp" />
@@ -21,8 +21,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@id/iv_selected"
-        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@id/iv_selected"
+        android:layout_marginStart="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -55,8 +55,8 @@
         android:id="@+id/iv_edit"
         android:src="@android:drawable/ic_menu_edit"
         android:tint="@android:color/black"
-        android:layout_marginRight="12dp"
-        android:layout_toLeftOf="@id/iv_delete"
+        android:layout_marginEnd="12dp"
+        android:layout_toStartOf="@id/iv_delete"
         android:layout_centerVertical="true"
         android:layout_width="30dp"
         android:layout_height="30dp" />
@@ -64,8 +64,8 @@
         android:id="@+id/iv_test"
         android:src="@android:drawable/ic_menu_help"
         android:tint="@android:color/black"
-        android:layout_marginRight="12dp"
-        android:layout_toLeftOf="@id/iv_edit"
+        android:layout_marginEnd="12dp"
+        android:layout_toStartOf="@id/iv_edit"
         android:layout_centerVertical="true"
         android:layout_width="30dp"
         android:layout_height="30dp" />

@@ -28,7 +28,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="10dp"
                 android:text="@string/drawer_title"
@@ -46,8 +46,7 @@
                 android:textSize="20sp"
                 android:textColor="@android:color/black"
                 android:text="@string/drawer_dns_settings"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
@@ -57,8 +56,7 @@
                 android:textSize="20sp"
                 android:textColor="@android:color/black"
                 android:text="@string/drawer_host_settings"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
@@ -68,8 +66,7 @@
                 android:textSize="20sp"
                 android:textColor="@android:color/black"
                 android:text="@string/app_list_title"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
@@ -83,8 +80,7 @@
                 android:textSize="20sp"
                 android:textColor="@android:color/black"
                 android:text="@string/drawer_dex"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
@@ -98,8 +94,7 @@
                 android:textSize="20sp"
                 android:textColor="@android:color/black"
                 android:text="@string/drawer_browser"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
@@ -114,8 +109,7 @@
                 android:textSize="20sp"
                 android:textColor="@android:color/black"
                 android:text="@string/drawer_about"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />

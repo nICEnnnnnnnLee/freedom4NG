@@ -10,12 +10,12 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="left"
+        android:gravity="start"
         android:text="@string/use_dns_specified"
         android:textSize="12sp" />
 
     <Spinner
-        android:id="@+id/useCunstomDNS"
+        android:id="@+id/useCustomDNS"
         android:layout_width="fill_parent"
         android:layout_height="20dp"
         android:layout_marginLeft="10dp"
@@ -28,7 +28,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="left"
+        android:gravity="start"
         android:text="@string/use_host_specified"
         android:textSize="12sp" />
 
@@ -42,17 +42,19 @@
 
 
     <TextView
+        android:labelFor="@+id/dns1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="left"
+        android:gravity="start"
         android:text="DNS"
         android:textSize="12sp" />
 
     <EditText
         android:id="@+id/dns1"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -65,7 +67,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="left"
+        android:gravity="start"
         android:text="@string/use_doh"
         android:textSize="12sp" />
 
@@ -79,17 +81,19 @@
 
 
     <TextView
+        android:labelFor="@+id/dohDomain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="left"
+        android:gravity="start"
         android:text="DoH Domain"
         android:textSize="12sp" />
 
     <EditText
         android:id="@+id/dohDomain"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -97,34 +101,38 @@
 
 
     <TextView
+        android:labelFor="@+id/dohHost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="left"
+        android:gravity="start"
         android:text="DoH Host"
         android:textSize="12sp" />
 
     <EditText
         android:id="@+id/dohHost"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"/>
 
     <TextView
+        android:labelFor="@+id/dohPath"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="left"
+        android:gravity="start"
         android:text="DoH Path"
         android:textSize="12sp" />
 
     <EditText
         android:id="@+id/dohPath"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

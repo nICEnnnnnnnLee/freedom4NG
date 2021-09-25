@@ -16,18 +16,27 @@ import java.util.Locale;
 
 import man.who.scan.my.app.die.a.mother.BuildConfig;
 import man.who.scan.my.app.die.a.mother.R;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
 import man.who.scan.my.app.die.a.mother.ui.base.BaseFragment;
 
 public class AboutFragment extends BaseFragment {
 
-    FragmetActivity activity;
+    FragmentActivity activity;
     View view;
     WebView wb_about;
 
+    public static AboutFragment newInstance() {
+        AboutFragment newFragment = new AboutFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("name", name);
+//        bundle.putString("passwd", passwd);
+//        newFragment.setArguments(bundle);
+        return newFragment;
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (FragmetActivity) getActivity();
+        activity = (FragmentActivity) getActivity();
     }
 
 

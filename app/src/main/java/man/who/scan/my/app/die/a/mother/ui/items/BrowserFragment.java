@@ -15,13 +15,13 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import man.who.scan.my.app.die.a.mother.R;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
 import man.who.scan.my.app.die.a.mother.ui.base.BaseFragment;
 import me.jingbin.web.ByWebView;
 
 public class BrowserFragment extends BaseFragment {
 
-    FragmetActivity activity;
+    FragmentActivity activity;
     View view;
 
     private WebView webView;
@@ -29,7 +29,7 @@ public class BrowserFragment extends BaseFragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (FragmetActivity) getActivity();
+        activity = (FragmentActivity) getActivity();
     }
 
 

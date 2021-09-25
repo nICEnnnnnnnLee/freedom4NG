@@ -1,18 +1,17 @@
 package man.who.scan.my.app.die.a.mother;
 
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 
 import java.io.File;
 import java.util.Locale;
 import java.util.Map;
 
-import man.who.scan.my.app.die.a.mother.ui.MultiFragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.MultiFragmentActivity;
 
 //public class MainActivity extends GlobalConfigActivity {
-//public class MainActivity extends MultiFragmetActivity {
-public class MainActivity extends MultiFragmetActivity {
+//public class MainActivity extends MultiFragmentActivity {
+public class MainActivity extends MultiFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

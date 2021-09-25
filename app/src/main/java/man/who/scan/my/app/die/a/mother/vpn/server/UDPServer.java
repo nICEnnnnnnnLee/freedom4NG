@@ -52,7 +52,7 @@ public class UDPServer extends Thread {
         sendPort = udpSocketSend.getPort();
         LocalVpnService.Instance.protect(udpSocket);
         packet = new DatagramPacket(receMsgs, 28, receMsgs.length - 28);
-        if (Global.dnsConfig.useCunstomDNS && Global.dnsConfig.useDoH) {
+        if (Global.dnsConfig.useCustomDNS && Global.dnsConfig.useDoH) {
             doh = new DoH(Global.dnsConfig.dohDomain, Global.dnsConfig.dohHost, Global.dnsConfig.dohPath);
             doh.init();
         }

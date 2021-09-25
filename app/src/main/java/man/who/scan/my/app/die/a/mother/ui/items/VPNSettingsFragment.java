@@ -25,8 +25,7 @@ import man.who.scan.my.app.die.a.mother.Config;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.model.VPNConfig;
 import man.who.scan.my.app.die.a.mother.ui.FileChooserActivity;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
-import man.who.scan.my.app.die.a.mother.ui.MultiFragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
 import man.who.scan.my.app.die.a.mother.vpn.util.ResourcesUtil;
 
 import static android.app.Activity.RESULT_OK;
@@ -36,14 +35,14 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
 
     ImageView imgSave, imgDelete, imgReload, imgShare;
     Button btnSelectPacPath;
-    FragmetActivity activity;
+    FragmentActivity activity;
     File configFile;
     View view;
     VPNConfig config;
     Resources resources;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (FragmetActivity) getActivity();
+        activity = (FragmentActivity) getActivity();
         configFile = new File(activity.configPath);
         Map<String, String> map = Config.fromFile(configFile);
         config = new VPNConfig();
@@ -135,11 +134,6 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
         Toast toast = Toast.makeText(activity, tips, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override

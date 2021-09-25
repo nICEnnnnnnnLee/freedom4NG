@@ -8,7 +8,6 @@ import man.who.scan.my.app.die.a.mother.model.DNSConfig;
 import man.who.scan.my.app.die.a.mother.model.DexConfig;
 import man.who.scan.my.app.die.a.mother.model.VPNConfig;
 import man.who.scan.my.app.die.a.mother.model.VPNGlobalConfig;
-import man.who.scan.my.app.die.a.mother.vpn.util.CommonUtil;
 
 public class Global {
     /**

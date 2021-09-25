@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
 
 import man.who.scan.my.app.die.a.mother.Config;
 import man.who.scan.my.app.die.a.mother.Global;
