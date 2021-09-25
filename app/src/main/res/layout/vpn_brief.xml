@@ -6,7 +6,7 @@
     android:layout_marginRight="2dp"
     android:layout_marginTop="5dp"
     android:paddingRight="10dp"
-    android:layout_height="60dp">
+    android:layout_height="70dp">
 
     <ImageView
         android:id="@+id/iv_selected"
