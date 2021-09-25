@@ -23,36 +23,36 @@
     <ImageView
         android:id="@+id/iv_more"
         android:src="@android:drawable/ic_menu_more"
-        android:layout_toLeftOf="@id/tv_right"
+        android:layout_toStartOf="@id/tv_right"
         android:layout_centerVertical="true"
-        android:layout_marginRight="0dp"
+        android:layout_marginEnd="0dp"
         android:visibility="gone"
         android:layout_width="30dp"
         android:layout_height="30dp" />
     <ImageView
         android:id="@+id/iv_delete"
         android:src="@android:drawable/ic_menu_delete"
-        android:layout_toLeftOf="@id/iv_more"
+        android:layout_toStartOf="@id/iv_more"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="gone"
         android:layout_width="30dp"
         android:layout_height="30dp" />
     <ImageView
         android:id="@+id/iv_add"
         android:src="@android:drawable/ic_menu_add"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="gone"
-        android:layout_toLeftOf="@id/iv_delete"
+        android:layout_toStartOf="@id/iv_delete"
         android:layout_centerVertical="true"
         android:layout_width="30dp"
         android:layout_height="30dp" />
     <ImageView
         android:id="@+id/iv_save"
         android:src="@android:drawable/ic_menu_save"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="gone"
-        android:layout_toLeftOf="@id/iv_add"
+        android:layout_toStartOf="@id/iv_add"
         android:layout_centerVertical="true"
         android:layout_width="30dp"
         android:layout_height="30dp" />
@@ -61,18 +61,18 @@
     <ImageView
         android:src="@android:drawable/ic_menu_rotate"
         android:id="@+id/iv_reload"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="gone"
-        android:layout_toLeftOf="@id/iv_save"
+        android:layout_toStartOf="@id/iv_save"
         android:layout_centerVertical="true"
         android:layout_width="30dp"
         android:layout_height="30dp" />
     <ImageView
         android:src="@android:drawable/ic_menu_share"
         android:id="@+id/iv_share"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="gone"
-        android:layout_toLeftOf="@id/iv_reload"
+        android:layout_toStartOf="@id/iv_reload"
         android:layout_centerVertical="true"
         android:layout_width="30dp"
         android:layout_height="30dp" />
@@ -89,10 +89,10 @@
         android:id="@+id/tv_title"
         android:textSize="20sp"
         android:textColor="#fff"
-        android:text="Title"
-        android:layout_toRightOf="@+id/tv_left"
+        android:text=""
+        android:layout_toEndOf="@+id/tv_left"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>

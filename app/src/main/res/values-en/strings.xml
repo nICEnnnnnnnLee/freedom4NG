@@ -13,7 +13,14 @@
     <string name="dex_settings">Dex Settings</string>
     <string name="dex_stop_service">Stop service</string>
     <string name="dex_test_main_class">Test main class</string>
-    <string name="direct_for_CN_ip">Direct for CN ip?</string>
+    <string name="direct_for_CN_ip">Direct for CN ip(May not effective if GeoDomain enabled)?</string>
+    <string name="exportHostCacheAfterServiceStop">Copy Host cache to clipboard when VpnService stop?</string>
+<!--    <string name="use_PAC">Enable PAC(SNI detect auto effect if enabled)?</string>-->
+<!--    <string name="pacPath">PAC path: </string>-->
+    <string name="use_GeoDomain">Enable GeoDomain(SNI detect auto effect if enabled)?</string>
+    <string name="gfwPath">GFW path: </string>
+    <string name="use_sni_detect">Enable SNI detect</string>
+    <string name="send_sni_instead_ip">Send SNI to remote instead of IP</string>
     <string name="direct_for_all">Direct for all ip?</string>
     <string name="dns_settings">DNS Settings</string>
     <string name="drawer_about">About</string>
@@ -81,4 +88,25 @@
     <string name="tips_connect_failed">Connect failed</string>
     <string name="tips_unknown_fail_reason">"Unknown err: "</string>
     <string name="tips_connect_ok">Connect succeed</string>
+    <string name="tips_200ok_path_err">The server returns 200 OK, seems url path err</string>
+    <string name="drawer_browser">Browser</string>
+
+
+    <string name="action_update">update</string>
+    <string name="action_about">about</string>
+    <string name="action_share">share</string>
+    <string name="actionbar_search">search</string>
+    <string name="actionbar_more">more</string>
+    <string name="actionbar_webview_share">Share to</string>
+    <string name="actionbar_webview_cope">Copy the link</string>
+    <string name="actionbar_webview_copy_cookies">Copy the cookies</string>
+    <string name="actionbar_webview_open">Browser open</string>
+    <string name="actionbar_webview_refresh">Refresh the page</string>
+    <string name="actionbar_share">Share it with friends\(^o^)/~</string>
+    <string name="string_hit">Search or enter the url</string>
+    <string name="bt_open_url">Open website</string>
+    <string name="about_index_path">file:///android_asset/about/about_EN.html</string>
+    <string name="browser_index_path">file:///android_asset/browser/index_EN.html</string>
+    <string name="app_list_index_path">file:///android_asset/app_list/index_EN.html</string>
+    <string name="app_list_title">Routing by application</string>
 </resources>

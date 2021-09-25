@@ -13,7 +13,7 @@ import io.netty.handler.codec.http.HttpContentDecompressor;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.ssl.SslHandler;
 import man.who.scan.my.app.die.a.mother.Global;
-import man.who.scan.my.app.die.a.mother.vpn.util.TrustAllSSLUitl;
+import man.who.scan.my.app.die.a.mother.vpn.util.TrustAllSSLUtil;
 
 public class DoHInitializer extends ChannelInitializer<SocketChannel> {
 
@@ -35,7 +35,7 @@ public class DoHInitializer extends ChannelInitializer<SocketChannel> {
 //		if (sslCtx != null) {
 //			p.addLast(sslCtx.newHandler(ch.alloc()));
 //		}
-        SSLContext context = TrustAllSSLUitl.getSSLContext(Global.vpnConfig.verifySSL);
+        SSLContext context = TrustAllSSLUtil.getSSLContext(Global.vpnConfig.verifySSL);
         SSLEngine engine = context.createSSLEngine(dohDomain, 443);
         engine.setUseClientMode(true);
         engine.setNeedClientAuth(false);

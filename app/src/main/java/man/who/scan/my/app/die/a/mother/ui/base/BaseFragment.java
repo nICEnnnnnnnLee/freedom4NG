@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import man.who.scan.my.app.die.a.mother.R;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
 
 public class BaseFragment extends Fragment {
 
@@ -16,13 +16,13 @@ public class BaseFragment extends Fragment {
     public final static int SELECT_FILE = 2;
     protected ImageView iv_add, iv_more, iv_delete, iv_save, iv_reload;
     protected TextView tv_title;
-    protected FragmetActivity activity;
+    protected FragmentActivity activity;
     protected Resources resources;
     public View view;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (FragmetActivity) getActivity();
+        activity = (FragmentActivity) getActivity();
         tv_title = activity.findViewById(R.id.tv_title);
         iv_more = activity.findViewById(R.id.iv_more);
         iv_add = activity.findViewById(R.id.iv_add);

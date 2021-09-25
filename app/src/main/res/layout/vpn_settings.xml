@@ -4,9 +4,10 @@
     android:orientation="vertical">
 
     <TextView
+        android:labelFor="@+id/remark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         android:gravity="start"
         android:text="@string/vpn_setting_remark"
@@ -14,9 +15,10 @@
 
     <EditText
         android:id="@+id/remark"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp" />
 
@@ -24,7 +26,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:gravity="start"
@@ -34,12 +36,13 @@
     <Spinner
         android:id="@+id/directAll"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"></Spinner>
 
     <TextView
+        android:labelFor="@+id/localPort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -50,6 +53,7 @@
 
     <EditText
         android:id="@+id/localPort"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -57,6 +61,7 @@
         android:layout_marginRight="10dp" />
 
     <TextView
+        android:labelFor="@+id/remotePort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -68,12 +73,14 @@
 
     <EditText
         android:id="@+id/remotePort"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
+        android:labelFor="@+id/remoteHost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -85,12 +92,14 @@
 
     <EditText
         android:id="@+id/remoteHost"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
+        android:labelFor="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -102,12 +111,14 @@
 
     <EditText
         android:id="@+id/username"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
+        android:labelFor="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -119,12 +130,14 @@
 
     <EditText
         android:id="@+id/password"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
+        android:labelFor="@+id/salt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -136,6 +149,7 @@
 
     <EditText
         android:id="@+id/salt"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -154,7 +168,7 @@
     <Spinner
         android:id="@+id/useSSL"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp" />
@@ -172,12 +186,13 @@
     <Spinner
         android:id="@+id/verifySSL"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
+        android:labelFor="@+id/path"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -189,12 +204,14 @@
 
     <EditText
         android:id="@+id/path"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
+        android:labelFor="@+id/domain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -206,12 +223,14 @@
 
     <EditText
         android:id="@+id/domain"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
+        android:labelFor="@+id/port"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -223,12 +242,14 @@
 
     <EditText
         android:id="@+id/port"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
     <TextView
+        android:labelFor="@+id/userAgent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -240,11 +261,97 @@
 
     <EditText
         android:id="@+id/userAgent"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="start"
+        android:text="@string/use_GeoDomain"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/useGeoDomain"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp" />
+
+    <LinearLayout
+        android:baselineAligned="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:labelFor="@+id/gfwPath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="start"
+            android:text="@string/gfwPath"
+            android:textSize="12sp" />
+        <Button
+            android:textAllCaps="false"
+            android:id="@+id/btnSelectPacPath"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:textSize="8sp"
+            android:text="..." />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/gfwPath"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="start"
+        android:text="@string/use_sni_detect"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/detectSNI"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="start"
+        android:text="@string/send_sni_instead_ip"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/transportSNI2Remote"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -259,7 +366,25 @@
     <Spinner
         android:id="@+id/directIfCN"
         android:layout_width="fill_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="start"
+        android:text="@string/exportHostCacheAfterServiceStop"
+        android:textSize="12sp" />
+
+    <Spinner
+        android:id="@+id/exportHostCacheAfterServiceStop"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"

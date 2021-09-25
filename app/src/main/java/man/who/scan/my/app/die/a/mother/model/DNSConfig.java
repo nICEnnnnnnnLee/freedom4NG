@@ -2,7 +2,7 @@ package man.who.scan.my.app.die.a.mother.model;
 
 public class DNSConfig extends BaseConfig{
 
-    public boolean useCunstomDNS = true;
+    public boolean useCustomDNS = true;
     public boolean useHost = true;
     public String dns1 = "114.114.114.114";
     //    public String dns2 = "";

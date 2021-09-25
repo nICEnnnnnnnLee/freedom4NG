@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Tomato</title>
+    <link type="text/css" rel="stylesheet" href="index.css" />
+</head>
+<body>
+<section id="search">
+    <form id="search-form">
+        <div class="search-form-group">
+            <div class="search-form-input">
+                <input type="search" id="kw" placeholder="Pls input the website..." autocomplete="off" required>
+            </div>
+            <button id="search-submit">
+                Go
+            </button>
+        </div>
+    </form>
+</section>
+<div class="settings">
+    <div class="settings tips">
+        <span>Allow third app urls:</span>
+        <input type="checkbox" id="allowThirdApp" checked="checked"/>
+    </div>
+    <div class="settings tips">
+        <span>Header Settings:</span>
+        <button id="header-settings-reset">Reset</button>
+        <button id="header-settings-save">Save</button>
+    </div>
+<textarea id="header-settings" >
+# Firefox PC
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/93.0
+# Firefox Android
+User-Agent: Mozilla/5.0 (Android 8.0.0; Mobile; rv:90.0) Gecko/90.0 Firefox/90.0
+x-requested-with: tomato/1.0
+</textarea>
+    <script type="text/javascript">
+            // 访问网页
+			var btnGo = document.getElementById('search-submit');
+			btnGo.onclick = function(e) {
+				e.preventDefault();
+				var input = document.getElementById('kw');
+				console.log(input.value);
+				if(input.value != ""){
+				    if(!input.value.startsWith("http") && input.value.indexOf("://") == -1){
+				        input.value = "https://" + input.value
+				    }
+				    window.location = input.value;
+				}
+
+				return false;
+			}
+            // 设置允许打开第三方app url
+            var chBoxAllowThirdApp = document.getElementById("allowThirdApp");
+            function saveAllowThirdApp(){
+                //console.log(chBoxAllowThirdApp.checked);
+                if(window.tomato_bridge){
+                    window.tomato_bridge.allThirdApp(chBoxAllowThirdApp.checked);
+				}
+            }
+            chBoxAllowThirdApp.onclick = saveAllowThirdApp;
+            saveAllowThirdApp();
+            // header 设置
+			var btnHeaderReset = document.getElementById('header-settings-reset');
+			var btnHeaderSave = document.getElementById('header-settings-save');
+			var txtHeaderSettings = document.getElementById('header-settings');
+            function reset(event) {
+				var headerSettings = window.localStorage.getItem('header-settings');
+				txtHeaderSettings.value = headerSettings;
+				if(window.tomato_bridge){
+                    window.tomato_bridge.setHeaders(headerSettings);
+				}
+				return false;
+			}
+            function save(event) {
+				window.localStorage.setItem('header-settings', txtHeaderSettings.value);
+				if(window.tomato_bridge){
+                    window.tomato_bridge.setHeaders(txtHeaderSettings.value);
+				}
+				return false;
+			}
+			btnHeaderReset.onclick = reset;
+			btnHeaderSave.onclick = save;
+			reset();
+			//save();
+</script>
+</div>
+</body>
+</html>

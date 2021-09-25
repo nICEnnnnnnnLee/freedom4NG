@@ -14,12 +14,18 @@ import man.who.scan.my.app.die.a.mother.R;
 
 
 public class BaseConfig {
-    final static String options[] = {"true", "false"};
+    final static String[] options = {"true", "false"};
     final static public int DNS = 1;
     final static public int VPN = 2;
     final static public int HOST = 3;
     final static public int DEX = 4;
     final static public int ABOUT = 5;
+    final static public int BROWSER = 6;
+    final static public int APP_LIST = 7;
+
+    final public static int MODE_DEFAULT = 0;
+    final public static int MODE_WHITE_LIST = 1;
+    final public static int MODE_BLACK_LIST = 2;
 
     private static int getId(String id) {
         try {

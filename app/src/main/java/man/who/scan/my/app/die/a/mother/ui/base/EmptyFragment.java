@@ -14,13 +14,7 @@ public class EmptyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.base_empty, container, false);
-        return view;
+        return inflater.inflate(R.layout.base_empty, container, false);
     }
 
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 }

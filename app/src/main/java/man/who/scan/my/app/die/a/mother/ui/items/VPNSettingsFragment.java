@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Base64;
@@ -11,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,20 +24,25 @@ import java.util.Map;
 import man.who.scan.my.app.die.a.mother.Config;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.model.VPNConfig;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FileChooserActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
 import man.who.scan.my.app.die.a.mother.vpn.util.ResourcesUtil;
+
+import static android.app.Activity.RESULT_OK;
+import static man.who.scan.my.app.die.a.mother.ui.base.BaseFragment.SELECT_FILE;
 
 public class VPNSettingsFragment extends Fragment implements View.OnClickListener {
 
     ImageView imgSave, imgDelete, imgReload, imgShare;
-    FragmetActivity activity;
+    Button btnSelectPacPath;
+    FragmentActivity activity;
     File configFile;
     View view;
     VPNConfig config;
     Resources resources;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (FragmetActivity) getActivity();
+        activity = (FragmentActivity) getActivity();
         configFile = new File(activity.configPath);
         Map<String, String> map = Config.fromFile(configFile);
         config = new VPNConfig();
@@ -60,6 +67,7 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
         imgDelete = activity.findViewById(R.id.iv_delete);
         imgReload = activity.findViewById(R.id.iv_reload);
         imgShare = activity.findViewById(R.id.iv_share);
+        btnSelectPacPath = view.findViewById(R.id.btnSelectPacPath);
         imgSave.setVisibility(View.VISIBLE);
         imgDelete.setVisibility(View.VISIBLE);
         imgReload.setVisibility(View.VISIBLE);
@@ -68,6 +76,7 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
         imgDelete.setOnClickListener(this);
         imgReload.setOnClickListener(this);
         imgShare.setOnClickListener(this);
+        btnSelectPacPath.setOnClickListener(this);
         return view;
     }
 
@@ -116,6 +125,11 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
             } else {
                 tips = resources.getString(R.string.tips_no_vpn_settings);
             }
+        }else if(v == btnSelectPacPath){
+            Intent intent = new Intent(activity, FileChooserActivity.class);
+            intent.putExtra("type", "file");
+            startActivityForResult(intent, SELECT_FILE);
+            return;
         }
         Toast toast = Toast.makeText(activity, tips, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
@@ -123,7 +137,16 @@ public class VPNSettingsFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case SELECT_FILE:
+                if (resultCode == RESULT_OK) {
+                    String gfw_path = data.getStringExtra("path");
+                    TextView tvGfwPath = this.getView().findViewById(R.id.gfwPath);
+                    tvGfwPath.setText(gfw_path);
+                }
+                break;
+        }
     }
 }

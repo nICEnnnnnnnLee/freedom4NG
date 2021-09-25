@@ -1,8 +1,6 @@
 package man.who.scan.my.app.die.a.mother.ui.items;
 
-import android.Manifest;
 import android.app.Fragment;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 
 import java.io.File;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.ui.FileChooserActivity;
@@ -24,6 +21,15 @@ public class FileFragment extends Fragment implements View.OnClickListener {
     String display;
     String file;
     FileChooserActivity activity;
+
+    public static FileFragment newInstance() {
+        FileFragment newFragment = new FileFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("name", name);
+//        bundle.putString("passwd", passwd);
+//        newFragment.setArguments(bundle);
+        return newFragment;
+    }
 
     @Override
     public void setArguments(Bundle args) {
@@ -38,29 +44,29 @@ public class FileFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         activity = (FileChooserActivity) getActivity();
         View view = inflater.inflate(R.layout.base_folder, container, false);
-        TextView texvView = view.findViewById(R.id.tv_folder);
-        texvView.setText(display);
+        TextView textView = view.findViewById(R.id.tv_folder);
+        textView.setText(display);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         switch (type) {
             case 0:
-                texvView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-                texvView.setHeight(50);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+//                textView.setHeight(50);
                 params.setMargins(5, 15, 0, 0);
-                texvView.setLayoutParams(params);
+                textView.setLayoutParams(params);
                 view.findViewById(R.id.tv_divider).setVisibility(View.GONE);
                 break;
             case 1:
-                texvView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-                texvView.setHeight(50);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+//                textView.setHeight(50);
                 params.setMargins(15, 15, 0, 0);
-                texvView.setLayoutParams(params);
+                textView.setLayoutParams(params);
                 view.findViewById(R.id.tv_divider).setVisibility(View.GONE);
-                texvView.setOnClickListener(this);
+                textView.setOnClickListener(this);
                 break;
             case 3:
-                texvView.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                textView.setTextColor(ContextCompat.getColor(activity, android.R.color.darker_gray));
             case 2:
-                texvView.setOnClickListener(this);
+                textView.setOnClickListener(this);
                 break;
             default:
                 break;

@@ -2,19 +2,27 @@ package man.who.scan.my.app.die.a.mother.vpn;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.net.VpnService;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import androidx.core.app.NotificationCompat;
 import man.who.scan.my.app.die.a.mother.Global;
 import man.who.scan.my.app.die.a.mother.R;
+import man.who.scan.my.app.die.a.mother.model.BaseConfig;
+import man.who.scan.my.app.die.a.mother.ui.base.ToastHandler;
 import man.who.scan.my.app.die.a.mother.vpn.ip.CommonMethods;
 import man.who.scan.my.app.die.a.mother.vpn.ip.IPHeader;
 import man.who.scan.my.app.die.a.mother.vpn.ip.TCPHeader;
@@ -24,6 +32,7 @@ import man.who.scan.my.app.die.a.mother.vpn.server.UDPServer;
 import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSession;
 import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSessionManager;
 import man.who.scan.my.app.die.a.mother.vpn.util.DNSUtil;
+import man.who.scan.my.app.die.a.mother.vpn.util.GeoDomainUtil;
 
 public class LocalVpnService extends VpnService implements Runnable {
 
@@ -41,10 +50,11 @@ public class LocalVpnService extends VpnService implements Runnable {
     UDPHeader m_UDPHeader;
     ByteBuffer m_DNSBuffer;
 
-    public String localIP = "168.168.168.168";
-    public int intLocalIP = CommonMethods.ipStringToInt(localIP);
-    public String uniqueIp = "222.222.222.222";
-    public int intUniqueIp = CommonMethods.ipStringToInt(uniqueIp);
+    final public String localIP = "168.168.168.168";
+    final public int intLocalIP = CommonMethods.ipStringToInt(localIP);
+    final public String uniqueIp = "222.222.222.222";
+    final public int intUniqueIp = CommonMethods.ipStringToInt(uniqueIp);
+    public GeoDomainUtil geoDomain;
     TCPServer tcpServer;
     UDPServer udpServer;
 //    UDPServer2 udpServer2;
@@ -73,6 +83,17 @@ public class LocalVpnService extends VpnService implements Runnable {
         }
         stopSelf();
         isClosed = true;
+        geoDomain = null;
+        if(Global.hostTableRuntime != null && Global.vpnConfig.exportHostCacheAfterServiceStop){
+            StringBuilder sb = new StringBuilder();
+            for(Map.Entry<String,String> entry: Global.hostTableRuntime.entrySet()){
+                sb.append(entry.getKey()).append(" ").append(entry.getValue()).append("\r\n");
+            }
+            ClipboardManager cm = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData mClipData = ClipData.newPlainText("Label", sb.toString());
+            cm.setPrimaryClip(mClipData);
+        }
+        Global.hostTableRuntime = null;
     }
 
     @Override
@@ -98,12 +119,54 @@ public class LocalVpnService extends VpnService implements Runnable {
         builder.addAddress(localIP, 32);
         builder.setSession("Freedom");
         builder.addRoute("0.0.0.0", 0);
-        if (Global.dnsConfig.useCunstomDNS && !Global.dnsConfig.dns1.isEmpty()) {
+
+        try {
+            switch (Global.vpnGlobalConfig.mode) {
+                case BaseConfig.MODE_WHITE_LIST:
+                    builder.addAllowedApplication(this.getPackageName());
+                    for (String pkg : Global.vpnGlobalConfig.whitelist) {
+                        builder.addAllowedApplication(pkg);
+                    }
+                    break;
+                case BaseConfig.MODE_BLACK_LIST:
+                    for (String pkg : Global.vpnGlobalConfig.blacklist) {
+                        builder.addDisallowedApplication(pkg);
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("\n\n\n\n\n\n\n创建黑白名单时出现错误!!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n\n\n\n\n\n\n\n");
+        }
+        if (Global.dnsConfig.useCustomDNS && !Global.dnsConfig.dns1.isEmpty()) {
             builder.addDnsServer(Global.dnsConfig.dns1);
+            // 在builder.addRoute("0.0.0.0", 0);的情况下没必要再加重复路由
+            //builder.addRoute(Global.dnsConfig.dns1, 32);
         } else {
             for (String dns : DNSUtil.defaultDNS(this)) {
                 builder.addDnsServer(dns);
+                // 在builder.addRoute("0.0.0.0", 0);的情况下没必要再加重复路由
+                //builder.addRoute(dns, 32);
             }
+        }
+        try {
+            if (Global.vpnConfig.useGeoDomain) {
+                File gfwFile = new File(Global.vpnConfig.gfwPath);
+                InputStream isr = null;
+                if (gfwFile.exists())
+                    isr = (new FileInputStream(gfwFile));
+                else {
+                    if (Global.vpnConfig.gfwPath.length() > 1)// * or empty is designed for default
+                        ToastHandler.show(this, "GFW path is not right.");
+                    isr = this.getResources().openRawResource(R.raw.gfwlist);
+                }
+                geoDomain = new GeoDomainUtil(isr,
+                        this.getResources().openRawResource(R.raw.direct_domains));
+                Global.hostTableRuntime = new ConcurrentHashMap<>();
+            }
+        } catch (Exception e) {
+            ToastHandler.show(this, "Gfw file parse error.");
+            geoDomain = null;
         }
         fileDescriptor = builder.establish();
         vpnInput = new FileInputStream(fileDescriptor.getFileDescriptor());
@@ -126,7 +189,7 @@ public class LocalVpnService extends VpnService implements Runnable {
         notificationBuilder.setContentText("运行中");
         notificationBuilder.setOngoing(true);
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(this.getPackageName(), NotificationTAG, NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }

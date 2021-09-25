@@ -10,8 +10,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.ssl.SslHandler;
 import man.who.scan.my.app.die.a.mother.Global;
-import man.who.scan.my.app.die.a.mother.vpn.util.TrustAllSSLUitl;
-//import man.who.scan.my.app.die.a.mother.vpn.util.TrustAllSSLUitl;
+import man.who.scan.my.app.die.a.mother.vpn.util.TrustAllSSLUtil;
 
 public class BackendInitializer extends ChannelInitializer<SocketChannel> {
 //	final static
@@ -42,7 +41,7 @@ public class BackendInitializer extends ChannelInitializer<SocketChannel> {
 //		pipeline.addLast("log", new LoggingHandler(LogLevel.ERROR));
         if (host != null) {
             if (Global.vpnConfig.useSSL) {
-                SSLContext context = TrustAllSSLUitl.getSSLContext(Global.vpnConfig.verifySSL);
+                SSLContext context = TrustAllSSLUtil.getSSLContext(Global.vpnConfig.verifySSL);
                 SSLEngine engine = context.createSSLEngine(Global.vpnConfig.domain, Global.vpnConfig.remotePort);
                 engine.setUseClientMode(true);
                 engine.setNeedClientAuth(false);

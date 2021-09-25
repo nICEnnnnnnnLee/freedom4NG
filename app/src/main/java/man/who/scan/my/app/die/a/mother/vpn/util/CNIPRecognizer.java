@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class CNIPRecognizer {
     static final long RANGE_SIZE = 10000000L;
-    private static HashMap<Integer, List<CNRecord>> recordMap = new HashMap<>();
+    final private static HashMap<Integer, List<CNRecord>> recordMap = new HashMap<>();
 
     static {
         List<CNRecord> list = new ArrayList<>();
@@ -57,8 +57,8 @@ public class CNIPRecognizer {
     }
 
     final static class CNRecord {
-        public long start = 0;
-        public int count = 0;
+        public long start;
+        public int count;
 
         public CNRecord(long start, int count) {
             this.start = start;

@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <!-- 设置当前HTML文件的字符编码 -->
+    <meta charset="utf-8">
+    <!-- 设置浏览器的兼容模式版本 （让IE使用最新的渲染引擎工作） -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 声明当前网页在移动端浏览器中展示的相关设置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link type="text/css" rel="stylesheet" href="index.css" />
+</head>
+<body>
+<div id="content">
+    <div class="center">
+        <div class="settings center">
+            <button id="settings-reset">重置</button>
+            <button id="settings-save">保存</button>
+        </div>
+    </div>
+    <div class="center">
+        <div class="settings center">
+            <button id="settings-import">导入</button>
+            <button id="settings-export">导出</button>
+        </div>
+    </div>
+    <div class="center">
+        <input type="radio" name="mode" id="mode_0" value="0"><span>全局</span>
+        <input type="radio" name="mode" id="mode_1" value="1"><span>白名单</span>
+        <input type="radio" name="mode" id="mode_2" value="2"><span>黑名单</span>
+    </div>
+    <div class="center">
+        <form>
+            <input type="text" id="searchStr">
+            <button id="search">搜索</button>
+        </form>
+    </div>
+    <div id="package_div">
+        <div id="waiting" style="width: 100px; margin: 60px auto; "><span>加载中...</span></div>
+        <!--
+    <ul class="package ">
+        <li class="isSelect ">
+            <input type="checkbox" checked="checked"/>
+        </li>
+        <li class="appInfo ">
+            <div><p class="pkg-label ">app名称</p></div>
+            <div><p class="pkg-name ">com.android.test</p></div>
+        </li>
+    </ul>
+    <ul class="package ">
+        <li class="isSelect ">
+            <input type="checkbox" checked="checked"/>
+        </li>
+        <li class="appInfo ">
+            <div><p class="pkg-label ">app名称</p></div>
+            <div><p class="pkg-name ">com.android.test</p></div>
+        </li>
+    </ul> -->
+    </div>
+</div>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
+
+
+
+
+
+

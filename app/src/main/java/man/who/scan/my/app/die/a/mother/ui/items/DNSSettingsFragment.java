@@ -20,7 +20,7 @@ import man.who.scan.my.app.die.a.mother.Config;
 import man.who.scan.my.app.die.a.mother.Global;
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.model.DNSConfig;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
 import man.who.scan.my.app.die.a.mother.ui.base.ToastHandler;
 import man.who.scan.my.app.die.a.mother.vpn.server.DoH;
 
@@ -28,14 +28,14 @@ public class DNSSettingsFragment extends Fragment implements View.OnClickListene
 
     View view, imgSave, imgDelete, imgReload, btnAutofillDoh, btn_test_doh;
     EditText dohHost, doHDomain, dohPath;
-    FragmetActivity activity;
+    FragmentActivity activity;
     DNSConfig config;
     Resources resources;
     private Handler toastHandler;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (FragmetActivity) getActivity();
+        activity = (FragmentActivity) getActivity();
         toastHandler = new ToastHandler(activity);
         Map<String, String> map = Config.fromFile(activity.configPath);
         config = Global.dnsConfig;
@@ -137,8 +137,4 @@ public class DNSSettingsFragment extends Fragment implements View.OnClickListene
         toast.show();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 }

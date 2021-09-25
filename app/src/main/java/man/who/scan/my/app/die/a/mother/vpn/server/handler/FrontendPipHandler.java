@@ -19,62 +19,38 @@ import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSession;
 import man.who.scan.my.app.die.a.mother.vpn.server.nat.NATSessionManager;
 import man.who.scan.my.app.die.a.mother.vpn.util.CNIPRecognizer;
 import man.who.scan.my.app.die.a.mother.vpn.util.CommonUtil;
+import man.who.scan.my.app.die.a.mother.vpn.util.SNIHelper;
 
 public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
 
     private Channel outboundChannel;
+    boolean isFirstRead;
+    Object firstMsg;
 
     public FrontendPipHandler() {
+        isFirstRead = true;
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-//        System.out.println("-- local server has received a connection --");
-        final Channel inboundChannel = ctx.channel();
-        InetSocketAddress insocket = (InetSocketAddress) inboundChannel.remoteAddress();
-        NATSession session = NATSessionManager.getSession("tcp", insocket.getPort());
-        if (session == null) {
-//			System.out.println("当前没有这个连接");
-            inboundChannel.close();
-            return;
-        }
-
-//        System.out.printf("-- remote (%s: %s) SSL: %s--\n", Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort, Global.vpnConfig.useSSL);
-        ChannelFuture f = null;
-        if (Global.vpnConfig.directAll || (Global.vpnConfig.directIfCN && CNIPRecognizer.isCNIP(session.RemoteHost))) {
-            Bootstrap b = new Bootstrap();
-            b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
-                    .handler(new BackendInitializer(inboundChannel))
-                    .option(ChannelOption.AUTO_READ, false);
-            f = b.connect(session.RemoteHost, session.RemotePort);
-        } else {
-            Bootstrap b = new Bootstrap();
-            b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
-                    .handler(new BackendInitializer(inboundChannel, session.RemoteHost, "" + session.RemotePort))
-                    .option(ChannelOption.AUTO_READ, false);
-            f = b.connect(Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort);
-        }
-        addListner(f, inboundChannel);
-        Socket socket = CommonUtil.socketOf(f.channel());
-        if (socket != null) {
-            LocalVpnService.Instance.protect(socket);
-        } else {
-            inboundChannel.close();
-            return;
-        }
-//		System.out.println("----尝试连接中");
-
+        ctx.read();
     }
 
-    private void addListner(ChannelFuture f, Channel in0) {
+    private void addListener(ChannelFuture f, Channel in0, boolean isDirect, ChannelHandlerContext ctx) {
         final Channel inboundChannel = in0;
+        final boolean isDirectf = isDirect;
+        final ChannelHandlerContext ctxf = ctx;
         f.addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture future) {
                 if (future.isSuccess()) {
-//					System.out.println("----连接成功");
                     outboundChannel = future.channel();
-                    inboundChannel.read();
+                    if (isDirectf) {
+                        try {
+                            userEventTriggered(ctxf, "write first Msg");
+                        } catch (Exception e) {
+                        }
+                    }
                 } else {
                     inboundChannel.close();
                 }
@@ -84,30 +60,105 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(final ChannelHandlerContext ctx, Object msg) {
-//        System.out.println("-- local server channelRead --");
-        if (outboundChannel != null && outboundChannel.isActive()) {
-            outboundChannel.writeAndFlush(msg).addListener(new ChannelFutureListener() {
-                @Override
-                public void operationComplete(ChannelFuture future) {
-                    if (future.isSuccess()) {
-                        ctx.channel().read();
-                    } else {
-                        future.channel().close();
-                    }
+//        System.out.println("--------------------FrontendPipHandler channelRead");
+        if (isFirstRead) {
+            final Channel inboundChannel = ctx.channel();
+            InetSocketAddress insocket = (InetSocketAddress) inboundChannel.remoteAddress();
+            NATSession session = NATSessionManager.getSession("tcp", insocket.getPort());
+            String sni = null;
+            if(Global.vpnConfig.detectSNI || Global.vpnConfig.useGeoDomain){ // GeoDomain 必须要使用流量探测
+                ByteBuf buf = (ByteBuf) msg;
+                sni = SNIHelper.getSNIOrNull(buf.array(), buf.readableBytes());
+            }
+            if (session == null) {
+                inboundChannel.close();
+                return;
+            }
+
+            Boolean isDirectResult = null;
+            if(Global.vpnConfig.directAll){
+                isDirectResult = true;
+            }
+            // 使用流量探测 + PAC分析
+            if(isDirectResult == null && Global.vpnConfig.useGeoDomain && LocalVpnService.Instance.geoDomain != null){
+                if(sni != null){
+                    Global.hostTableRuntime.putIfAbsent(sni, session.RemoteHost);
+                    isDirectResult = LocalVpnService.Instance.geoDomain.isDirect(sni);
+//                    System.out.printf("sni: %s, direct: %s\n", sni, isDirectResult);
+                }else{
+                    isDirectResult = LocalVpnService.Instance.geoDomain.isDirect(session.RemoteHost);
                 }
-            });
-        }else{
-            ByteBuf buf = (ByteBuf)msg;
-            System.err.println("-- 收到了不该收到的数据 --" + buf.readableBytes());
-            buf.release();
+            }
+            // 使用GeoIP
+            if(isDirectResult == null){
+                isDirectResult = Global.vpnConfig.directIfCN && CNIPRecognizer.isCNIP(session.RemoteHost);
+            }
+//        System.out.printf("-- remote (%s: %s) SSL: %s--\n", Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort, Global.vpnConfig.useSSL);
+            ChannelFuture f = null;
+            if (isDirectResult) {
+                Bootstrap b = new Bootstrap();
+                b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
+                        .handler(new BackendInitializer(inboundChannel))
+                        .option(ChannelOption.AUTO_READ, false);
+                f = b.connect(session.RemoteHost, session.RemotePort);
+                addListener(f, inboundChannel, true, ctx);
+            } else {
+                String remoteHost = Global.vpnConfig.transportSNI2Remote && sni != null ? sni: session.RemoteHost;
+                Bootstrap b = new Bootstrap();
+                b.group(inboundChannel.eventLoop()).channel(ctx.channel().getClass())
+                        .handler(new BackendInitializer(inboundChannel, remoteHost, "" + session.RemotePort, ctx))
+                        .option(ChannelOption.AUTO_READ, false);
+                f = b.connect(Global.vpnConfig.remoteHost, Global.vpnConfig.remotePort);
+                addListener(f, inboundChannel, false, ctx);
+            }
+            Socket socket = CommonUtil.socketOf(f.channel());
+            if (socket != null) {
+                LocalVpnService.Instance.protect(socket);
+            } else {
+                inboundChannel.close();
+                return;
+            }
+            firstMsg = msg;
+            isFirstRead = false;
+        } else {
+            if (outboundChannel != null && outboundChannel.isActive()) {
+                outboundChannel.writeAndFlush(msg).addListener(new ChannelFutureListener() {
+                    @Override
+                    public void operationComplete(ChannelFuture future) {
+                        if (future.isSuccess()) {
+                            ctx.channel().read();
+                        } else {
+                            future.channel().close();
+                        }
+                    }
+                });
+            } else {
+                ByteBuf buf = (ByteBuf) msg;
+                System.err.println("-- 收到了不该收到的数据 --" + buf.readableBytes());
+                buf.release();
+            }
         }
+
+
+//        System.out.println("-- local server channelRead --");
     }
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        if (evt instanceof Channel && outboundChannel == null) {
-            outboundChannel = (Channel) evt;
-            ctx.channel().read();
+        if (firstMsg != null) {
+            final Channel inboundChannel = ctx.channel();
+            outboundChannel.writeAndFlush(firstMsg).addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) {
+                    if (future.isSuccess()) {
+                        inboundChannel.read();
+                    } else {
+                        future.channel().close();
+                    }
+                    firstMsg = null;
+                }
+            });
+
         }
     }
 
@@ -122,7 +173,7 @@ public class FrontendPipHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        if(!(cause instanceof IOException))
+        if (!(cause instanceof IOException))
             cause.printStackTrace();
         channelInactive(ctx);
     }

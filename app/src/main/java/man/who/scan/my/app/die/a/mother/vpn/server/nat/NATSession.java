@@ -21,7 +21,6 @@ public class NATSession {
     
     @Override
     public int hashCode() {
-    	int hash = RemotePort * 31 + RemoteIP;
-    	return hash;
+		return RemotePort * 31 + RemoteIP;
     }
 }

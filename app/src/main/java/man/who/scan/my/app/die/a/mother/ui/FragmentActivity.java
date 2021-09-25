@@ -5,18 +5,18 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
 
 import man.who.scan.my.app.die.a.mother.R;
 import man.who.scan.my.app.die.a.mother.model.BaseConfig;
 import man.who.scan.my.app.die.a.mother.ui.base.BaseFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.AboutFragment;
+import man.who.scan.my.app.die.a.mother.ui.items.AppListFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.DNSSettingsFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.DexServiceFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.HostSettingsFragment;
 import man.who.scan.my.app.die.a.mother.ui.items.VPNSettingsFragment;
 
-public class FragmetActivity extends Activity {
+public class FragmentActivity extends Activity {
 
     public String configPath;
     public int configType;
@@ -53,6 +53,13 @@ public class FragmetActivity extends Activity {
             case BaseConfig.ABOUT:
                 frag = new AboutFragment();
                 transaction.add(R.id.base, frag);
+                break;
+            case BaseConfig.APP_LIST:
+                frag = new AppListFragment();
+                transaction.add(R.id.base, frag);
+                break;
+            case BaseConfig.BROWSER:
+                ByWebViewActivity.loadUrl(this, this.getResources().getString(R.string.browser_index_path), "Tomato", 0, null);
                 break;
             default:
                 break;

@@ -45,10 +45,10 @@ public class BackendAuthHandler extends ChannelInboundHandlerAdapter {
         newCookie.put("my_port", port);
         newCookie.put("my_time", currentTime);
         newCookie.put("my_token", CommonUtil.MD5(token));
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(String.format("GET %s HTTP/%s\r\n", Global.vpnConfig.path, Global.vpnConfig.http_version))
                 .append(String.format("Host: %s:%s\r\n", Global.vpnConfig.domain, Global.vpnConfig.port))
-                .append(String.format("User-Agent: %s\r\n", Global.vpnConfig.userAgent, Global.vpnConfig.http_version))
+                .append(String.format("User-Agent: %s\r\n", Global.vpnConfig.userAgent))
                 .append("Accept: */*\r\n")
                 .append("Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2\r\n")
                 .append("Sec-WebSocket-Version: 13\r\n").append("Sec-WebSocket-Extensions: permessage-deflate\r\n")
@@ -58,7 +58,7 @@ public class BackendAuthHandler extends ChannelInboundHandlerAdapter {
                 .append(String.format("Cookie: %s\r\n", genCookie(newCookie))).append("Sec-WebSocket-Key: ")
                 .append(CommonUtil.getRandomString(24)).append("\r\n\r\n");
 //		System.out.println(sb.toString());
-        byte content[] = sb.toString().getBytes();
+        byte[] content = sb.toString().getBytes();
         ByteBuf newMsg = ctx.alloc().buffer(content.length);
         newMsg.writeBytes(content);
         ctx.channel().writeAndFlush(newMsg).addListener(new ChannelFutureListener() {
@@ -68,15 +68,15 @@ public class BackendAuthHandler extends ChannelInboundHandlerAdapter {
                     InetSocketAddress insocket = (InetSocketAddress) future.channel().localAddress();
 //					System.out.println("ctxOfFrontHandler.fireUserEventTriggered(insocket);");
 //					System.out.println(ctxOfFrontHandler);
-                    if (ctxOfFrontHandler != null) {
-                        ChannelInboundHandler handler = (ChannelInboundHandler) ctxOfFrontHandler.handler();
-                        try {
-                            handler.userEventTriggered(ctxOfFrontHandler, insocket);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-//						ctxOfFrontHandler.fireUserEventTriggered(insocket);
-                    }
+//                    if (ctxOfFrontHandler != null) {
+//                        ChannelInboundHandler handler = (ChannelInboundHandler) ctxOfFrontHandler.handler();
+//                        try {
+//                            handler.userEventTriggered(ctxOfFrontHandler, insocket);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+////						ctxOfFrontHandler.fireUserEventTriggered(insocket);
+//                    }
                     ctx.fireChannelActive();
                 }
             }
@@ -97,7 +97,13 @@ public class BackendAuthHandler extends ChannelInboundHandlerAdapter {
             String body = header.substring(index + 4);
             if (checkHeader(headerStr)) {
                 ctx.pipeline().remove(this);
-                byte content[] = body.getBytes();
+                //ctxOfFrontHandler.read();
+                ChannelInboundHandler handler = (ChannelInboundHandler) ctxOfFrontHandler.handler();
+                try {
+                    handler.userEventTriggered(ctxOfFrontHandler, "write first Msg");
+                } catch (Exception e) {
+                }
+                byte[] content = body.getBytes();
                 if (content.length > 0) {
                     ByteBuf newMsg = ctx.alloc().buffer(content.length);
                     newMsg.writeBytes(content);
@@ -117,9 +123,9 @@ public class BackendAuthHandler extends ChannelInboundHandlerAdapter {
     final static Pattern cookiePattern = Pattern.compile("Set-Cookie: ([^=]+)=([^:]+);", Pattern.CASE_INSENSITIVE);
 
     public boolean checkHeader(String header) {
-//		if (!header.contains("auth: ok\r\n")) {
-//			return false;
-//		}
+		if (!header.contains("auth: ok\r\n")) {
+			return false;
+		}
         Matcher match = cookiePattern.matcher(header);
         while (match.find()) {
             String name = match.group(1);

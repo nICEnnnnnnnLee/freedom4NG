@@ -5,12 +5,13 @@
 
 
     <TextView
+        android:labelFor="@+id/dexPath"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="left"
+        android:gravity="start"
         android:text="@string/dex_location"
         android:textSize="12sp" />
 
@@ -23,17 +24,19 @@
         android:inputType="none" />
 
     <TextView
+        android:labelFor="@+id/dexMainClassName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:gravity="left"
+        android:gravity="start"
         android:text="@string/dex_main_class_name"
         android:textSize="12sp" />
 
     <EditText
         android:id="@+id/dexMainClassName"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -55,7 +58,7 @@
             android:gravity="center_horizontal"
             android:text="@string/dex_select_path"
             android:textColor="#ffffff"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/bv_import_main_class"
@@ -63,12 +66,12 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:background="@drawable/button"
             android:gravity="center_horizontal"
             android:text="@string/dex_test_main_class"
             android:textColor="#ffffff"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,20 +90,20 @@
             android:gravity="center_horizontal"
             android:text="@string/dex_run_service"
             android:textColor="#ffffff"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/bv_stop_dex"
             android:textAllCaps="false"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button"
             android:gravity="center_horizontal"
             android:text="@string/dex_stop_service"
             android:textColor="#ffffff"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

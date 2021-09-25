@@ -42,7 +42,10 @@
     <p class="title">About <strong>Freedom</strong></p>
 
     <p class="name content-left">Version</p>
-    <p class="value content-left" id="version">Unkown</p>
+    <p class="value content-left" id="version">Unknown</p>
+
+    <p class="name content-left">Build Time</p>
+    <p class="value content-left" id="buildTime">Unknown</p>
 
     <p class="name content-left">Author</p>
     <p class="value content-left"><a href="https://github.com/nICEnnnnnnnLee">nICEnnnnnnnLee</a>
@@ -58,13 +61,19 @@
 <div>
     <p class="title">Library</p>
 
+    <a href="https://github.com/youlookwhat/ByWebView">
+        <div>
+            <p class="name content-left">ByWebView</p>
+            <p class="value content-left">Apache-2.0 License</p>
+        </div>
+    </a>
+    
     <a href="https://github.com/material-components/material-components-android">
         <div>
             <p class="name content-left">Material Components for Android</p>
             <p class="value content-left">Apache-2.0 License</p>
         </div>
     </a>
-
 
     <a href="https://netty.io">
         <div>
@@ -91,6 +100,8 @@
 <script type="text/javascript">
     var version = document.getElementById('version');
     version.innerHTML = window.android.getVersionName();
+    var buildTime = document.getElementById('buildTime');
+    buildTime.innerHTML = window.android.getBuildTime();
 </script>
 </body>
 </html>

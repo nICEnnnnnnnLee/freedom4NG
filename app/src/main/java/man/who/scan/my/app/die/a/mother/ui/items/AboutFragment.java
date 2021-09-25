@@ -14,19 +14,29 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import man.who.scan.my.app.die.a.mother.BuildConfig;
 import man.who.scan.my.app.die.a.mother.R;
-import man.who.scan.my.app.die.a.mother.ui.FragmetActivity;
+import man.who.scan.my.app.die.a.mother.ui.FragmentActivity;
 import man.who.scan.my.app.die.a.mother.ui.base.BaseFragment;
 
 public class AboutFragment extends BaseFragment {
 
-    FragmetActivity activity;
+    FragmentActivity activity;
     View view;
     WebView wb_about;
 
+    public static AboutFragment newInstance() {
+        AboutFragment newFragment = new AboutFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("name", name);
+//        bundle.putString("passwd", passwd);
+//        newFragment.setArguments(bundle);
+        return newFragment;
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = (FragmetActivity) getActivity();
+        activity = (FragmentActivity) getActivity();
     }
 
 
@@ -35,13 +45,12 @@ public class AboutFragment extends BaseFragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.about, container, false);
-        String htmlPath = "file:///android_asset/about/about.html";
+        String htmlPath = resources.getString(R.string.about_index_path);
         Configuration config = resources.getConfiguration();
         String lang = config.getLocales().toLanguageTags();
         if(!lang.startsWith("zh")){
             config.setLocale(Locale.ENGLISH);
             resources.updateConfiguration(config, resources.getDisplayMetrics());
-            htmlPath = "file:///android_asset/about/about_EN.html";
         }
 
         TextView title = activity.findViewById(R.id.tv_title);
@@ -56,7 +65,6 @@ public class AboutFragment extends BaseFragment {
         return view;
     }
 
-    //由于安全原因 需要加 @JavascriptInterface
     @JavascriptInterface
     public String getVersionName() {
         Context context = this.getContext();
@@ -68,5 +76,10 @@ public class AboutFragment extends BaseFragment {
             e.printStackTrace();
             return "Unknown";
         }
+    }
+
+    @JavascriptInterface
+    public String getBuildTime() {
+        return BuildConfig.apkBuildTime;
     }
 }

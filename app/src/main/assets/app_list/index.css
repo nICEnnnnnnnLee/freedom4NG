@@ -1,0 +1,74 @@
+html,body {
+    overflow-x:hidden;
+    background-color: white;
+}
+ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+}
+li {
+  display: inline-block;
+}
+.center{
+   margin: 15px auto;
+    width: 270px;
+}
+.center span{
+   font-size: 16px;
+}
+.center.settings{
+    width: 180px;
+}
+.center.settings button{
+    margin-left: 15px;
+    width: 64px;
+}
+#searchStr{
+    width: 190px;
+    margin-right: 10px;
+}
+.package{
+    min-width:95%;
+    max-width:300px;
+    width: 98%;
+    height:70px;
+    margin: 0 auto;
+    border-bottom: 2px solid gray;
+}
+.pkg-label{
+    font-size: 16px;
+    margin: 5px 2px 5px;
+    white-space: nowrap;  /*强制span不换行*/
+    display: inline-block;  /*将span当做块级元素对待*/
+    width: 100%;  /*限制宽度*/
+    overflow: hidden;  /*超出宽度部分隐藏*/
+    text-overflow: ellipsis;  /*超出部分以点号代替*/
+}
+.pkg-name{
+    font-size: 12px;
+    color: gray;
+    margin: 0 5px 0;
+}
+.package li.isSelect{
+    width: 20px;
+    height: 70px;
+    overflow: hidden;
+}
+.package li.isSelect input{
+    position: relative; /*脱离文档流*/
+    top: 35%; /*偏移*/
+}
+.package li.appInfo{
+    margin-left: 5px;
+    width: 260px;
+    height: 70px;
+    overflow: hidden;
+}
+.hide {
+    display: none
+}
+.center input[type='radio']{
+    width: 12px;
+    height: 12px
+}

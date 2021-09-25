@@ -79,10 +79,10 @@ public class GlobalConfigActivity extends Activity {
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(GlobalConfigActivity.this, FragmetActivity.class);
+//                Intent intent = new Intent(GlobalConfigActivity.this, FragmentActivity.class);
 //                intent.putExtra("configPath",rPath + "/config.ini");
 //                intent.putExtra("configType", 3);
-                Intent intent = new Intent(GlobalConfigActivity.this, MultiFragmetActivity.class);
+                Intent intent = new Intent(GlobalConfigActivity.this, MultiFragmentActivity.class);
                 startActivity(intent);
             }
         });

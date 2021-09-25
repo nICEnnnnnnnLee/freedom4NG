@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import man.who.scan.my.app.die.a.mother.model.DNSConfig;
 import man.who.scan.my.app.die.a.mother.model.DexConfig;
 import man.who.scan.my.app.die.a.mother.model.VPNConfig;
-import man.who.scan.my.app.die.a.mother.vpn.util.CommonUtil;
+import man.who.scan.my.app.die.a.mother.model.VPNGlobalConfig;
 
 public class Global {
     /**
@@ -33,7 +33,9 @@ public class Global {
     public static VPNConfig vpnConfig = new VPNConfig();
     final public static DNSConfig dnsConfig = new DNSConfig();
     final public static DexConfig dexConfig = new DexConfig();
+    final public static VPNGlobalConfig vpnGlobalConfig = new VPNGlobalConfig();
     final public static HashMap<String, String> hostConfig = new HashMap<>();
+    public static ConcurrentHashMap<String, String> hostTableRuntime;
 
 
     final public static ConcurrentHashMap<String, String> cookies = new ConcurrentHashMap<>();
