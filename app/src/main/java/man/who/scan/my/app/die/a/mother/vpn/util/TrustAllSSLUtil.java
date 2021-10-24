@@ -13,7 +13,7 @@ import javax.net.ssl.X509TrustManager;
 public class TrustAllSSLUtil {
     public static SSLSocketFactory getSSLSocketFactory() {
         try {
-            SSLContext sslContext = SSLContext.getInstance("SSL");
+            SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, getTrustManager(), new SecureRandom());
             return sslContext.getSocketFactory();
         } catch (Exception e) {
@@ -23,7 +23,7 @@ public class TrustAllSSLUtil {
 
     public static SSLContext getSSLContext(boolean verify) {
         try {
-            SSLContext sslContext = SSLContext.getInstance("SSL");
+            SSLContext sslContext = SSLContext.getInstance("TLS");
             if (verify)
                 sslContext.init(null, null, new SecureRandom());
             else

@@ -105,14 +105,24 @@ public class VPNBriefFragment extends Fragment implements View.OnClickListener {
                     Message msg = Message.obtain();
                     try {
                         int code = TestUtil.testVPNConfig(config);
-                        if (code == 101)
-                            msg.obj = resources.getString(R.string.tips_connect_ok);
-                        else if (code == 403)
-                            msg.obj = resources.getString(R.string.tips_auth_failed);
-                        else if (code == 200)
-                            msg.obj = resources.getString(R.string.tips_200ok_path_err);
-                        else
-                            msg.obj = resources.getString(R.string.tips_unknown_fail_reason) + code;
+                        switch (code){
+                            case 101:
+                                msg.obj = resources.getString(R.string.tips_connect_ok);
+                                break;
+                            case 403:
+                            case -2:
+                            case -3:
+                                msg.obj = resources.getString(R.string.tips_auth_failed);
+                                break;
+                            case 200:
+                                msg.obj = resources.getString(R.string.tips_200ok_path_err);
+                                break;
+                            case -1:
+                                msg.obj = resources.getString(R.string.tips_connect_failed);
+                                break;
+                            default:
+                                msg.obj = resources.getString(R.string.tips_unknown_fail_reason) + code;
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         msg.obj = resources.getString(R.string.tips_connect_failed);
