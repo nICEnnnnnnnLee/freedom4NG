@@ -7,10 +7,14 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
 import man.who.scan.my.app.die.a.mother.Global;
@@ -31,6 +35,9 @@ public class TestUtil {
                 if (vpn.useSSL) {
                     SSLSocketFactory factory = TrustAllSSLUtil.getSSLContext(vpn.verifySSL).getSocketFactory();
                     socket = factory.createSocket(socket, vpn.domain, vpn.remotePort, true);
+                    if(vpn.verifySSL && !isValid(vpn.domain, (SSLSocket) socket)) {
+                        return -1;
+                    }
                 }
             }catch (Exception e){
                 return -1; // 连接出了问题
@@ -88,4 +95,25 @@ public class TestUtil {
                 socket.close();
         }
     }
+    public static boolean isValid(final String host, final SSLSocket s) {
+        try {
+            final Certificate[] certs = s.getSession().getPeerCertificates();
+            final X509Certificate x509 = (X509Certificate) certs[0];
+            for(List<?> entry: x509.getSubjectAlternativeNames()) {
+                if((Integer)entry.get(0) == 2) {
+                    String san = entry.get(1).toString();
+                    if(san.equals(host))
+                        return true;
+                    if(san.startsWith("*") && host.endsWith(san.substring(1)))
+                        return true;
+                }
+            }
+            System.err.printf("Hostname: %s not match SubjectAlternativeNames: %s\n",host, x509.getSubjectAlternativeNames());
+            return false;
+        } catch (final Exception ex) {
+            return false;
+        }
+    }
+    
+    
 }
