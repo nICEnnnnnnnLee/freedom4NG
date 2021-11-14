@@ -4,6 +4,7 @@ import java.net.DatagramSocket;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
+import javax.net.ssl.SSLParameters;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -39,6 +40,14 @@ public class DoHInitializer extends ChannelInitializer<SocketChannel> {
         SSLEngine engine = context.createSSLEngine(dohDomain, 443);
         engine.setUseClientMode(true);
         engine.setNeedClientAuth(false);
+        if(Global.vpnConfig.verifySSL){
+            // 域名校验
+            // https://netty.io/4.1/api/io/netty/handler/ssl/SslContext.html#newHandler-io.netty.buffer.ByteBufAllocator-java.util.concurrent.Executor-
+            SSLParameters sslParameters = engine.getSSLParameters();
+            // only available since Java 7
+            sslParameters.setEndpointIdentificationAlgorithm("HTTPS");
+            engine.setSSLParameters(sslParameters);
+        }
         p.addLast("ssl", new SslHandler(engine));
         p.addLast(new HttpClientCodec());
         p.addLast(new HttpContentDecompressor());
