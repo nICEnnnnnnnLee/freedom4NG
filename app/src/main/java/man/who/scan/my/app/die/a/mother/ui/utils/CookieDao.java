@@ -24,6 +24,9 @@ public class CookieDao {
     public static CookieDao getInstance() {
         if (cookieDao == null){
             File db_file = new File(Global.ROOT_DIR.getParentFile().getParentFile(), "app_webview/Cookies");
+            if(!db_file.exists()){
+                db_file = new File(Global.ROOT_DIR.getParentFile().getParentFile(), "app_webview/Default/Cookies");
+            }
             String db_path = db_file.getAbsolutePath();
             cookieDao = new CookieDao(db_path);
 
