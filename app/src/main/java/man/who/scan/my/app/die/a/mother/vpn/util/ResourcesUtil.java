@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
@@ -196,5 +197,20 @@ public class ResourcesUtil {
         }catch (Exception e){
         }
         return sb.toString();
+    }
+
+    public static void copy(InputStream rSource, OutputStream rDest) {
+        try {
+            byte[] buffer = new byte[1024 * 1024];
+            int size = rSource.read(buffer);
+            while (size != -1) {
+                rDest.write(buffer, 0, size);
+                size = rSource.read(buffer);
+            }
+            rSource.close();
+            rDest.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

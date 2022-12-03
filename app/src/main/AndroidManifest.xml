@@ -25,7 +25,8 @@
             android:name=".MainActivity"
             android:launchMode="singleTask"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden|adjustPan">
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -42,7 +43,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/WebViewTheme"
-            tools:ignore="LockedOrientationActivity">
+            tools:ignore="LockedOrientationActivity"
+            android:exported="true">
 
             <!--需要添加下面的intent-filter配置-->
             <intent-filter tools:ignore="AppLinkUrlError">
@@ -60,7 +62,8 @@
 
         <service
             android:name=".vpn.LocalVpnService"
-            android:permission="android.permission.BIND_VPN_SERVICE">
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>

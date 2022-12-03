@@ -13,14 +13,14 @@ def currentTime = getCurrentTime();
 Properties props = new Properties()
 props.load(new FileInputStream(file("signing.properties")))
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 31
+    buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "man.who.scan.my.app.die.a.mother"
         minSdkVersion 24
-        targetSdkVersion 29
-        versionCode 13
-        versionName "1.3.0r"
+        targetSdkVersion 31
+        versionCode 14
+        versionName "1.3.2d"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {

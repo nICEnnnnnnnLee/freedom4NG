@@ -14,6 +14,9 @@ public class BaseFragment extends Fragment {
 
     public final static int SELECT_FOLDER = 1;
     public final static int SELECT_FILE = 2;
+    public final static int REQUEST_FOLDER_AUTH = 3;
+    public final static int REQUEST_ALL_FILE_AUTH = 4;
+    public final static int SELECT_FILE_BY_SYSTEM = 5;
     protected ImageView iv_add, iv_more, iv_delete, iv_save, iv_reload;
     protected TextView tv_title;
     protected FragmentActivity activity;
