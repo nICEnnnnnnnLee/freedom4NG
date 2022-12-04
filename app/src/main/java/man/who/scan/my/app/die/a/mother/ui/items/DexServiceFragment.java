@@ -66,7 +66,7 @@ public class DexServiceFragment extends BaseFragment implements View.OnClickList
                     intent.setType("*/*");
                     intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI,
                             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toURI());
-                    activity.startActivityForResult(intent, SELECT_FILE_BY_SYSTEM);
+                    startActivityForResult(intent, SELECT_FILE_BY_SYSTEM);
                 } else {
                     Intent intent = new Intent(activity, FileChooserActivity.class);
                     intent.putExtra("type", "file");
@@ -159,6 +159,9 @@ public class DexServiceFragment extends BaseFragment implements View.OnClickList
                 try {
                     InputStream is = contentResolver.openInputStream(fileUrl);
                     File cache = new File(this.getContext().getCacheDir().getAbsolutePath(), displayName);
+                    if(cache.exists()){
+                        cache.delete();
+                    }
                     FileOutputStream fos = new FileOutputStream(cache);
                     ResourcesUtil.copy(is, fos);
                     fileName = cache.getCanonicalPath();

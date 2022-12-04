@@ -241,6 +241,8 @@ public class MultiFragmentActivity extends BaseDrawerActivity {
                 try {
                     InputStream is = contentResolver.openInputStream(fileUrl);
                     File cache = new File(this.getCacheDir().getAbsolutePath(), displayName);
+                    if(cache.exists())
+                        cache.delete();
                     FileOutputStream fos = new FileOutputStream(cache);
                     ResourcesUtil.copy(is, fos);
                     fileName = cache.getCanonicalPath();
