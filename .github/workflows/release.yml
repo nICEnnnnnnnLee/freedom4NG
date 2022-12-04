@@ -1,6 +1,8 @@
 name: android master CI
 
 on:
+  workflow_dispatch:
+    inputs:
   push:
     branches: [ master ]
     paths:
