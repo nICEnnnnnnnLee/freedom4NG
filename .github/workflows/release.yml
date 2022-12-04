@@ -13,27 +13,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: set up JDK 11
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'adopt'
+          distribution: 'temurin'
 
       - name: Read tag_latest
         id: tag_latest
-        uses:  ashley-taylor/read-json-property-action@v1.0
-        with:
-          path: ./.github/release.json
-          property: tag_latest
+        shell: python
+        run: |
+            import os, json
 
-      - name: Read description
-        id: description
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./.github/release.info
-
+            with open('./.github/release.json', encoding='utf-8') as file:
+                version = json.load(file)
+                with open(os.environ.get("GITHUB_OUTPUT"),'w', encoding='utf-8') as output:
+                    output.write("value=" + version.tag_latest)
+                    
       - name: Generate signing.properties
         run: |
           rm -rf freedom.jks
@@ -43,31 +41,19 @@ jobs:
           echo "KEY_ALIAS = ${{ secrets.KEY_ALIAS }}" >> app/signing.properties
           echo "KEY_PASSWORD = ${{ secrets.KEY_PASSWORD }}" >> app/signing.properties
           cat app/signing.properties
+          
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew assembleRelease
-    
+      
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{steps.tag_latest.outputs.value}}
-          release_name: Freedom - v${{steps.tag_latest.outputs.value}}
-          body: |
-            ${{steps.description.outputs.content}}
+          name: Freedom - v${{steps.tag_latest.outputs.value}}
+          body_path: ./.github/release.info
           draft: false
           prerelease: false
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./app/build/outputs/apk/release/app-release.apk
-          asset_name: Freedom.${{steps.tag_latest.outputs.value}}.apk
-          asset_content_type: application/vnd.android.package-archive
+          files: |
+            ./app/build/outputs/apk/release/app-release.apk

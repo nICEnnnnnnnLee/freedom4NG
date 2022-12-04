@@ -1,15 +1,21 @@
 package man.who.scan.my.app.die.a.mother.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.net.VpnService;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.util.Base64;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +24,10 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +46,7 @@ public class MultiFragmentActivity extends BaseDrawerActivity {
     final static int START_VPN = 0;
     final static int SELECT_FOLDER = 1;
     final static int SELECT_FILE = 2;
+    final static int SELECT_FILE_BY_SYSTEM = 5;
     PopupMenu popupMenu;
     File configDir;
     List<VPNBriefFragment> frags;
@@ -69,9 +79,18 @@ public class MultiFragmentActivity extends BaseDrawerActivity {
                         startActivityForResult(intent, SELECT_FOLDER);
                         break;
                     case R.id.action_import:
-                        intent = new Intent(MultiFragmentActivity.this, FileChooserActivity.class);
-                        intent.putExtra("type", "file");
-                        startActivityForResult(intent, SELECT_FILE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                            intent.addCategory(Intent.CATEGORY_OPENABLE);
+                            intent.setType("*/*");
+                            intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI,
+                                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toURI());
+                            startActivityForResult(intent, SELECT_FILE_BY_SYSTEM);
+                        } else {
+                            intent = new Intent(MultiFragmentActivity.this, FileChooserActivity.class);
+                            intent.putExtra("type", "file");
+                            startActivityForResult(intent, SELECT_FILE);
+                        }
                         break;
                     case R.id.action_import_from_clipboard:
                         //获取剪贴板管理器：
@@ -193,9 +212,51 @@ public class MultiFragmentActivity extends BaseDrawerActivity {
                     }
                 }
                 break;
+            case SELECT_FILE_BY_SYSTEM:
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri uri = data.getData();
+                    String zipFile = getRealPath(uri);
+                    try {
+                        ResourcesUtil.unZip(new File(zipFile), Global.ROOT_DIR.getAbsolutePath());
+                        this.toast(resources.getString(R.string.tips_import_ok_need_reboot));
+                    } catch (Exception e) {
+                        this.toast(resources.getString(R.string.tips_import_not_ok));
+                    }
+                }
+                break;
             default:
                 break;
         }
+    }
+
+    // http://t.zoukankan.com/androidxiaoyang-p-4968663.html
+    private String getRealPath(Uri fileUrl) {
+        String fileName = null;
+        if (fileUrl != null) {
+            if (fileUrl.getScheme().toString().compareTo("content") == 0) // content://开头的uri
+            {
+                //把文件复制到沙盒目录
+                ContentResolver contentResolver = this.getContentResolver();
+                String displayName = "temp.zip";
+                try {
+                    InputStream is = contentResolver.openInputStream(fileUrl);
+                    File cache = new File(this.getCacheDir().getAbsolutePath(), displayName);
+                    if(cache.exists())
+                        cache.delete();
+                    FileOutputStream fos = new FileOutputStream(cache);
+                    ResourcesUtil.copy(is, fos);
+                    fileName = cache.getCanonicalPath();
+                    fos.close();
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (fileUrl.getScheme().compareTo("file") == 0) // file:///开头的uri
+            {
+                fileName = fileUrl.getPath();
+            }
+        }
+        return fileName;
     }
 
     @Override
