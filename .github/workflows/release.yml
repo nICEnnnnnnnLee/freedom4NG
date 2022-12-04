@@ -30,7 +30,7 @@ jobs:
             with open('./.github/release.json', encoding='utf-8') as file:
                 version = json.load(file)
                 with open(os.environ.get("GITHUB_OUTPUT"),'w', encoding='utf-8') as output:
-                    output.write("value=" + version.tag_latest)
+                    output.write("value=" + version["tag_latest"])
                     
       - name: Generate signing.properties
         run: |
