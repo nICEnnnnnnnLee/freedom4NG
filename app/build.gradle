@@ -2,6 +2,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.protobuf'
 
 def getCurrentTime() {
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -43,6 +44,47 @@ android {
             buildConfigField("String", "apkBuildTime", "\"${currentTime}\"")
         }
     }
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        checkAllWarnings false
+        warningsAsErrors false
+        // 关闭指定问题检查
+        disable 'TypographyFractions', 'TypographyQuotes', 'InvalidPackage', 'ValidFragment'
+        // 仅检查指定问题
+        check 'NewApi', 'InlinedApi'
+        // true--error输出文件不包含源码行号
+        noLines true
+        // true--显示错误的所有发生位置，不截取
+        showAll true
+        // 回退lint设置(默认规则)
+        lintConfig file("default-lint.xml")
+        // true--生成txt格式报告(默认false)
+        textReport false
+        textOutput 'stdout'
+        checkReleaseBuilds false
+    }
+}
+
+protobuf {
+    protoc { artifact = 'com.google.protobuf:protoc:3.21.7' }
+    plugins {
+        grpc { artifact = 'io.grpc:protoc-gen-grpc-java:1.51.0' // CURRENT_GRPC_VERSION
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java { option 'lite' }
+            }
+            task.plugins {
+                grpc { // Options added to --grpc_out
+                    option 'lite' }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -58,4 +100,9 @@ dependencies {
     implementation 'org.jetbrains:annotations-java5:15.0'
     //    implementation("com.squareup.okhttp3:okhttp:4.9.0")
     implementation project(':ByWebView')
+
+    implementation 'io.grpc:grpc-okhttp:1.51.0'
+    implementation 'io.grpc:grpc-protobuf-lite:1.51.0'
+    implementation 'io.grpc:grpc-stub:1.51.0'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
 }

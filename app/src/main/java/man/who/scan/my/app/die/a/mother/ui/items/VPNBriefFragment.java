@@ -125,7 +125,7 @@ public class VPNBriefFragment extends Fragment implements View.OnClickListener {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        msg.obj = resources.getString(R.string.tips_connect_failed);
+                        msg.obj = resources.getString(R.string.tips_connect_failed) + e.toString();
                     }
                     toastHandler.sendMessage(msg);
                 }

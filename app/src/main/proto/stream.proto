@@ -1,0 +1,22 @@
+syntax = "proto3"; // 版本声明，使用Protocol Buffers v3版本
+
+package freedomGo.grpc; // 默认包名
+option go_package = "github.com/nicennnnnnnlee/freedomGo/grpc"; // 指定编译生成的文件目录，也可以指定golang包名
+// option java_package = "nicelee.grpc";
+option java_package = "man.who.scan.my.app.die.a.mother.vpn.grpc";
+
+
+// 定义服务
+service Freedom {
+    rpc Pipe (stream FreedomRequest) returns (stream FreedomResponse);
+}
+
+// 请求消息
+message FreedomRequest {
+    bytes data = 1;
+}
+
+// 响应消息
+message FreedomResponse {
+    bytes data = 1;
+}

@@ -45,9 +45,9 @@ public class BaseConfig {
                 View view = view0.findViewById(getId(key));
                 if (field.getType().equals(String.class)) {
                     String str = null;
-                    if(view instanceof Spinner){
+                    if (view instanceof Spinner) {
                         str = ((Spinner) view).getSelectedItem().toString();
-                    }else if(view instanceof EditText){
+                    } else if (view instanceof EditText) {
                         str = ((EditText) view).getText().toString();
                     }
                     if (!str.isEmpty() && !str.equalsIgnoreCase("null"))
@@ -74,7 +74,7 @@ public class BaseConfig {
                 Object value = field.get(this);
                 View view = view0.findViewById(getId(key));
                 if (view instanceof Spinner) {
-                    String[] opts = !key.equals("proxyMode")? options: optionsProxyMode;
+                    String[] opts = !key.equals("proxyMode") ? options : optionsProxyMode;
                     ArrayAdapter adapter = new ArrayAdapter<String>(view0.getContext(), android.R.layout.simple_spinner_item, opts);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     ((Spinner) view).setAdapter(adapter);
@@ -97,7 +97,12 @@ public class BaseConfig {
                 if (view instanceof EditText) {
                     ((EditText) view).setText(value.toString());
                 } else if (view instanceof Spinner) {
-                    int position = (Boolean) value ? 0 : 1;
+                    int position = 0;
+                    if (field.getType().equals(boolean.class)) {
+                        position = (Boolean) value ? 0 : 1;
+                    } else {
+                        position = optionsProxyMode[0].equals(value) ? 0 : 1;
+                    }
                     ((Spinner) view).setSelection(position);
                 } else {
                     System.err.println("暂时未实现该类型的自动设置");
