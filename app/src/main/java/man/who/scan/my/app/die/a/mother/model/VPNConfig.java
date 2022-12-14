@@ -18,6 +18,8 @@ public class VPNConfig extends BaseConfig {
     public String port = "443";
     public String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0";
 
+    public String proxyMode = "ws"; // ws grpc
+    public String grpcServiceName = "freedomGo.grpc.Freedom"; // grpc模式时, path为 /{grpcServiceName}/Pipe
 //    public boolean usePAC = true;
 //    public String pacPath = "*";
     public boolean useGeoDomain = false;
