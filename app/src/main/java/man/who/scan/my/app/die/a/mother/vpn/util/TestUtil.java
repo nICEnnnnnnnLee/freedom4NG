@@ -39,6 +39,7 @@ public class TestUtil {
                 return testWebSocket(vpn);
             case "grpc":
                 return testGrpc(vpn);
+//                return testFactory(vpn);
             default:
                 throw new RuntimeException("Proxy Mode invalie: " + vpn.proxyMode);
         }
@@ -61,7 +62,7 @@ public class TestUtil {
             if (!client.finishLatch.await(20, TimeUnit.SECONDS)) {
                 throw new RuntimeException(
                         "Could not finish rpc within 20 secs, the server is likely down");
-            } else if (client.valid) {
+            } else if (client.valid != null && client.valid) {
                 requestStreamObserver.onCompleted();
                 return 101;
             } else {
@@ -106,7 +107,7 @@ public class TestUtil {
                 sb.append(String.format("GET %s HTTP/%s\r\n", vpn.path, vpn.http_version))
                         .append(String.format("Host: %s:%s\r\n", vpn.domain, vpn.port))
 //					.append(String.format("Host: %s\r\n", vpn.domain))
-                        .append(String.format("User-Agent: %s\r\n", vpn.userAgent, vpn.http_version))
+                        .append(String.format("User-Agent: %s\r\n", vpn.userAgent))
                         .append("Accept: */*\r\n")
                         .append("Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2\r\n")
                         .append("Sec-WebSocket-Version: 13\r\n").append("Sec-WebSocket-Extensions: permessage-deflate\r\n")
