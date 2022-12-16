@@ -92,7 +92,7 @@ public class Config {
         if (configs != null) {
             Global.vpnConfig.fromMap(configs);
             Global.dnsConfig.fromMap(configs);
-            Global.initCookies();
+            Global.vpnConfig.init();
             return true;
         } else {
             return false;

@@ -1,4 +1,2 @@
-* 核心功能没有变化，主要是自用的其它功能有些改变
-* 从外部导入数据适配Android 12
-* fix: 定制浏览器某些情况下找不到Webview的Cookie保存位置，导致无法复制cookie的情况
-* 运行外部Dex服务添加保活措施
+* feat: 添加gRPC模式, 现在支持Websocket(HTTP 1.1 Upgrade)、GRPC(HTTP2)。Websocket比后者开销要少。  
+* fix: 使用`?`图标测试配置可行性时, `username`、`grpc servicename`总是使用当前配置而非图标对应配置

@@ -228,6 +228,12 @@ public class LocalVpnService extends VpnService implements Runnable {
                 TCPHeader tcpHeader = m_TCPHeader;
                 tcpHeader.m_Offset = ipHeader.getHeaderLength();
                 if (ipHeader.getDestinationIP() == intUniqueIp) {
+//                    System.out.printf("远程TCP: (%s, %s) -> (%s, %s) \n",
+//                            CommonMethods.ipIntToString(ipHeader.getSourceIP()),
+//                            (tcpHeader.getSourcePort() + 65536)% 65536,
+//                            CommonMethods.ipIntToString(ipHeader.getDestinationIP()),
+//                            (tcpHeader.getDestinationPort()+ 65536)% 65536
+//                    );
                     //来自TCP服务器
                     //System.out.println("来自TCP服务器: port: " + tcpHeader.getDestinationPort());
                     int portKey = tcpHeader.getDestinationPort();
@@ -248,6 +254,12 @@ public class LocalVpnService extends VpnService implements Runnable {
                     // 添加端口映射
 //                    System.out.println("来自本地的TCP报文: port: " + tcpHeader.getDestinationPort());
 //                    System.out.println("来自本地的TCP报文: dstIP: " + CommonMethods.ipIntToString(ipHeader.getDestinationIP()));
+//                    System.out.printf("本地TCP: (%s, %s) -> (%s, %s) \n",
+//                            CommonMethods.ipIntToString(ipHeader.getSourceIP()),
+//                            (tcpHeader.getSourcePort() + 65536)% 65536,
+//                            CommonMethods.ipIntToString(ipHeader.getDestinationIP()),
+//                            (tcpHeader.getDestinationPort()+ 65536)% 65536
+//                            );
                     int portKey = tcpHeader.getSourcePort();
                     portKey = portKey > 0 ? portKey : portKey + 65536;
                     int dstIP = ipHeader.getDestinationIP();

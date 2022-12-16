@@ -36,7 +36,7 @@ public class TrustAllSSLUtil {
     }
 
     // 获取TrustManager
-    private static TrustManager[] getTrustManager() {
+    public static TrustManager[] getTrustManager() {
         // 不校检证书链
         TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
             @Override

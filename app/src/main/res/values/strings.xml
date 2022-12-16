@@ -98,6 +98,8 @@
 
     <!-- vpn_settings.xml -->
     <string name="vpn_setting_remark">备注 Remark</string>
+    <string name="proxy_mode">Proxy 模式</string>
+    <string name="grpc_service_name">gRPC 服务名称</string>
     <string name="direct_for_all">全部直连</string>
     <string name="local_tcp_port">本地TCP端口</string>
     <string name="server_tcp_port">服务器TCP端口</string>

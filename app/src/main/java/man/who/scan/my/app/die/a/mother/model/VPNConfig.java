@@ -1,5 +1,11 @@
 package man.who.scan.my.app.die.a.mother.model;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+import man.who.scan.my.app.die.a.mother.Global;
+import man.who.scan.my.app.die.a.mother.vpn.grpc.FreedomGrpc;
+
 public class VPNConfig extends BaseConfig {
     public String remark = "";
     public boolean directAll = false;
@@ -18,6 +24,8 @@ public class VPNConfig extends BaseConfig {
     public String port = "443";
     public String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0";
 
+    public String proxyMode = "ws"; // ws grpc
+    public String grpcServiceName = "freedomGo.grpc.Freedom"; // grpc模式时, path为 /{grpcServiceName}/Pipe
 //    public boolean usePAC = true;
 //    public String pacPath = "*";
     public boolean useGeoDomain = false;
@@ -27,4 +35,14 @@ public class VPNConfig extends BaseConfig {
     public boolean directIfCN = true;
 
     public boolean exportHostCacheAfterServiceStop = false;
+
+    public void init() {
+        Global.cookies.put("my_type", "1");
+        Global.cookies.put("my_domain", "");
+        Global.cookies.put("my_port", "0");
+        Global.cookies.put("my_username", username);
+
+        FreedomGrpc.SERVICE_NAME = grpcServiceName;
+        FreedomGrpc.resetPipeMethod();
+    }
 }

@@ -1,15 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 31
+    buildToolsVersion "30.0.2"
 
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 31
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -21,7 +19,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        checkAllWarnings false
+        warningsAsErrors false
+        // 关闭指定问题检查
+        disable 'TypographyFractions', 'TypographyQuotes', 'InvalidPackage', 'ValidFragment'
+        // 仅检查指定问题
+        check 'NewApi', 'InlinedApi'
+        // true--error输出文件不包含源码行号
+        noLines true
+        // true--显示错误的所有发生位置，不截取
+        showAll true
+        // 回退lint设置(默认规则)
+        lintConfig file("default-lint.xml")
+        // true--生成txt格式报告(默认false)
+        textReport false
+        textOutput 'stdout'
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {

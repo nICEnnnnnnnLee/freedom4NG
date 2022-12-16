@@ -38,6 +38,8 @@
     <string name="tips_save_ok">Save succeeded</string>
     <string name="tips_save_not_ok">Save failed!</string>
     <string name="vpn_setting_remark">Remark</string>
+    <string name="proxy_mode">Proxy Mode</string>
+    <string name="grpc_service_name">gRPC Service Name</string>
     <string name="local_tcp_port">Local TCP port</string>
     <string name="test_current_DoH_Settings">Test current DoH settings</string>
     <string name="tips_export_ok">Export succeeded</string>

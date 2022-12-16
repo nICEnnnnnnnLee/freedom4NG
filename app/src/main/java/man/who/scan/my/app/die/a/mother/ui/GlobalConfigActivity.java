@@ -96,7 +96,7 @@ public class GlobalConfigActivity extends Activity {
     void view2Global() {
         Global.vpnConfig.getFromView(this.getWindow().getDecorView());
         Global.dnsConfig.getFromView(this.getWindow().getDecorView());
-        Global.initCookies();
+        Global.vpnConfig.init();
     }
 
     private void stopVPN() {
