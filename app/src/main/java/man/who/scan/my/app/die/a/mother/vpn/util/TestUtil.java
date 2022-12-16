@@ -32,7 +32,7 @@ public class TestUtil {
     static Pattern statusCodePattern;
 
     public static int testVPNConfig(VPNConfig vpn) throws Exception {
-        Global.initCookies();
+        vpn.init();
 //        System.out.println("\n\n-------------------\n" + vpn);
         switch (vpn.proxyMode) {
             case "ws":
