@@ -1,5 +1,11 @@
 package man.who.scan.my.app.die.a.mother.model;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+import man.who.scan.my.app.die.a.mother.Global;
+import man.who.scan.my.app.die.a.mother.vpn.grpc.FreedomGrpc;
+
 public class VPNConfig extends BaseConfig {
     public String remark = "";
     public boolean directAll = false;
@@ -29,4 +35,14 @@ public class VPNConfig extends BaseConfig {
     public boolean directIfCN = true;
 
     public boolean exportHostCacheAfterServiceStop = false;
+
+    public void init() {
+        Global.cookies.put("my_type", "1");
+        Global.cookies.put("my_domain", "");
+        Global.cookies.put("my_port", "0");
+        Global.cookies.put("my_username", username);
+
+        FreedomGrpc.SERVICE_NAME = grpcServiceName;
+        FreedomGrpc.resetPipeMethod();
+    }
 }

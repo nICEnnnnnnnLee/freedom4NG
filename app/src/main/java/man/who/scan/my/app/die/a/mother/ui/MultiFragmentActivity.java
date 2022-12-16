@@ -315,7 +315,7 @@ public class MultiFragmentActivity extends BaseDrawerActivity {
 
     private void startVPN() {
         Intent intent = VpnService.prepare(this);
-        Global.initCookies();
+        Global.vpnConfig.init();
         if (intent != null) {
             startActivityForResult(intent, START_VPN);
 //            System.out.println("startActivityForResult");

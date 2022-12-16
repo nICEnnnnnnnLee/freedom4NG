@@ -1,6 +1,7 @@
 package man.who.scan.my.app.die.a.mother;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -40,15 +41,7 @@ public class Global {
 
     final public static ConcurrentHashMap<String, String> cookies = new ConcurrentHashMap<>();
 
-    public static void initCookies() {
-        cookies.put("my_type", "1");
-        cookies.put("my_domain", "");
-        cookies.put("my_port", "0");
-        cookies.put("my_username", vpnConfig.username);
-//        cookies.put("my_token", CommonUtil.MD5(vpnConfig.password + vpnConfig.salt));
-    }
-
     static {
-        initCookies();
+        Global.vpnConfig.init();
     }
 }
