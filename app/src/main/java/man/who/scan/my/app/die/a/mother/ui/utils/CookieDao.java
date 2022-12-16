@@ -1,5 +1,6 @@
 package man.who.scan.my.app.die.a.mother.ui.utils;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -39,6 +40,7 @@ public class CookieDao {
         return SQLiteDatabase.openDatabase(db_path, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
+    @SuppressLint("Range")
     public List<Cookie> getAllMatchedCookies(String host, String path) {
 //        System.out.printf("host: %s, path: %s\n", host, path);
         List<Cookie> cookies = new ArrayList<>();
